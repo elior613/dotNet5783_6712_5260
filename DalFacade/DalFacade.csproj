@@ -19,8 +19,4 @@
     <BaseOutputPath> $(SolutionDir)\bin\</BaseOutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="DO\" />
-  </ItemGroup>
-
 </Project>
