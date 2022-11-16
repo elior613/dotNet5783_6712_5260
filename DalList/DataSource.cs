@@ -34,7 +34,6 @@ static internal class DataSource
                         "Yisroel@gmail.com", "Reuven@gmail.com", "Shimon@gmail.com", "Levi@gmail.com", "Yehuda@gmail.com", "Yissachar@gmail.com", "Zevulun@gmail.com", "Dan@gmail.com", "Naftali@gmail.com", "Gad@gmail.com", "Asher@gmail.com","Menashe@gmail.com", "Efraim@gmail.com", "Beniamin@gmail.com"};//to initialize the customers emails
         List<string> addressOfCustumer = new List<string> { "Ben Yehuda, Jerusalem", "Jaffa, Jerusalem", "King Gorge, Jerusalem", "Dizingof, Tel Aviv", "Bialik, Tel Aviv", "Rabbi Akiva, Bnei Brak", "Hazon Ish, Bnei Brak", "Bnei Brit, Ashdod", "Yerushalaim, Zefat" };//to initialize the customers addresses
         Order order = new Order();
-        order.ID = Config.orderId;
         order.CostumerName = namesOfCustomers[rand.Next(0, 21)];
         order.CostumerEmail = emailsOfCustomers[rand.Next(0, 21)];
         order.CostumerAddress = addressOfCustumer[rand.Next(0, 8)];
@@ -53,13 +52,39 @@ static internal class DataSource
     private static OrderItem AddOrderItem()
     {
         OrderItem orderItem = new OrderItem();
-        orderItem.id = Config.orderItemId;
-        orderItem.OrderID = Config.orderId;
-        orderItem.ProductID = rand.Next(100000,100200);
+        orderItem.ProductID = rand.Next(100000, 100200);
         return orderItem;
     }
+
+    static DataSource()
+    {
+        Dal.DataSource.s_Initialize();
+    }
+
+
+    private static void s_Initialize()
+    {
+        int countProduct = 100000;
+        for (int i = 0; i < 50; i++)
+        {
+            producrArr[i] = AddProduct(countProduct);
+            countProduct++;
+        }
+
+        for (int i = 0; i < 100; i++)
+        {
+            orderArr[i] = AddOrder();
+        }
+
+        for (int i = 0; i < 200; i++)
+            orderItemArr[i] = AddOrderItem();
+
+    }
+
+
     internal class Config
     {
+
         internal static int productNum = 0;
         internal static int orderNum = 0;
         internal static int orderItemNum = 0;
@@ -67,26 +92,7 @@ static internal class DataSource
         public int OrderId { get; }
         internal static int orderItemId = 1;
         public int OrderItemId { get; }
-        private static void Initialize()
-        {
-            int countProduct = 100000;
-            for (int i = 0; i < 50; i++)
-            {
-                producrArr[i] = AddProduct(countProduct);
-                countProduct++;
-            }
-         
-            for (int i = 0; i < 100; i++)
-            {
-            }
-         
-            for (int i = 0; i < 200; i++)
-            {
-                orderItemArr[i] = AddOrderItem();
-            }
 
-
-        }
 
     }
 }
