@@ -19,9 +19,11 @@ public class DalOrderItem
         {
             if (DataSource.orderItemArr[i].id==num)
                 oi= DataSource.orderItemArr[i];
-
+            
         }
-        return oi;
+        if (oi.id != num)
+            throw new Exception("The object doesn't exist.");
+            return oi;
     }
 
     public static DO.OrderItem[] GetAll()
