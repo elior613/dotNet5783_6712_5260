@@ -9,7 +9,7 @@ class DalTest
 {
     static void Main(string[] args)
     {
-        int choice=1;
+        int choice = 1;
         while (choice != 0)
         {
             Console.WriteLine("Which entity do you want ?");
@@ -17,7 +17,7 @@ class DalTest
             Console.WriteLine("2-Order");
             Console.WriteLine("3-OrderItem");
             Console.WriteLine("0-to end the program");
-            choice = System.Console.Read();
+            choice = Convert.ToInt32(Console.ReadLine());
             switch (choice)
             {
                 case 1:
@@ -29,7 +29,7 @@ class DalTest
                     Console.WriteLine("-Choose 5 to update any product");
                     Console.WriteLine("-Choose another number to return to the menu");
                     Console.ReadLine();
-                    choice = System.Console.Read();
+                    choice = Convert.ToInt32(Console.ReadLine());
                     int num, num2;
                     DO.Product prod = new DO.Product();
                     Furniture furniture = new Furniture();
@@ -85,7 +85,7 @@ class DalTest
                     Console.WriteLine("-Choose 5 to delete ant Order.");
                     Console.WriteLine("-Choose 6 to update ant Order.");
                     Console.WriteLine("-Choose another number to return to the menu");
-                    choice = System.Console.Read();
+                    choice = Convert.ToInt32(Console.ReadLine());
                     DO.Order ord = new Order();
                     switch (choice)
                     {
@@ -148,7 +148,7 @@ class DalTest
                     Console.WriteLine("-Choose 5 to delete ant OrderItem.");
                     Console.WriteLine("-Choose 6 to update ant OrderItem.");
                     Console.WriteLine("-Choose another number to return to the menu");
-                    choice = System.Console.Read();
+                    choice = Convert.ToInt32(Console.ReadLine());
                     DO.OrderItem oi = new OrderItem();
                     switch (choice)
                     {
