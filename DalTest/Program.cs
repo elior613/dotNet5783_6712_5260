@@ -28,7 +28,6 @@ class DalTest
                     Console.WriteLine("-Choose 4 to delete any product");
                     Console.WriteLine("-Choose 5 to update any product");
                     Console.WriteLine("-Choose another number to return to the menu");
-                    Console.ReadLine();
                     choice = Convert.ToInt32(Console.ReadLine());
                     int num, num2;
                     DO.Product prod = new DO.Product();
@@ -43,7 +42,7 @@ class DalTest
                             break;
                         case 2:
                             Console.WriteLine("enter the ID of the product you want to see");
-                            num = System.Console.Read();
+                            num = Convert.ToInt32(Console.ReadLine());
                             DalProduct.Get(num);
                             break;
                         case 3:
@@ -51,21 +50,21 @@ class DalTest
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the product you want do delete ");
-                            num = System.Console.Read();
+                            num = Convert.ToInt32(Console.ReadLine());
                             DalProduct.Delete(num);
                             break;
                         case 5:
                             Console.WriteLine("enter Id of the product you want to update");
-                            num = System.Console.Read();
+                            num = Convert.ToInt32(Console.ReadLine());
                             prod.ID = num;
                             Console.WriteLine("which category you want to update? choice: LivingRoomFurniture/bedroomFurniture/kitchenFurniture/toilets/officeFurniture");
                             category = System.Console.ReadLine();
                             furniture.ToString(category);
                             Console.WriteLine("hou many there is in stock?");
-                            num = System.Console.Read();
+                            num = Convert.ToInt32(Console.ReadLine());
                             prod.InStock = num;
                             Console.WriteLine("how many the cost of the product?");
-                            num = System.Console.Read();
+                            num = Convert.ToInt32(Console.ReadLine())
                             prod.Price = num;
                             Console.WriteLine("what is the name of the product?");
                             name = System.Console.ReadLine();
@@ -94,7 +93,7 @@ class DalTest
                             break;
                         case 2:
                             Console.WriteLine("enter the ID of the order you want to see");
-                            num = System.Console.Read();
+                            num = Convert.ToInt32(Console.ReadLine());
                             DalOrder.Get(num);
                             break;
                         case 3:
@@ -102,12 +101,12 @@ class DalTest
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the order you want to see his detalies");
-                            num = System.Console.Read();
+                            num = Convert.ToInt32(Console.ReadLine());
                             DalOrder.GetDetalies(num);
                             break;
                         case 5:
                             Console.WriteLine("enter the ID of the order you want do delete ");
-                            num = System.Console.Read();
+                            num = Convert.ToInt32(Console.ReadLine());
                             DalOrder.Delete(num);
                             break;
                         case 6:
@@ -157,7 +156,7 @@ class DalTest
                             break;
                         case 2:
                             Console.WriteLine("enter the ID of the order item you want to see");
-                            num = System.Console.Read();
+                            num = Convert.ToInt32(Console.ReadLine());
                             DalOrderItem.Get(num);
                             break;
                         case 3:
@@ -165,9 +164,9 @@ class DalTest
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the order");
-                            num = System.Console.Read();
+                            num = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("enter the ID of the product");
-                            num2 = System.Console.Read();
+                            num2 = Convert.ToInt32(Console.ReadLine());
                             DalOrderItem.GetOrderItem(num2, num);
                             break;
                         case 5:
