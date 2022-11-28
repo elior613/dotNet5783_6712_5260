@@ -64,7 +64,7 @@ class DalTest
                             num = Convert.ToInt32(Console.ReadLine());
                             prod.InStock = num;
                             Console.WriteLine("how many the cost of the product?");
-                            num = Convert.ToInt32(Console.ReadLine())
+                            num = Convert.ToInt32(Console.ReadLine());
                             prod.Price = num;
                             Console.WriteLine("what is the name of the product?");
                             name = System.Console.ReadLine();
