@@ -6,6 +6,7 @@ namespace Dal;
 
 public class DalProduct
 {
+    static DataSource();
     public static int Add(DO.Product prod)
     {
         for(int i = 0; i < DataSource.producrArr.Length; i++)
