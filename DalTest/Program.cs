@@ -9,6 +9,10 @@ class DalTest
 {
     static void Main(string[] args)
     {
+        DalProduct dalProduct = new DalProduct();
+        DalOrder dalOrder = new DalOrder();
+        DalOrderItem dalOrderItem = new DalOrderItem();
+
         int choice = 1;
         while (choice != 0)
         {
@@ -38,20 +42,20 @@ class DalTest
                     {
 
                         case 1:
-                            DalProduct.Add(prod);
+                            dalProduct.Add(prod);
                             break;
                         case 2:
                             Console.WriteLine("enter the ID of the product you want to see");
                             num = Convert.ToInt32(Console.ReadLine());
-                            DalProduct.Get(num);
+                            dalProduct.Get(num);
                             break;
                         case 3:
-                            DalProduct.GetAll();
+                            dalProduct.GetAll();
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the product you want do delete ");
                             num = Convert.ToInt32(Console.ReadLine());
-                            DalProduct.Delete(num);
+                            dalProduct.Delete(num);
                             break;
                         case 5:
                             Console.WriteLine("enter Id of the product you want to update");
@@ -69,7 +73,7 @@ class DalTest
                             Console.WriteLine("what is the name of the product?");
                             name = System.Console.ReadLine();
                             prod.Name = name;
-                            DalProduct.Update(prod);
+                            dalProduct.Update(prod);
                             break;
                         default:
                             break;
@@ -89,25 +93,25 @@ class DalTest
                     switch (choice)
                     {
                         case 1:
-                            DalOrder.Add(ord);
+                            dalOrder.Add(ord);
                             break;
                         case 2:
                             Console.WriteLine("enter the ID of the order you want to see");
                             num = Convert.ToInt32(Console.ReadLine());
-                            DalOrder.Get(num);
+                            dalOrder.Get(num);
                             break;
                         case 3:
-                            DalOrder.GetAll();
+                            dalOrder.GetAll();
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the order you want to see his detalies");
                             num = Convert.ToInt32(Console.ReadLine());
-                            DalOrder.GetDetalies(num);
+                            dalOrder.GetDetails(num);
                             break;
                         case 5:
                             Console.WriteLine("enter the ID of the order you want do delete ");
                             num = Convert.ToInt32(Console.ReadLine());
-                            DalOrder.Delete(num);
+                            dalOrder.Delete(num);
                             break;
                         case 6:
                             Console.WriteLine("enter Id of the order you want to update");
@@ -131,7 +135,7 @@ class DalTest
                             Console.WriteLine("what is the date of the delivery?");
                             date = Convert.ToDateTime(Console.ReadLine());
                             ord.DeliveryDate = date;
-                            DalOrder.Update(ord);
+                            dalOrder.Update(ord);
                             break;
                         default:
                             break;
@@ -152,27 +156,27 @@ class DalTest
                     switch (choice)
                     {
                         case 1:
-                            DalOrderItem.Add(oi);
+                            dalOrderItem.Add(oi);
                             break;
                         case 2:
                             Console.WriteLine("enter the ID of the order item you want to see");
                             num = Convert.ToInt32(Console.ReadLine());
-                            DalOrderItem.Get(num);
+                            dalOrderItem.Get(num);
                             break;
                         case 3:
-                            DalOrderItem.GetAll();
+                            dalOrderItem.GetAll();
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the order");
                             num = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("enter the ID of the product");
                             num2 = Convert.ToInt32(Console.ReadLine());
-                            DalOrderItem.GetOrderItem(num2, num);
+                            dalOrderItem.GetOrderItem(num2, num);
                             break;
                         case 5:
                             Console.WriteLine("enter the ID of the order item you want do delete ");
                             num = System.Console.Read();
-                            DalOrderItem.Delete(num);
+                            dalOrderItem.Delete(num);
                             break;
                         case 6:
                             Console.WriteLine("enter Id of the order item you want to update");
@@ -190,7 +194,7 @@ class DalTest
                             Console.WriteLine("how many the cost of the product?");
                             num = System.Console.Read();
                             oi.Price = num;
-                            DalOrderItem.Update(oi);
+                            dalOrderItem.Update(oi);
                             break;
                         default:
                             break;

@@ -6,15 +6,27 @@ using System;
 
 namespace Dal;
 
-static internal class DataSource
+internal sealed class DataSource
 {
+    private static DataSource _instance = null;
+    public static DataSource Instance { get { return _instance; } }
+
+
     static readonly Random rand = new Random();
-    internal static Product[] producrArr = new Product[50];
-    internal static Order[] orderArr = new Order[100];
-    internal static OrderItem[] orderItemArr = new OrderItem[200];
+    internal Product[] producrArr = new Product[50];
+    internal Order[] orderArr = new Order[100];
+    internal OrderItem[] orderItemArr = new OrderItem[200];
 
+    static DataSource()
+    {
+        _instance = new DataSource();
+    }
+    private DataSource()
+    {
+        s_Initialize();
+    }
 
-    private static Product AddProduct(int countProduct)
+    private Product AddProduct(int countProduct)
     {
         List<string> namesOfProducts = new List<string> { "Sofa", "Table", "Chair", "Wardrobe", "Dresser", "Bed", "Shelf", "Armchair" };//to initialize the names of the products
         Product product = new Product();
@@ -26,7 +38,7 @@ static internal class DataSource
         return product;
     }
 
-    private static Order AddOrder()
+    private Order AddOrder()
     {
         List<string> namesOfCustomers = new List<string> { "Avraam", "Itzchak", "Iakov", "Moshe", "Aharon", "Yosef", "David", "Shlomo",
                         "Yisroel", "Reuven", "Shimon", "Levi", "Yehuda", "Yissachar", "Zevulun", "Dan", "Naftali", "Gad", "Asher","Menashe", "Efraim", "Beniamin"};//to initialize the first customers names
@@ -34,35 +46,28 @@ static internal class DataSource
                         "Yisroel@gmail.com", "Reuven@gmail.com", "Shimon@gmail.com", "Levi@gmail.com", "Yehuda@gmail.com", "Yissachar@gmail.com", "Zevulun@gmail.com", "Dan@gmail.com", "Naftali@gmail.com", "Gad@gmail.com", "Asher@gmail.com","Menashe@gmail.com", "Efraim@gmail.com", "Beniamin@gmail.com"};//to initialize the customers emails
         List<string> addressOfCustumer = new List<string> { "Ben Yehuda, Jerusalem", "Jaffa, Jerusalem", "King Gorge, Jerusalem", "Dizingof, Tel Aviv", "Bialik, Tel Aviv", "Rabbi Akiva, Bnei Brak", "Hazon Ish, Bnei Brak", "Bnei Brit, Ashdod", "Yerushalaim, Zefat" };//to initialize the customers addresses
         Order order = new Order();
+         DateTime date1 = new DateTime(2022, rand.Next(1, 12), rand.Next(1, 31));
+        TimeSpan t = new TimeSpan(1, 5, 9, 6, 3);
+        DateTime date2 = date1.Add(t);
+        DateTime date3 = date2.Add(t);
         order.CostumerName = namesOfCustomers[rand.Next(0, 21)];
-        order.CostumerEmail = emailsOfCustomers[rand.Next(0, 21)];
-        order.CostumerAddress = addressOfCustumer[rand.Next(0, 8)];
-        order.OrderDate = DateTime.MinValue;
-        DateTime date1 = new DateTime(2022, rand.Next(1, 12), rand.Next(1, 31));
-        DateTime date2 = new DateTime(2022, rand.Next(1, 12), rand.Next(1, 31));
-        TimeSpan t1 = date1 - order.OrderDate;
-        TimeSpan t2 = date2 - order.OrderDate;
-        date1 = Convert.ToDateTime(t1.ToString());
-        date2 = Convert.ToDateTime(t2.ToString());
-        order.ShipDate = date1;
-        order.DeliveryDate = date2;
+            order.CostumerEmail = emailsOfCustomers[rand.Next(0, 21)];
+            order.CostumerAddress = addressOfCustumer[rand.Next(0, 8)];
+            order.OrderDate = date1;
+            order.ShipDate = date2;
+            order.DeliveryDate = date3;
         return order;
     }
 
-    private static OrderItem AddOrderItem()
+    private OrderItem AddOrderItem()
     {
         OrderItem orderItem = new OrderItem();
         orderItem.ProductID = rand.Next(100000, 100200);
         return orderItem;
     }
 
-    static DataSource()
-    {
-        Dal.DataSource.s_Initialize();
-    }
 
-
-    private static void s_Initialize()
+    private void s_Initialize()
     {
         int countProduct = 100000;
         for (int i = 0; i < 50; i++)
@@ -71,9 +76,13 @@ static internal class DataSource
             countProduct++;
         }
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 3; i++)
         {
             orderArr[i] = AddOrder();
+            if (i > 50)
+                orderArr[i].DeliveryDate = DateTime.MinValue;
+            if(i>80)
+                orderArr[i].ShipDate= DateTime.MinValue;    
         }
 
         for (int i = 0; i < 200; i++)
@@ -82,16 +91,16 @@ static internal class DataSource
     }
 
 
-    internal class Config
+    internal static class Config
     {
 
         internal static int productNum = 0;
         internal static int orderNum = 0;
         internal static int orderItemNum = 0;
         internal static int orderId = 1;
-        public int OrderId { get; }
+        public static int OrderId { get; }
         internal static int orderItemId = 1;
-        public int OrderItemId { get; }
+        public static int OrderItemId { get; }
 
 
     }

@@ -7,47 +7,48 @@ namespace Dal;
 
 public class DalOrder
 {
-    public static int Add(DO.Order ord)
+    DataSource _dataSource = DataSource.Instance;
+    public  int Add(DO.Order ord)
     {
    
         ord.ID = DataSource.Config.orderId;
-        DataSource.orderArr[DataSource.Config.productNum] = ord;
+        _dataSource.orderArr[DataSource.Config.productNum] = ord;
         DataSource.Config.productNum++;
         return ord.ID;
     }
 
-    public static DO.Order Get(int num)
+    public  DO.Order Get(int num)
     {
         DO.Order ord = new DO.Order();
-        for(int i=0; i<DataSource.orderArr.Length; i++)
+        for(int i=0; i< _dataSource.orderArr.Length; i++)
         {
-            if(DataSource.orderArr[i].ID == num)
-                ord = DataSource.orderArr[i];
+            if(_dataSource.orderArr[i].ID == num)
+                ord = _dataSource.orderArr[i];
         }
         return ord;
     }
 
-    public static DO.Order[] GetAll()
+    public  DO.Order[] GetAll()
     {
-        DO.Order[] ord = new DO.Order[DataSource.orderArr.Length];
+        DO.Order[] ord = new DO.Order[_dataSource.orderArr.Length];
         for(int i=0; i<ord.Length; i++)
-            ord[i] = DataSource.orderArr[i];
+            ord[i] = _dataSource.orderArr[i];
         return ord;
     }
 
-    public static List<string> GetDetalies(int IDnum)
+    public  List<string> GetDetails(int IDnum)
     {
         List<string> list = new List<string>();
-        for(int i=0; i<DataSource.orderArr.Length; i++)
+        for(int i=0; i< _dataSource.orderArr.Length; i++)
         {
-            if (DataSource.orderArr[i].ID == IDnum)
+            if (_dataSource.orderArr[i].ID == IDnum)
             {
-                list.Add(DataSource.orderArr[i].CostumerName);
-                list.Add(DataSource.orderArr[i].CostumerEmail);
-                list.Add(DataSource.orderArr[i].CostumerAddress);
-                list.Add(DataSource.orderArr[i].OrderDate.ToString());
-                list.Add(DataSource.orderArr[i].ShipDate.ToString());
-                list.Add(DataSource.orderArr[i].DeliveryDate.ToString());
+                list.Add(_dataSource.orderArr[i].CostumerName);
+                list.Add(_dataSource.orderArr[i].CostumerEmail);
+                list.Add(_dataSource.orderArr[i].CostumerAddress);
+                list.Add(_dataSource.orderArr[i].OrderDate.ToString());
+                list.Add(_dataSource.orderArr[i].ShipDate.ToString());
+                list.Add(_dataSource.orderArr[i].DeliveryDate.ToString());
             }
         }
         if (list.Count > 0)
@@ -55,27 +56,27 @@ public class DalOrder
         else
             throw new Exception("the order doesn't exist");
     }
-    public static void Delete(int num)
+    public  void Delete(int num)
     {
-        for(int i=0; i<DataSource.orderArr.Length; i++)
+        for(int i=0; i< _dataSource.orderArr.Length; i++)
         {
-            if (DataSource.producrArr[i].ID==num) 
-                DataSource.producrArr[i].ID = 0;
+            if (_dataSource.producrArr[i].ID==num)
+                _dataSource.producrArr[i].ID = 0;
         }
     }
 
-    public static void Update(DO.Order ord)
+    public  void Update(DO.Order ord)
     {
-        for(int i=0; i<DataSource.orderArr.Length; i++)
+        for(int i=0; i< _dataSource.orderArr.Length; i++)
         {
-            if (DataSource.orderArr[i].ID == ord.ID)
+            if (_dataSource.orderArr[i].ID == ord.ID)
             {
-                DataSource.orderArr[i].OrderDate=ord.OrderDate;
-                DataSource.orderArr[i].ShipDate=ord.ShipDate;
-                DataSource.orderArr[i].DeliveryDate=ord.DeliveryDate;
-                DataSource.orderArr[i].CostumerName=ord.CostumerName;
-                DataSource.orderArr[i].CostumerEmail=ord.CostumerEmail;
-                DataSource.orderArr[i].CostumerAddress=ord.CostumerAddress;
+                _dataSource.orderArr[i].OrderDate=ord.OrderDate;
+                _dataSource.orderArr[i].ShipDate=ord.ShipDate;
+                _dataSource.orderArr[i].DeliveryDate=ord.DeliveryDate;
+                _dataSource.orderArr[i].CostumerName=ord.CostumerName;
+                _dataSource.orderArr[i].CostumerEmail=ord.CostumerEmail;
+                _dataSource.orderArr[i].CostumerAddress=ord.CostumerAddress;
             }
             else
                 throw new Exception("the order doesn't exist");
