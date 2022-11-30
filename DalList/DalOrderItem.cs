@@ -11,6 +11,7 @@ public class DalOrderItem
         oi.OrderID = DataSource.Config.orderId;
         _dataSource.orderItemArr[DataSource.Config.orderItemNum] = oi;
         DataSource.Config.orderItemNum++;
+        Console.WriteLine("The order item has been successfully added");
         return oi.id;
     }
     public  DO.OrderItem Get(int num)
@@ -53,13 +54,18 @@ public class DalOrderItem
         for(int i = 0; i < DataSource.Config.orderItemNum; i++)
         {
             if (_dataSource.orderItemArr[i].id == num)
+            {
                 _dataSource.orderItemArr[i].id = 0;
+                Console.WriteLine("The order item has been successfully deleted");
+                return;
+            }
         }
+        throw new Exception("the order item doesn't exist");
     }
 
     public  void Update(DO.OrderItem oi)
     {
-        for(int i = 0; i < _dataSource.orderItemArr.Length; i++)
+        for (int i = 0; i < _dataSource.orderItemArr.Length; i++)
         {
             if (_dataSource.orderItemArr[i].id == oi.id)
             {
@@ -67,10 +73,11 @@ public class DalOrderItem
                 _dataSource.orderItemArr[i].ProductID = oi.ProductID;
                 _dataSource.orderItemArr[i].Amount = oi.Amount;
                 _dataSource.orderItemArr[i].Price = oi.Price;
+                Console.WriteLine("The order item has been updated successfully");
+                return;
             }
-            else
-                throw new Exception("the order item doesn't exist");
         }
+                throw new Exception("the order item doesn't exist");
     }
 
 }

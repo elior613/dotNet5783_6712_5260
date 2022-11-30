@@ -50,6 +50,7 @@ internal sealed class DataSource
         TimeSpan t = new TimeSpan(1, 5, 9, 6, 3);
         DateTime date2 = date1.Add(t);
         DateTime date3 = date2.Add(t);
+        order.ID= Config.orderId;
         order.CostumerName = namesOfCustomers[rand.Next(0, 21)];
             order.CostumerEmail = emailsOfCustomers[rand.Next(0, 21)];
             order.CostumerAddress = addressOfCustumer[rand.Next(0, 8)];
@@ -62,6 +63,8 @@ internal sealed class DataSource
     private OrderItem AddOrderItem()
     {
         OrderItem orderItem = new OrderItem();
+        orderItem.id = Config.orderItemId;
+        orderItem.OrderID = Config.orderId;
         orderItem.ProductID = rand.Next(100000, 100200);
         return orderItem;
     }

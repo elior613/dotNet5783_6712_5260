@@ -15,6 +15,7 @@ public class DalProduct
                         throw new Exception("the product already exist");
         }
         _dataSource.producrArr[DataSource.Config.productNum] = prod;
+        Console.WriteLine("The product has been successfully added");
         return DataSource.Config.productNum; 
     }
  
@@ -37,18 +38,23 @@ public  DO.Product Get (int num){
         return prod;
     }
 
-    public  void Delete(int num)
+    public void Delete(int num)
     {
-        for(int i=0; i < _dataSource.producrArr.Length; i++)
+        for (int i = 0; i < _dataSource.producrArr.Length; i++)
         {
-            if(_dataSource.producrArr[i].ID == num)
+            if (_dataSource.producrArr[i].ID == num)
+            {
                 _dataSource.producrArr[i].ID = 0;
+                Console.WriteLine("The product has been successfully deleted");
+                return;
+            }
         }
+        throw new Exception("the product doesn't exist");
     }
 
     public  void Update(DO.Product prod)
     {
-        for(int i=0; i < _dataSource.producrArr.Length; i++)
+        for (int i = 0; i < _dataSource.producrArr.Length; i++)
         {
             if (_dataSource.producrArr[i].ID == prod.ID)
             {
@@ -56,9 +62,10 @@ public  DO.Product Get (int num){
                 _dataSource.producrArr[i].InStock = prod.InStock;
                 _dataSource.producrArr[i].Price = prod.Price;
                 _dataSource.producrArr[i].Name = prod.Name;
+                Console.WriteLine("The product has been updated successfully");
+                return;
             }
-            else
-                throw new Exception("the product doesn't exist");
         }
+                throw new Exception("the product doesn't exist");
     }
 }

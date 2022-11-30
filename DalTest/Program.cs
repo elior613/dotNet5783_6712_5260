@@ -12,6 +12,13 @@ class DalTest
         DalProduct dalProduct = new DalProduct();
         DalOrder dalOrder = new DalOrder();
         DalOrderItem dalOrderItem = new DalOrderItem();
+        Product product = new Product();
+        Product[] products = new Product[50];
+        Order[]orders=new Order[100];
+        OrderItem[] items=new OrderItem[200];
+        List<string> details=new List<string>();
+        Order order = new Order();
+        OrderItem orderitem = new OrderItem();
 
         int choice = 1;
         while (choice != 0)
@@ -47,10 +54,23 @@ class DalTest
                         case 2:
                             Console.WriteLine("enter the ID of the product you want to see");
                             num = Convert.ToInt32(Console.ReadLine());
-                            dalProduct.Get(num);
+                            product=dalProduct.Get(num);
+                            Console.WriteLine(product.ID.ToString());
+                            Console.WriteLine(product.Name.ToString());
+                            Console.WriteLine(product.Furniture.ToString());
+                            Console.WriteLine(product.Price.ToString());
+                            Console.WriteLine(product.InStock.ToString());
                             break;
                         case 3:
-                            dalProduct.GetAll();
+                           products= dalProduct.GetAll();
+                            foreach(Product p in products)
+                            {
+                                Console.WriteLine(p.ID.ToString());
+                                Console.WriteLine(p.Name.ToString());
+                                Console.WriteLine(p.Furniture.ToString());
+                                Console.WriteLine(p.Price.ToString());
+                                Console.WriteLine(p.InStock.ToString());
+                            }
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the product you want do delete ");
@@ -98,15 +118,36 @@ class DalTest
                         case 2:
                             Console.WriteLine("enter the ID of the order you want to see");
                             num = Convert.ToInt32(Console.ReadLine());
-                            dalOrder.Get(num);
+                            order=dalOrder.Get(num);
+                            Console.WriteLine(order.ID.ToString());
+                            Console.WriteLine(order.CostumerName.ToString());
+                            Console.WriteLine(order.CostumerEmail.ToString());
+                            Console.WriteLine(order.CostumerAddress.ToString());
+                            Console.WriteLine("Order Date", order.OrderDate.ToString());
+                            Console.WriteLine("Ship Date", order.ShipDate.ToString());
+                            Console.WriteLine("Delivery Date",order.DeliveryDate.ToString());
                             break;
                         case 3:
                             dalOrder.GetAll();
+                            foreach (Order or in orders)
+                            {
+                                Console.WriteLine(or.ID.ToString());
+                                Console.WriteLine(or.CostumerName.ToString());
+                                Console.WriteLine(or.CostumerEmail.ToString());
+                                Console.WriteLine(or.CostumerAddress.ToString());
+                                Console.WriteLine("Order Date", or.OrderDate.ToString());
+                                Console.WriteLine("Ship Date", or.ShipDate.ToString());
+                                Console.WriteLine("Delivery Date", or.DeliveryDate.ToString());  
+                            }
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the order you want to see his detalies");
                             num = Convert.ToInt32(Console.ReadLine());
-                            dalOrder.GetDetails(num);
+                            details = dalOrder.GetDetails(num);
+                            foreach (string str in details)
+                            {
+                                Console.WriteLine(str);
+                            }
                             break;
                         case 5:
                             Console.WriteLine("enter the ID of the order you want do delete ");
@@ -161,17 +202,31 @@ class DalTest
                         case 2:
                             Console.WriteLine("enter the ID of the order item you want to see");
                             num = Convert.ToInt32(Console.ReadLine());
-                            dalOrderItem.Get(num);
+                            orderitem=dalOrderItem.Get(num);
+                            Console.WriteLine(orderitem.id.ToString());
+                            Console.WriteLine(orderitem.OrderID.ToString());
+                            Console.WriteLine(orderitem.ProductID.ToString());
+                            Console.WriteLine(orderitem.Amount.ToString());
+                            Console.WriteLine(orderitem.Price.ToString());
                             break;
                         case 3:
                             dalOrderItem.GetAll();
+                     foreach(OrderItem item in items)
+                            {
+                                Console.WriteLine(item.id.ToString());
+                                Console.WriteLine(item.OrderID.ToString());
+                                Console.WriteLine(item.ProductID.ToString());
+                                Console.WriteLine(item.Amount.ToString());
+                                Console.WriteLine(item.Price.ToString());
+                            }
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the order");
                             num = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("enter the ID of the product");
                             num2 = Convert.ToInt32(Console.ReadLine());
-                            dalOrderItem.GetOrderItem(num2, num);
+                            orderitem=dalOrderItem.GetOrderItem(num2, num);
+                            Console.WriteLine(orderitem.ToString());
                             break;
                         case 5:
                             Console.WriteLine("enter the ID of the order item you want do delete ");

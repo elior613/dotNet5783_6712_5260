@@ -14,6 +14,7 @@ public class DalOrder
         ord.ID = DataSource.Config.orderId;
         _dataSource.orderArr[DataSource.Config.productNum] = ord;
         DataSource.Config.productNum++;
+        Console.WriteLine("The order has been successfully added");
         return ord.ID;
     }
 
@@ -22,8 +23,10 @@ public class DalOrder
         DO.Order ord = new DO.Order();
         for(int i=0; i< _dataSource.orderArr.Length; i++)
         {
-            if(_dataSource.orderArr[i].ID == num)
+            if (_dataSource.orderArr[i].ID == num)
+            {
                 ord = _dataSource.orderArr[i];
+            }
         }
         return ord;
     }
@@ -60,26 +63,33 @@ public class DalOrder
     {
         for(int i=0; i< _dataSource.orderArr.Length; i++)
         {
-            if (_dataSource.producrArr[i].ID==num)
+            if (_dataSource.producrArr[i].ID == num)
+            {
                 _dataSource.producrArr[i].ID = 0;
+                Console.WriteLine("The order has been successfully deleted");
+                return;
+            }
         }
+        throw new Exception("the order doesn't exist");
     }
 
     public  void Update(DO.Order ord)
     {
-        for(int i=0; i< _dataSource.orderArr.Length; i++)
+        for (int i = 0; i < _dataSource.orderArr.Length; i++)
         {
             if (_dataSource.orderArr[i].ID == ord.ID)
             {
-                _dataSource.orderArr[i].OrderDate=ord.OrderDate;
-                _dataSource.orderArr[i].ShipDate=ord.ShipDate;
-                _dataSource.orderArr[i].DeliveryDate=ord.DeliveryDate;
-                _dataSource.orderArr[i].CostumerName=ord.CostumerName;
-                _dataSource.orderArr[i].CostumerEmail=ord.CostumerEmail;
-                _dataSource.orderArr[i].CostumerAddress=ord.CostumerAddress;
+                _dataSource.orderArr[i].OrderDate = ord.OrderDate;
+                _dataSource.orderArr[i].ShipDate = ord.ShipDate;
+                _dataSource.orderArr[i].DeliveryDate = ord.DeliveryDate;
+                _dataSource.orderArr[i].CostumerName = ord.CostumerName;
+                _dataSource.orderArr[i].CostumerEmail = ord.CostumerEmail;
+                _dataSource.orderArr[i].CostumerAddress = ord.CostumerAddress;
+                Console.WriteLine("The order has been updated successfully");
+                return;
             }
-            else
+        }
                 throw new Exception("the order doesn't exist");
         }
     }
-}
+
