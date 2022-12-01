@@ -14,7 +14,7 @@ public struct Product
     private Furniture furniture;
     public Furniture Furniture { get; set; }
     public override string ToString() => $@"
-        Product ID = {id}, {name}, Category - {furniture}
-Price: {price}, Amount in stock: {inStock}
+        Product ID = {ID}, {Name}, Category - {Furniture}
+Price: {Price}, Amount in stock: {InStock}
     ";
 }

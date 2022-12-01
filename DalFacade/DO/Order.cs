@@ -2,9 +2,7 @@
 namespace DO;
 
 public struct Order
-{
-    private int id;
-    public int ID { get; set; }
+{   public int ID { get ; set; }
     private string costumerName, costumerEmail, costumerAddress;
     public string CostumerName { get; set; }
     public string CostumerEmail { get; set; }
@@ -16,7 +14,7 @@ public struct Order
     public DateTime DeliveryDate { get; set; }
 
     public override string ToString() => $@"
-        Order ID = {id}, Costumer details: {costumerName},{costumerEmail}, {costumerAddress}, 
-        Order date:{orderDate}, Ship date: {shipDate}, Delivery date: {deliveryDate}
+        Order ID = {ID}, Costumer details: {CostumerName},{CostumerEmail}, {CostumerAddress}, 
+        Order date:{OrderDate}, Ship date: {ShipDate}, Delivery date: {DeliveryDate}
     ";
 }

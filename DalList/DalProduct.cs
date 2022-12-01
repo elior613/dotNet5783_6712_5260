@@ -22,12 +22,16 @@ public class DalProduct
 
 public  DO.Product Get (int num){
     DO.Product prod = new DO.Product();
-    for(int i=0; i < _dataSource.producrArr.Length; i++)
-    {
-        if (_dataSource.producrArr[i].ID == num)
-            prod= _dataSource.producrArr[i];
+        for (int i = 0; i < _dataSource.producrArr.Length; i++)
+        {
+            if (_dataSource.producrArr[i].ID == num)
+            {
+                prod = _dataSource.producrArr[i];
+                return prod;
+            }
     }
-    return prod;
+        throw new Exception("the product doesn't exist");
+
     }
 
     public  DO.Product[] GetAll()

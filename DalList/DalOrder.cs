@@ -21,14 +21,15 @@ public class DalOrder
     public  DO.Order Get(int num)
     {
         DO.Order ord = new DO.Order();
-        for(int i=0; i< _dataSource.orderArr.Length; i++)
+        for (int i = 0; i < _dataSource.orderArr.Length; i++)
         {
             if (_dataSource.orderArr[i].ID == num)
             {
                 ord = _dataSource.orderArr[i];
+                return ord;
             }
         }
-        return ord;
+        throw new Exception("the order doesn't exist");
     }
 
     public  DO.Order[] GetAll()

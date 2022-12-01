@@ -54,28 +54,42 @@ class DalTest
                         case 2:
                             Console.WriteLine("enter the ID of the product you want to see");
                             num = Convert.ToInt32(Console.ReadLine());
-                            product=dalProduct.Get(num);
-                            Console.WriteLine(product.ID.ToString());
-                            Console.WriteLine(product.Name.ToString());
-                            Console.WriteLine(product.Furniture.ToString());
-                            Console.WriteLine(product.Price.ToString());
-                            Console.WriteLine(product.InStock.ToString());
+                            try
+                            {
+                                product = dalProduct.Get(num);
+                                Console.WriteLine(product.ToString());
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the product doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             break;
                         case 3:
                            products= dalProduct.GetAll();
                             foreach(Product p in products)
                             {
-                                Console.WriteLine(p.ID.ToString());
-                                Console.WriteLine(p.Name.ToString());
-                                Console.WriteLine(p.Furniture.ToString());
-                                Console.WriteLine(p.Price.ToString());
-                                Console.WriteLine(p.InStock.ToString());
+                                Console.WriteLine(p.ToString());
                             }
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the product you want do delete ");
                             num = Convert.ToInt32(Console.ReadLine());
-                            dalProduct.Delete(num);
+                            try
+                            {
+                                dalProduct.Delete(num);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the product doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             break;
                         case 5:
                             Console.WriteLine("enter Id of the product you want to update");
@@ -93,7 +107,18 @@ class DalTest
                             Console.WriteLine("what is the name of the product?");
                             name = System.Console.ReadLine();
                             prod.Name = name;
-                            dalProduct.Update(prod);
+                            try
+                            {
+                                dalProduct.Update(prod);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the product doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             break;
                         default:
                             break;
@@ -118,32 +143,42 @@ class DalTest
                         case 2:
                             Console.WriteLine("enter the ID of the order you want to see");
                             num = Convert.ToInt32(Console.ReadLine());
-                            order=dalOrder.Get(num);
-                            Console.WriteLine(order.ID.ToString());
-                            Console.WriteLine(order.CostumerName.ToString());
-                            Console.WriteLine(order.CostumerEmail.ToString());
-                            Console.WriteLine(order.CostumerAddress.ToString());
-                            Console.WriteLine("Order Date", order.OrderDate.ToString());
-                            Console.WriteLine("Ship Date", order.ShipDate.ToString());
-                            Console.WriteLine("Delivery Date",order.DeliveryDate.ToString());
+                            try
+                            {
+                                order = dalOrder.Get(num);
+                                Console.WriteLine(order.ToString());
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the order doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             break;
                         case 3:
                             dalOrder.GetAll();
                             foreach (Order or in orders)
                             {
-                                Console.WriteLine(or.ID.ToString());
-                                Console.WriteLine(or.CostumerName.ToString());
-                                Console.WriteLine(or.CostumerEmail.ToString());
-                                Console.WriteLine(or.CostumerAddress.ToString());
-                                Console.WriteLine("Order Date", or.OrderDate.ToString());
-                                Console.WriteLine("Ship Date", or.ShipDate.ToString());
-                                Console.WriteLine("Delivery Date", or.DeliveryDate.ToString());  
+                                Console.WriteLine(or.ToString());
                             }
                             break;
                         case 4:
                             Console.WriteLine("enter the ID of the order you want to see his detalies");
                             num = Convert.ToInt32(Console.ReadLine());
-                            details = dalOrder.GetDetails(num);
+                            try
+                            {
+                                details = dalOrder.GetDetails(num);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the order doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             foreach (string str in details)
                             {
                                 Console.WriteLine(str);
@@ -152,7 +187,18 @@ class DalTest
                         case 5:
                             Console.WriteLine("enter the ID of the order you want do delete ");
                             num = Convert.ToInt32(Console.ReadLine());
-                            dalOrder.Delete(num);
+                            try
+                            {
+                                dalOrder.Delete(num);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the order doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             break;
                         case 6:
                             Console.WriteLine("enter Id of the order you want to update");
@@ -176,7 +222,18 @@ class DalTest
                             Console.WriteLine("what is the date of the delivery?");
                             date = Convert.ToDateTime(Console.ReadLine());
                             ord.DeliveryDate = date;
-                            dalOrder.Update(ord);
+                            try
+                            {
+                                dalOrder.Update(ord);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the order doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             break;
                         default:
                             break;
@@ -202,22 +259,25 @@ class DalTest
                         case 2:
                             Console.WriteLine("enter the ID of the order item you want to see");
                             num = Convert.ToInt32(Console.ReadLine());
-                            orderitem=dalOrderItem.Get(num);
-                            Console.WriteLine(orderitem.id.ToString());
-                            Console.WriteLine(orderitem.OrderID.ToString());
-                            Console.WriteLine(orderitem.ProductID.ToString());
-                            Console.WriteLine(orderitem.Amount.ToString());
-                            Console.WriteLine(orderitem.Price.ToString());
+                            try
+                            {
+                                orderitem = dalOrderItem.Get(num);
+                                Console.WriteLine(orderitem.ToString());
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the order item doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             break;
                         case 3:
                             dalOrderItem.GetAll();
                      foreach(OrderItem item in items)
                             {
-                                Console.WriteLine(item.id.ToString());
-                                Console.WriteLine(item.OrderID.ToString());
-                                Console.WriteLine(item.ProductID.ToString());
-                                Console.WriteLine(item.Amount.ToString());
-                                Console.WriteLine(item.Price.ToString());
+                                Console.WriteLine(item.ToString());
                             }
                             break;
                         case 4:
@@ -225,13 +285,35 @@ class DalTest
                             num = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("enter the ID of the product");
                             num2 = Convert.ToInt32(Console.ReadLine());
-                            orderitem=dalOrderItem.GetOrderItem(num2, num);
-                            Console.WriteLine(orderitem.ToString());
+                            try
+                            {
+                                orderitem = dalOrderItem.GetOrderItem(num2, num);
+                                Console.WriteLine(orderitem.ToString());
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the order item doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             break;
                         case 5:
                             Console.WriteLine("enter the ID of the order item you want do delete ");
                             num = System.Console.Read();
-                            dalOrderItem.Delete(num);
+                            try
+                            {
+                                dalOrderItem.Delete(num);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the order item doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             break;
                         case 6:
                             Console.WriteLine("enter Id of the order item you want to update");
@@ -249,7 +331,18 @@ class DalTest
                             Console.WriteLine("how many the cost of the product?");
                             num = System.Console.Read();
                             oi.Price = num;
-                            dalOrderItem.Update(oi);
+                            try
+                            {
+                                dalOrderItem.Update(oi);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the order item doesn't exist");
+                            }
+                            finally
+                            {
+                                Console.WriteLine("try again with correct number");
+                            }
                             break;
                         default:
                             break;
