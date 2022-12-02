@@ -2,9 +2,13 @@
 
 using DO;
 using System;
-
-
 namespace Dal;
+
+
+
+   
+
+
 
 internal sealed class DataSource
 {
@@ -47,27 +51,29 @@ internal sealed class DataSource
     private Order AddOrder()
     {
         Order order = new Order();
-        DateTime date1 = new DateTime(2022, rand.Next(1, 12), rand.Next(1, 31));
+        DateTime date1 = DateTime.Now;
         TimeSpan t = new TimeSpan(1, 5, 9, 6, 3);
-        DateTime date2 = date1.Add(t);
-        DateTime date3 = date2.Add(t);
+        DateTime date2 = date1-t;
+        DateTime date3 = date2-t;
 
        order.ID= Config.OrderId;
         order.CostumerName = namesOfCustomers[rand.Next(0, 21)];
             order.CostumerEmail = emailsOfCustomers[rand.Next(0, 21)];
             order.CostumerAddress = addressOfCustumer[rand.Next(0, 8)];
-            order.OrderDate = date1;
+            order.OrderDate = date3;
             order.ShipDate = date2;
-            order.DeliveryDate = date3;
+            order.DeliveryDate = date1;
         return order;
     }
 
     private OrderItem AddOrderItem()
     {
         OrderItem orderItem = new OrderItem();
-        orderItem.id = Config.orderItemId;
+        orderItem.id = Config.OrderItemId;
         orderItem.OrderID = rand.Next(1,100);
         orderItem.ProductID = rand.Next(100000, 100200);
+        orderItem.Amount = rand.Next(0, 100);
+        orderItem.Price = rand.Next(30, 300);
         return orderItem;
     }
 

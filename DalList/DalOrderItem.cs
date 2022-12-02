@@ -17,10 +17,11 @@ public class DalOrderItem
     public  DO.OrderItem Get(int num)
     {
         DO.OrderItem oi=new DO.OrderItem();
-        for(int i = 0; i < DataSource.Config.orderItemNum; i++)
+        for(int i = 0; i < _dataSource.orderItemArr.Length; i++)
         {
             if (_dataSource.orderItemArr[i].id==num)
                 oi= _dataSource.orderItemArr[i];
+
             
         }
         if (oi.id != num)

@@ -63,10 +63,7 @@ class DalTest
                             {
                                 Console.WriteLine("the product doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                          
                             break;
                         case 3:
                            products= dalProduct.GetAll();
@@ -86,10 +83,7 @@ class DalTest
                             {
                                 Console.WriteLine("the product doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                           
                             break;
                         case 5:
                             Console.WriteLine("enter Id of the product you want to update");
@@ -115,10 +109,7 @@ class DalTest
                             {
                                 Console.WriteLine("the product doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                           
                             break;
                         default:
                             break;
@@ -152,13 +143,9 @@ class DalTest
                             {
                                 Console.WriteLine("the order doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
                             break;
                         case 3:
-                            dalOrder.GetAll();
+                            orders = dalOrder.GetAll();
                             foreach (Order or in orders)
                             {
                                 Console.WriteLine(or.ToString());
@@ -175,10 +162,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+           
                             foreach (string str in details)
                             {
                                 Console.WriteLine(str);
@@ -195,10 +179,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                          
                             break;
                         case 6:
                             Console.WriteLine("enter Id of the order you want to update");
@@ -230,10 +211,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                          
                             break;
                         default:
                             break;
@@ -268,13 +246,10 @@ class DalTest
                             {
                                 Console.WriteLine("the order item doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                            
                             break;
                         case 3:
-                            dalOrderItem.GetAll();
+                            items=dalOrderItem.GetAll();
                      foreach(OrderItem item in items)
                             {
                                 Console.WriteLine(item.ToString());
@@ -294,10 +269,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order item doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                          
                             break;
                         case 5:
                             Console.WriteLine("enter the ID of the order item you want do delete ");
@@ -310,10 +282,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order item doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                            
                             break;
                         case 6:
                             Console.WriteLine("enter Id of the order item you want to update");
@@ -339,10 +308,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order item doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                           
                             break;
                         default:
                             break;
