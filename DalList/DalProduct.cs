@@ -6,15 +6,15 @@ namespace Dal;
 
 public class DalProduct
 {
-    DataSource _dataSource = DataSource.Instance;
+    DataSource dataSource = DataSource.Instance;
     public  int Add(DO.Product prod)
     {
-        for(int i = 0; i < _dataSource.producrArr.Length; i++)
+        for(int i = 0; i < dataSource.producrArr.Length; i++)
         {
-            if (_dataSource.producrArr[i].ID == prod.ID)
+            if (dataSource.producrArr[i].ID == prod.ID)
                         throw new Exception("the product already exist");
         }
-        _dataSource.producrArr[DataSource.Config.productNum] = prod;
+        dataSource.producrArr[DataSource.Config.productNum] = prod;
         Console.WriteLine("The product has been successfully added");
         return DataSource.Config.productNum; 
     }
@@ -22,11 +22,11 @@ public class DalProduct
 
 public  DO.Product Get (int num){
     DO.Product prod = new DO.Product();
-        for (int i = 0; i < _dataSource.producrArr.Length; i++)
+        for (int i = 0; i < dataSource.producrArr.Length; i++)
         {
-            if (_dataSource.producrArr[i].ID == num)
+            if (dataSource.producrArr[i].ID == num)
             {
-                prod = _dataSource.producrArr[i];
+                prod = dataSource.producrArr[i];
                 return prod;
             }
     }
@@ -36,19 +36,19 @@ public  DO.Product Get (int num){
 
     public  DO.Product[] GetAll()
     {
-     DO.Product[] prod = new DO.Product[_dataSource.producrArr.Length]; 
-        for(int i=0; i < _dataSource.producrArr.Length; i++)
-            prod[i] = _dataSource.producrArr[i];
+     DO.Product[] prod = new DO.Product[dataSource.producrArr.Length]; 
+        for(int i=0; i < dataSource.producrArr.Length; i++)
+            prod[i] = dataSource.producrArr[i];
         return prod;
     }
 
     public void Delete(int num)
     {
-        for (int i = 0; i < _dataSource.producrArr.Length; i++)
+        for (int i = 0; i < dataSource.producrArr.Length; i++)
         {
-            if (_dataSource.producrArr[i].ID == num)
+            if (dataSource.producrArr[i].ID == num)
             {
-                _dataSource.producrArr[i].ID = 0;
+                dataSource.producrArr[i].ID = 0;
                 Console.WriteLine("The product has been successfully deleted");
                 return;
             }
@@ -58,14 +58,14 @@ public  DO.Product Get (int num){
 
     public  void Update(DO.Product prod)
     {
-        for (int i = 0; i < _dataSource.producrArr.Length; i++)
+        for (int i = 0; i < dataSource.producrArr.Length; i++)
         {
-            if (_dataSource.producrArr[i].ID == prod.ID)
+            if (dataSource.producrArr[i].ID == prod.ID)
             {
-                _dataSource.producrArr[i].Furniture = prod.Furniture;
-                _dataSource.producrArr[i].InStock = prod.InStock;
-                _dataSource.producrArr[i].Price = prod.Price;
-                _dataSource.producrArr[i].Name = prod.Name;
+                dataSource.producrArr[i].Furniture = prod.Furniture;
+                dataSource.producrArr[i].InStock = prod.InStock;
+                dataSource.producrArr[i].Price = prod.Price;
+                dataSource.producrArr[i].Name = prod.Name;
                 Console.WriteLine("The product has been updated successfully");
                 return;
             }
