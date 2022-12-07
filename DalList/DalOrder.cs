@@ -12,7 +12,7 @@ public class DalOrder
     {
    
         ord.ID = DataSource.Config.orderId;//adding a new ID for the new Order
-        _dataSource.orderArr[DataSource.Config.productNum] = ord;//addingg the new order in the array with all the orders 
+        dataSource.orderArr[DataSource.Config.productNum] = ord;//addingg the new order in the array with all the orders 
         DataSource.Config.productNum++;
         Console.WriteLine("The order has been successfully added");
         return ord.ID;
