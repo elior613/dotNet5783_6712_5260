@@ -2,6 +2,7 @@
 
 namespace DO;
 
+//product structur 
 public struct Product
 {
     private int id, inStock;
@@ -13,6 +14,9 @@ public struct Product
     public double Price { get; set; }
     private Furniture furniture;
     public Furniture Furniture { get; set; }
+
+
+    //to show all the details of the product
     public override string ToString() => $@"
         Product ID = {ID}, {Name}, Category - {Furniture}
 Price: {Price}, Amount in stock: {InStock}

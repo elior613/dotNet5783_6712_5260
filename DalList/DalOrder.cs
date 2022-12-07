@@ -11,8 +11,8 @@ public class DalOrder
     public  int Add(DO.Order ord)
     {
    
-        ord.ID = DataSource.Config.orderId;
-        _dataSource.orderArr[DataSource.Config.productNum] = ord;
+        ord.ID = DataSource.Config.orderId;//adding a new ID for the new Order
+        _dataSource.orderArr[DataSource.Config.productNum] = ord;//addingg the new order in the array with all the orders 
         DataSource.Config.productNum++;
         Console.WriteLine("The order has been successfully added");
         return ord.ID;
@@ -21,7 +21,7 @@ public class DalOrder
     public  DO.Order Get(int num)
     {
         DO.Order ord = new DO.Order();
-        for (int i = 0; i < _dataSource.orderArr.Length; i++)
+        for (int i = 0; i < _dataSource.orderArr.Length; i++)//get thanks to a loop in an array an order
         {
             if (_dataSource.orderArr[i].ID == num)
             {
@@ -29,18 +29,18 @@ public class DalOrder
                 return ord;
             }
         }
-        throw new Exception("the order doesn't exist");
+        throw new Exception("the order doesn't exist");//if the order doesn't exist
     }
 
     public  DO.Order[] GetAll()
     {
-        DO.Order[] ord = new DO.Order[_dataSource.orderArr.Length];
+        DO.Order[] ord = new DO.Order[_dataSource.orderArr.Length];//putting all the orders in an array and return the pointer to the array
         for(int i=0; i<ord.Length; i++)
             ord[i] = _dataSource.orderArr[i];
         return ord;
     }
 
-    public  List<string> GetDetails(int IDnum)
+    public  List<string> GetDetails(int IDnum)//showing all the details about an order depending of it's ID
     {
         List<string> list = new List<string>();
         for(int i=0; i< _dataSource.orderArr.Length; i++)
@@ -58,9 +58,9 @@ public class DalOrder
         if (list.Count > 0)
             return list;
         else
-            throw new Exception("the order doesn't exist");
+            throw new Exception("the order doesn't exist");//sending a message if the order doesn't exist
     }
-    public  void Delete(int num)
+    public  void Delete(int num)//deleting an order in the array by remplacing his ID by 0
     {
         for(int i=0; i< _dataSource.orderArr.Length; i++)
         {
@@ -71,10 +71,10 @@ public class DalOrder
                 return;
             }
         }
-        throw new Exception("the order doesn't exist");
+        throw new Exception("the order doesn't exist");//if the order didn't exist
     }
 
-    public  void Update(DO.Order ord)
+    public  void Update(DO.Order ord)//updating all the details about the order 
     {
         for (int i = 0; i < _dataSource.orderArr.Length; i++)
         {
@@ -90,7 +90,7 @@ public class DalOrder
                 return;
             }
         }
-                throw new Exception("the order doesn't exist");
+                throw new Exception("the order doesn't exist");//if we were trying to update an inexisting order
         }
     }
 

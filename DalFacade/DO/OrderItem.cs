@@ -1,6 +1,8 @@
 ﻿
 namespace DO;
 
+
+//order item structure 
 public struct OrderItem
 {
     private int ID, productID, orderID;
@@ -11,7 +13,7 @@ public struct OrderItem
     public double Price { get; set; }
     private int amount;
     public int Amount { get; set; }
-
+    //printing the details when needed
     public override string ToString() => $@"
          ID = {id}, {ProductID}, {OrderID},
 Price: {Price}, Amount: {Amount}

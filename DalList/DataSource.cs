@@ -11,12 +11,12 @@ internal sealed class DataSource
     private static DataSource _instance = null;
     public static DataSource Instance { get { return _instance; } }
 
-
+    //creating all the array we need for the each class
     static readonly Random rand = new Random();
     internal Product[] producrArr = new Product[50];
     internal Order[] orderArr = new Order[100];
     internal OrderItem[] orderItemArr = new OrderItem[200];
-
+    //creating list for the customers containing all their details
     List<string> namesOfCustomers = new List<string> { "Avraam", "Itzchak", "Iakov", "Moshe", "Aharon", "Yosef", "David", "Shlomo",
                         "Yisroel", "Reuven", "Shimon", "Levi", "Yehuda", "Yissachar", "Zevulun", "Dan", "Naftali", "Gad", "Asher","Menashe", "Efraim", "Beniamin"};//to initialize the first customers names
     List<string> emailsOfCustomers = new List<string> { "Avraam@gmail.com", "Itzchak@gmail.com", "Iakov@gmail.com", "Moshe@gmail.com", "Aharon@gmail.com", "Yosef@gmail.com", "David@gmail.com", "Shlomo@gmail.com",
@@ -32,7 +32,7 @@ internal sealed class DataSource
         s_Initialize();
     }
 
-    private Product AddProduct(int countProduct)
+    private Product AddProduct(int countProduct)//adding products and fullfiling it's details
     {
         List<string> namesOfProducts = new List<string> { "Sofa", "Table", "Chair", "Wardrobe", "Dresser", "Bed", "Shelf", "Armchair" };//to initialize the names of the products
         Product product = new Product();
@@ -41,12 +41,12 @@ internal sealed class DataSource
         product.Furniture = (DO.Furniture)rand.Next(0, 4);
         product.InStock = rand.Next(0, 100);
         product.Price = rand.Next(30, 300);
-        return product;
+        return product;//returning the new created product
     }
 
-    private Order AddOrder()
+    private Order AddOrder()//adding a new order 
     {
-        Order order = new Order();
+        Order order = new Order();//initialising and completing it's deteails
         DateTime date1 = new DateTime(2022, rand.Next(1, 12), rand.Next(1, 31));
         TimeSpan t = new TimeSpan(1, 5, 9, 6, 3);
         DateTime date2 = date1.Add(t);
@@ -72,7 +72,7 @@ internal sealed class DataSource
     }
 
 
-    private void s_Initialize()
+    private void s_Initialize()//rules using for the initialing by creating some array for each class created
     {
         int countProduct = 100000;
         for (int i = 0; i < 50; i++)
@@ -103,7 +103,7 @@ internal sealed class DataSource
         internal static int orderNum = 0;
         internal static int orderItemNum = 0;
         internal static int orderId = 0;
-        public static int OrderId 
+        public static int OrderId //generating the ID for each new order 
         { 
             get => ++orderId;  
         }
