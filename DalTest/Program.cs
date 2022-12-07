@@ -4,7 +4,6 @@ using Dal;
 using DO;
 #nullable disable
 
-
 class DalTest
 {
     static void Main(string[] args)
