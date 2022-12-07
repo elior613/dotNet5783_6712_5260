@@ -67,7 +67,7 @@ class DalTest
                             {
                                 Console.WriteLine("the product doesn't exist");
                             }
-                            finally //...and ask him to try again
+                            finally
                             {
                                 Console.WriteLine("try again with correct number");
                             }
@@ -90,10 +90,7 @@ class DalTest
                             {
                                 Console.WriteLine("the product doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                           
                             break;
                         case 5://updating a product
 
@@ -120,10 +117,7 @@ class DalTest
                             {
                                 Console.WriteLine("the product doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                           
                             break;
                         default:
                             break;
@@ -157,14 +151,8 @@ class DalTest
                             {
                                 Console.WriteLine("the order doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
                             break;
-
-
-                        case 3://showing all the existing orders 
+                        case 3:
                             dalOrder.GetAll();
                             foreach (Order or in orders)
                             {
@@ -184,10 +172,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+           
                             foreach (string str in details)
                             {
                                 Console.WriteLine(str);
@@ -206,10 +191,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                          
                             break;
 
 
@@ -243,10 +225,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                          
                             break;
                         default:
                             break;
@@ -282,14 +261,9 @@ class DalTest
                             {
                                 Console.WriteLine("the order item doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                            
                             break;
-
-
-                        case 3://show all the order itemand their details
+                        case 3:
                             dalOrderItem.GetAll();
                      foreach(OrderItem item in items)
                             {
@@ -310,10 +284,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order item doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                          
                             break;
 
 
@@ -328,10 +299,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order item doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                            
                             break;
 
 
@@ -359,10 +327,7 @@ class DalTest
                             {
                                 Console.WriteLine("the order item doesn't exist");
                             }
-                            finally
-                            {
-                                Console.WriteLine("try again with correct number");
-                            }
+                           
                             break;
                         default:
                             break;
