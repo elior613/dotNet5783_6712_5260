@@ -17,9 +17,9 @@ internal sealed class DataSource
 
     //creating all the array we need for the each class
     static readonly Random rand = new Random();
-    internal Product[] producrArr = new Product[50];
-    internal Order[] orderArr = new Order[100];
-    internal OrderItem[] orderItemArr = new OrderItem[200];
+    internal List<Product> producrArr = new List<Product>();
+    internal List<Order> orderArr = new List<Order>();
+    internal List<OrderItem> orderItemArr = new List<OrderItem>();
     //creating list for the customers containing all their details
     List<string> namesOfCustomers = new List<string> { "Avraam", "Itzchak", "Iakov", "Moshe", "Aharon", "Yosef", "David", "Shlomo",
                         "Yisroel", "Reuven", "Shimon", "Levi", "Yehuda", "Yissachar", "Zevulun", "Dan", "Naftali", "Gad", "Asher","Menashe", "Efraim", "Beniamin"};//to initialize the first customers names
@@ -62,7 +62,11 @@ internal sealed class DataSource
             order.CostumerAddress = addressOfCustumer[rand.Next(0, 8)];
             order.OrderDate = date3;
             order.ShipDate = date2;
+        if (order.ID > 80)
+            order.ShipDate = DateTime.MinValue;
             order.DeliveryDate = date1;
+        if(order.ID > 50)
+            order.DeliveryDate = DateTime.MinValue; 
         return order;
     }
 
@@ -90,10 +94,6 @@ internal sealed class DataSource
         for (int i = 0; i < 100; i++)
         {
             orderArr[i] = AddOrder();
-            if (i > 50)
-                orderArr[i].DeliveryDate = DateTime.MinValue;
-            if(i>80)
-                orderArr[i].ShipDate= DateTime.MinValue;    
         }
 
         for (int i = 0; i < 200; i++)

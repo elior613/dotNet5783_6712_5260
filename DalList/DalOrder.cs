@@ -21,7 +21,7 @@ public class DalOrder
     public  DO.Order Get(int num)
     {
         DO.Order ord = new DO.Order();
-        for (int i = 0; i < dataSource.orderArr.Length; i++)//get thanks to a loop in an array an order
+        for (int i = 0; i < dataSource.orderArr.Count; i++)//get thanks to a loop in an array an order
         {
             if (dataSource.orderArr[i].ID == num)
             {
@@ -34,7 +34,7 @@ public class DalOrder
 
     public  DO.Order[] GetAll()
     {
-        DO.Order[] ord = new DO.Order[dataSource.orderArr.Length];//putting all the orders in an array and return the pointer to the array
+        DO.Order[] ord = new DO.Order[dataSource.orderArr.Count];//putting all the orders in an array and return the pointer to the array
         for(int i=0; i<ord.Length; i++)
             ord[i] = dataSource.orderArr[i];
         return ord;
@@ -43,7 +43,7 @@ public class DalOrder
     public  List<string> GetDetails(int IDnum)//showing all the details about an order depending of it's ID
     {
         List<string> list = new List<string>();
-        for(int i=0; i< dataSource.orderArr.Length; i++)
+        for(int i=0; i< dataSource.orderArr.Count; i++)
         {
             if (dataSource.orderArr[i].ID == IDnum)
             {
@@ -62,11 +62,11 @@ public class DalOrder
     }
     public  void Delete(int num)//deleting an order in the array by remplacing his ID by 0
     {
-        for(int i=0; i< dataSource.orderArr.Length; i++)
+        for(int i=0; i< dataSource.orderArr.Count; i++)
         {
             if (dataSource.producrArr[i].ID == num)
             {
-                dataSource.producrArr[i].ID = 0;
+                dataSource.producrArr.Remove(dataSource.producrArr[i]);
                 Console.WriteLine("The order has been successfully deleted");
                 return;
             }
@@ -76,16 +76,11 @@ public class DalOrder
 
     public  void Update(DO.Order ord)//updating all the details about the order 
     {
-        for (int i = 0; i < dataSource.orderArr.Length; i++)
+        for (int i = 0; i < dataSource.orderArr.Count; i++)
         {
             if (dataSource.orderArr[i].ID == ord.ID)
             {
-                dataSource.orderArr[i].OrderDate = ord.OrderDate;
-                dataSource.orderArr[i].ShipDate = ord.ShipDate;
-                dataSource.orderArr[i].DeliveryDate = ord.DeliveryDate;
-                dataSource.orderArr[i].CostumerName = ord.CostumerName;
-                dataSource.orderArr[i].CostumerEmail = ord.CostumerEmail;
-                dataSource.orderArr[i].CostumerAddress = ord.CostumerAddress;
+                dataSource.orderArr[i]=ord;
                 Console.WriteLine("The order has been updated successfully");
                 return;
             }

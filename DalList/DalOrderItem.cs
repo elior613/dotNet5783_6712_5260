@@ -17,7 +17,7 @@ public class DalOrderItem
     public  DO.OrderItem Get(int num)
     {
         DO.OrderItem oi=new DO.OrderItem();
-        for(int i = 0; i < dataSource.orderItemArr.Length; i++)
+        for(int i = 0; i < dataSource.orderItemArr.Count; i++)
         {
             if (dataSource.orderItemArr[i].id==num)
                 oi= dataSource.orderItemArr[i];
@@ -31,7 +31,7 @@ public class DalOrderItem
 
     public  DO.OrderItem[] GetAll()
     {
-       DO.OrderItem[] oi=new DO.OrderItem[dataSource.orderItemArr.Length];
+       DO.OrderItem[] oi=new DO.OrderItem[dataSource.orderItemArr.Count];
         for(int i = 0; i < oi.Length; i++)
             oi[i] = dataSource.orderItemArr[i];
         return oi;
@@ -40,7 +40,7 @@ public class DalOrderItem
     public  DO.OrderItem GetOrderItem(int prodId,int ordId)
     {
         DO.OrderItem oi = new DO.OrderItem();
-        for(int i=0; i < dataSource.orderItemArr.Length; i++)
+        for(int i=0; i < dataSource.orderItemArr.Count; i++)
         {
             if (dataSource.orderItemArr[i].ProductID == prodId && dataSource.orderItemArr[i].OrderID==ordId)
                 oi= dataSource.orderItemArr[i];
@@ -56,7 +56,7 @@ public class DalOrderItem
         {
             if (dataSource.orderItemArr[i].id == num)
             {
-                dataSource.orderItemArr[i].id = 0;
+                dataSource.orderItemArr.Remove(dataSource.orderItemArr[i]);
                 Console.WriteLine("The order item has been successfully deleted");
                 return;
             }
@@ -66,14 +66,11 @@ public class DalOrderItem
 
     public  void Update(DO.OrderItem oi)
     {
-        for (int i = 0; i < dataSource.orderItemArr.Length; i++)
+        for (int i = 0; i < dataSource.orderItemArr.Count; i++)
         {
             if (dataSource.orderItemArr[i].id == oi.id)
             {
-                dataSource.orderItemArr[i].OrderID = oi.OrderID;
-                dataSource.orderItemArr[i].ProductID = oi.ProductID;
-                dataSource.orderItemArr[i].Amount = oi.Amount;
-                dataSource.orderItemArr[i].Price = oi.Price;
+                dataSource.orderItemArr[i] = oi;
                 Console.WriteLine("The order item has been updated successfully");
                 return;
             }
