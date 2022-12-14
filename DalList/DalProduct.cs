@@ -39,9 +39,12 @@ public  DO.Product Get (int num)//getting a product
 
     public IEnumerable<Product> GetAll()//putting all the product in an array and returning the pointer of the array
     {
-        IEnumerable<Product> prod = new IEnumerable<Product>(); 
-        for(int i=0; i < dataSource.producrArr.Count; i++)
-            prod[i] = dataSource.producrArr[i];
+        IEnumerable<Product> prod = new DO.Product[dataSource.producrArr.Count];
+        Product enumerator = prod.GetEnumerator();
+        for (int i=0;i< dataSource.producrArr.Count; i++)
+        {
+
+        }
         return prod;
     }
 
