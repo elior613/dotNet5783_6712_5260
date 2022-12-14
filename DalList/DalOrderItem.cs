@@ -1,8 +1,11 @@
 ﻿
 
+using DalApi;
+using DO;
+
 namespace Dal;
 
-public class DalOrderItem
+internal class DalOrderItem:IOrderItem
 {
     DataSource dataSource = DataSource.Instance;
     public  int Add(DO.OrderItem oi)
@@ -29,11 +32,9 @@ public class DalOrderItem
             return oi;
     }
 
-    public  DO.OrderItem[] GetAll()
+    public  IEnumerable<OrderItem> GetAll()
     {
-       DO.OrderItem[] oi=new DO.OrderItem[dataSource.orderItemArr.Count];
-        for(int i = 0; i < oi.Length; i++)
-            oi[i] = dataSource.orderItemArr[i];
+        IEnumerable<OrderItem> oi =dataSource.orderItemArr;
         return oi;
     }
 

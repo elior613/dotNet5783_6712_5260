@@ -3,13 +3,14 @@
 using DO;
 using System.Security.Cryptography;
 using System.Collections;
+using DalApi;
 
 namespace Dal;
 
-public class DalProduct
+internal class DalProduct:IProduct
 {
     DataSource dataSource = DataSource.Instance;
-    public  int Add(DO.Product prod)//adding a new product in our list of product.
+    public  Product Add(DO.Product prod)//adding a new product in our list of product.
     {
         for(int i = 0; i < dataSource.producrArr.Count; i++)//checking if the product already exist or not
         {
@@ -18,7 +19,7 @@ public class DalProduct
         }
         dataSource.producrArr[DataSource.Config.productNum] = prod;
         Console.WriteLine("The product has been successfully added");//confirmation of the creation of the new product
-        return DataSource.Config.productNum; 
+        return prod; 
     }
  
 
@@ -39,12 +40,7 @@ public  DO.Product Get (int num)//getting a product
 
     public IEnumerable<Product> GetAll()//putting all the product in an array and returning the pointer of the array
     {
-        IEnumerable<Product> prod = new DO.Product[dataSource.producrArr.Count];
-        Product enumerator = prod.GetEnumerator();
-        for (int i=0;i< dataSource.producrArr.Count; i++)
-        {
-
-        }
+        IEnumerable<Product> prod = dataSource.producrArr;
         return prod;
     }
 

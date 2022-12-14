@@ -12,7 +12,7 @@ class DalTest
         DalOrder dalOrder = new DalOrder();
         DalOrderItem dalOrderItem = new DalOrderItem();
         Product product = new Product();
-        Product[] products = new Product[50];
+        List<Product> products = new List<Product>();
         Order[]orders=new Order[100];
         OrderItem[] items=new OrderItem[200];
         List<string> details=new List<string>();
@@ -72,7 +72,7 @@ class DalTest
                             }
                             break;
                         case 3://show all the details of all the existing products
-                           products= dalProduct.GetAll();
+                           dalProduct.GetAll();
                             foreach(Product p in products)
                             {
                                 Console.WriteLine(p.ToString());

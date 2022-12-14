@@ -2,10 +2,10 @@
 
 using DO;
 using System.Net;
-
+using DalApi;
 namespace Dal;
 
-public class DalOrder
+internal class DalOrder:IOrder
 {
     DataSource dataSource = DataSource.Instance;
     public  int Add(DO.Order ord)
@@ -32,11 +32,9 @@ public class DalOrder
         throw new Exception("the order doesn't exist");//if the order doesn't exist
     }
 
-    public  DO.Order[] GetAll()
+    public  IEnumerable<Order> GetAll()
     {
-        DO.Order[] ord = new DO.Order[dataSource.orderArr.Count];//putting all the orders in an array and return the pointer to the array
-        for(int i=0; i<ord.Length; i++)
-            ord[i] = dataSource.orderArr[i];
+        IEnumerable<Order> ord = dataSource.orderArr;//putting all the orders in an array and return the pointer to the array
         return ord;
     }
 
