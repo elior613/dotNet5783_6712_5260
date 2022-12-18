@@ -7,10 +7,10 @@ using DalApi;
 
 namespace Dal;
 
-internal class DalProduct:IProduct
+internal class DalProduct:IProduct 
 {
     DataSource dataSource = DataSource.Instance;
-    public  Product Add(DO.Product prod)//adding a new product in our list of product.
+    public  int Add(DO.Product prod)//adding a new product in our list of product.
     {
         for(int i = 0; i < dataSource.producrArr.Count; i++)//checking if the product already exist or not
         {
@@ -19,7 +19,7 @@ internal class DalProduct:IProduct
         }
         dataSource.producrArr[DataSource.Config.productNum] = prod;
         Console.WriteLine("The product has been successfully added");//confirmation of the creation of the new product
-        return prod; 
+        return prod.ID; 
     }
  
 

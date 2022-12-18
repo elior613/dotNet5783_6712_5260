@@ -4,10 +4,10 @@ namespace DalApi
 {
     public interface ICrud<T>
     {
-        T Add(T t);
-        T Get(T t);
-        IEnumerable<T> GetAll();
-        void Delete(T t);
-        void Update(T t);
+        public int Add(T t);
+        public T Get(int id);
+        public IEnumerable<T> GetAll();
+        public void Delete(int id);
+        public void Update(T t);
     }
 }

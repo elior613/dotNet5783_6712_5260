@@ -18,7 +18,7 @@ internal class DalOrder:IOrder
         return ord.ID;
     }
 
-    public  DO.Order Get(int num)
+    public  Order Get(int num)
     {
         DO.Order ord = new DO.Order();
         for (int i = 0; i < dataSource.orderArr.Count; i++)//get thanks to a loop in an array an order
@@ -38,7 +38,7 @@ internal class DalOrder:IOrder
         return ord;
     }
 
-    public  List<string> GetDetails(int IDnum)//showing all the details about an order depending of it's ID
+    public IEnumerable<string> GetDetails(int IDnum)//showing all the details about an order depending of it's ID
     {
         List<string> list = new List<string>();
         for(int i=0; i< dataSource.orderArr.Count; i++)

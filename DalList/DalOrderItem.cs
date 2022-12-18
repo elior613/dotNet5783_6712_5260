@@ -8,7 +8,7 @@ namespace Dal;
 internal class DalOrderItem:IOrderItem
 {
     DataSource dataSource = DataSource.Instance;
-    public  int Add(DO.OrderItem oi)
+    public  int Add(OrderItem oi)
     {
         oi.id = DataSource.Config.orderItemId;
         oi.OrderID = DataSource.Config.orderId;
