@@ -29,7 +29,7 @@ internal class DalOrder:IOrder
                 return ord;
             }
         }
-        throw new Exception("the order doesn't exist");//if the order doesn't exist
+        throw new DoesntExistException();//if the order doesn't exist
     }
 
     public  IEnumerable<Order> GetAll()
@@ -56,7 +56,7 @@ internal class DalOrder:IOrder
         if (list.Count > 0)
             return list;
         else
-            throw new Exception("the order doesn't exist");//sending a message if the order doesn't exist
+            throw new DoesntExistException();//sending a message if the order doesn't exist
     }
     public  void Delete(int num)//deleting an order in the array by remplacing his ID by 0
     {
@@ -69,7 +69,7 @@ internal class DalOrder:IOrder
                 return;
             }
         }
-        throw new Exception("the order doesn't exist");//if the order didn't exist
+        throw new DoesntExistException();//if the order didn't exist
     }
 
     public  void Update(DO.Order ord)//updating all the details about the order 
@@ -83,7 +83,7 @@ internal class DalOrder:IOrder
                 return;
             }
         }
-                throw new Exception("the order doesn't exist");//if we were trying to update an inexisting order
+        throw new DoesntExistException();//if we were trying to update an inexisting order
         }
     }
 

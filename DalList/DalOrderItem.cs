@@ -28,7 +28,7 @@ internal class DalOrderItem:IOrderItem
             
         }
         if (oi.id != num)
-            throw new Exception("The object doesn't exist.");
+            throw new DoesntExistException();
             return oi;
     }
 
@@ -49,7 +49,7 @@ internal class DalOrderItem:IOrderItem
         if(oi.OrderID==ordId&&oi.ProductID==prodId)
         return oi;
         else
-            throw new Exception("the order item doesn't exist");
+            throw new DoesntExistException();
     }
     public  void Delete(int num)
     {
@@ -62,7 +62,7 @@ internal class DalOrderItem:IOrderItem
                 return;
             }
         }
-        throw new Exception("the order item doesn't exist");
+        throw new DoesntExistException();
     }
 
     public  void Update(DO.OrderItem oi)
@@ -76,7 +76,7 @@ internal class DalOrderItem:IOrderItem
                 return;
             }
         }
-                throw new Exception("the order item doesn't exist");
+        throw new DoesntExistException();
     }
 
 }

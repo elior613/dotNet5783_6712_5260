@@ -1,7 +1,7 @@
 ﻿
 namespace DalApi
 {
-    internal interface IDal:IOrder,IProduct,IOrderItem
+    public interface IDal
     {
         IProduct Product { get; }
         IOrderItem OrderItem { get; }

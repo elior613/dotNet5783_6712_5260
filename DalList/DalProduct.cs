@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Collections;
 using DalApi;
 
+
 namespace Dal;
 
 internal class DalProduct:IProduct 
@@ -15,7 +16,7 @@ internal class DalProduct:IProduct
         for(int i = 0; i < dataSource.producrArr.Count; i++)//checking if the product already exist or not
         {
             if (dataSource.producrArr[i].ID == prod.ID)
-                        throw new Exception("the product already exist");//if the new product was in fact an existing product
+                        throw new ExistException();//if the new product was in fact an existing product
         }
         dataSource.producrArr[DataSource.Config.productNum] = prod;
         Console.WriteLine("The product has been successfully added");//confirmation of the creation of the new product
@@ -34,7 +35,7 @@ public  DO.Product Get (int num)//getting a product
                 return prod;
             }
     }
-        throw new Exception("the product doesn't exist");
+        throw new DoesntExistException();
 
     }
 
@@ -55,7 +56,7 @@ public  DO.Product Get (int num)//getting a product
                 return;
             }
         }
-        throw new Exception("the product doesn't exist");
+        throw new DoesntExistException();
     }
 
     public  void Update(DO.Product prod)//updating all the details about a product
@@ -69,6 +70,6 @@ public  DO.Product Get (int num)//getting a product
                 return;
             }
         }
-                throw new Exception("the product doesn't exist");
+                 throw new DoesntExistException();
     }
 }

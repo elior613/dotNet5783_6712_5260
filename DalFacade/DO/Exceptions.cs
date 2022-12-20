@@ -1,13 +1,28 @@
 ﻿
 
+using System.Runtime.Serialization;
+
 namespace DO
 {
-    internal class Exist:Exception
+    public class ExistException : Exception
     {
-     
+        public ExistException():base(){}
+        public ExistException(string message) : base(message) { }
+        public ExistException(string message, Exception innerException) : base(message, innerException) { }
+        protected ExistException (SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        override public string ToString() =>
+        "Exist Exception: the object already exist ";
+
     }
-    internal class DoesntExist : Exception
+    public class DoesntExistException : Exception
     {
+        public DoesntExistException():base(){}
+        public DoesntExistException(string message) : base(message) { }
+        public DoesntExistException(string message, Exception innerException) : base(message, innerException) { }
+        protected DoesntExistException (SerializationInfo info, StreamingContext context) : base(info, context) { }
+        override public string ToString()=> 
+        "Doesn't Exist Exception: the object doesn't exist" ;
 
     }
 }
