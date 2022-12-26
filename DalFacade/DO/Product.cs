@@ -18,7 +18,7 @@ public struct Product
 
     //to show all the details of the product
     public override string ToString() => $@"
-        Product ID = {ID}, {Name}, Category - {Furniture}
-Price: {Price}, Amount in stock: {InStock}
+    Product ID = {ID}, {Name}, Category - {Furniture}
+    Price: {Price}, Amount in stock: {InStock}
     ";
 }

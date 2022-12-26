@@ -12,11 +12,11 @@ class DalTest
     static void Main(string[] args)
     {//initialising of all the class that we will need in our program
     
-        Product product = new Product();
-        IEnumerable<Product> products = new List<Product>();
-        IEnumerable<Order>orders=new Order[100];
-        IEnumerable<OrderItem>items=new OrderItem[200];
+       IEnumerable<Product>products;
+        IEnumerable<Order>orders;
+        IEnumerable<OrderItem>items;
         IEnumerable<string> details=new List<string>();
+        Product product = new Product();
         Order order = new Order();
         OrderItem orderitem = new OrderItem();
 
@@ -61,7 +61,7 @@ class DalTest
                             try//if the product doesn't exist ...
                             {
                                 product = dal.Product.Get(num);
-                                Console.WriteLine(product.ToString());
+                                Console.WriteLine(product);
                             }
                             catch//...say it to the user...
                             {
@@ -73,10 +73,10 @@ class DalTest
                             }
                             break;
                         case 3://show all the details of all the existing products
-                            dal.Product.GetAll();
-                            foreach(Product p in products)
+                            products = dal.Product.GetAll();
+                            foreach (Product p in products)
                             {
-                                Console.WriteLine(p.ToString());
+                                Console.WriteLine(p);
                             }
                             break;
                         case 4://for deleting a Product
@@ -145,7 +145,7 @@ class DalTest
                             try//if the Id doesn't match with any known order
                             {
                                 order = dal.Order.Get(num);
-                                Console.WriteLine(order.ToString());
+                                Console.WriteLine(order);
                             }
                             catch
                             {
@@ -153,10 +153,10 @@ class DalTest
                             }
                             break;
                         case 3:
-                            dal.Order.GetAll();
+                             orders= dal.Order.GetAll();
                             foreach (Order or in orders)
                             {
-                                Console.WriteLine(or.ToString());
+                                Console.WriteLine(or);
                             }
                             break;
 
@@ -255,7 +255,7 @@ class DalTest
                             try//if the ID doen't existe
                             {
                                 orderitem = dal.OrderItem.Get(num);
-                                Console.WriteLine(orderitem.ToString());
+                                Console.WriteLine(orderitem);
                             }
                             catch
                             {
@@ -264,10 +264,10 @@ class DalTest
                             
                             break;
                         case 3:
-                            dal.OrderItem.GetAll();
+                           items =  dal.OrderItem.GetAll();
                      foreach(OrderItem item in items)
                             {
-                                Console.WriteLine(item.ToString());
+                                Console.WriteLine(item);
                             }
                             break;
                         case 4:
@@ -278,7 +278,7 @@ class DalTest
                             try
                             {
                                 orderitem = dal.OrderItem.GetOrderItem(num2, num);
-                                Console.WriteLine(orderitem.ToString());
+                                Console.WriteLine(orderitem);
                             }
                             catch
                             {
