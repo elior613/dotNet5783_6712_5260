@@ -1,21 +1,22 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Dal;
+using DalApi;
 using DO;
 #nullable disable
 
 class DalTest
 {
+    static IDal dal = new DalList();
+    
     static void Main(string[] args)
     {//initialising of all the class that we will need in our program
-        DalProduct dalProduct = new DalProduct();
-        DalOrder dalOrder = new DalOrder();
-        DalOrderItem dalOrderItem = new DalOrderItem();
+    
         Product product = new Product();
-        List<Product> products = new List<Product>();
-        Order[]orders=new Order[100];
-        OrderItem[] items=new OrderItem[200];
-        List<string> details=new List<string>();
+        IEnumerable<Product> products = new List<Product>();
+        IEnumerable<Order>orders=new Order[100];
+        IEnumerable<OrderItem>items=new OrderItem[200];
+        IEnumerable<string> details=new List<string>();
         Order order = new Order();
         OrderItem orderitem = new OrderItem();
 
@@ -51,7 +52,7 @@ class DalTest
                     {
 
                         case 1://adding a new product
-                            dalProduct.Add(product);
+                            dal.Product.Add(product);
                             break;
 
                         case 2://looking for the details of an existing product
@@ -59,7 +60,7 @@ class DalTest
                             num = Convert.ToInt32(Console.ReadLine());
                             try//if the product doesn't exist ...
                             {
-                                product = dalProduct.Get(num);
+                                product = dal.Product.Get(num);
                                 Console.WriteLine(product.ToString());
                             }
                             catch//...say it to the user...
@@ -72,7 +73,7 @@ class DalTest
                             }
                             break;
                         case 3://show all the details of all the existing products
-                           dalProduct.GetAll();
+                            dal.Product.GetAll();
                             foreach(Product p in products)
                             {
                                 Console.WriteLine(p.ToString());
@@ -83,7 +84,7 @@ class DalTest
                             num = Convert.ToInt32(Console.ReadLine());//asking the ID of the product we want to delete
                             try //if we are trying to delete a product that doesn't exist
                             {
-                                dalProduct.Delete(num);
+                                dal.Product.Delete(num);
                             }
                             catch
                             {
@@ -110,7 +111,7 @@ class DalTest
                             product.Name = name;
                             try
                             {
-                                dalProduct.Update(product);
+                                dal.Product.Update(product);
                             }
                             catch
                             {
@@ -136,14 +137,14 @@ class DalTest
                     switch (choice)
                     {
                         case 1:
-                            dalOrder.Add(order);//adding a new order
+                            dal.Order.Add(order);//adding a new order
                             break;
                         case 2://show an order depending of it's ID
                             Console.WriteLine("enter the ID of the order you want to see");
                             num = Convert.ToInt32(Console.ReadLine());
                             try//if the Id doesn't match with any known order
                             {
-                                order = dalOrder.Get(num);
+                                order = dal.Order.Get(num);
                                 Console.WriteLine(order.ToString());
                             }
                             catch
@@ -152,7 +153,7 @@ class DalTest
                             }
                             break;
                         case 3:
-                            dalOrder.GetAll();
+                            dal.Order.GetAll();
                             foreach (Order or in orders)
                             {
                                 Console.WriteLine(or.ToString());
@@ -165,7 +166,7 @@ class DalTest
                             num = Convert.ToInt32(Console.ReadLine());
                             try//if the order doesn't exist
                             {
-                                details = dalOrder.GetDetails(num);
+                                details = dal.Order.GetDetails(num);
                             }
                             catch
                             {
@@ -184,7 +185,7 @@ class DalTest
                             num = Convert.ToInt32(Console.ReadLine());
                             try
                             {
-                                dalOrder.Delete(num);
+                                dal.Order.Delete(num);
                             }
                             catch
                             {
@@ -218,7 +219,7 @@ class DalTest
                             order.DeliveryDate = date;//adjusting the delivery date 
                             try//checking if the order does exist or not
                             {
-                                dalOrder.Update(order);
+                                dal.Order.Update(order);
                             }
                             catch
                             {
@@ -245,7 +246,7 @@ class DalTest
                     switch (choice)
                     {
                         case 1://adding a new order ited
-                            dalOrderItem.Add(orderitem);
+                            dal.OrderItem.Add(orderitem);
                             break;
 
                         case 2://showing an orderitem depending of it's ID
@@ -253,7 +254,7 @@ class DalTest
                             num = Convert.ToInt32(Console.ReadLine());
                             try//if the ID doen't existe
                             {
-                                orderitem = dalOrderItem.Get(num);
+                                orderitem = dal.OrderItem.Get(num);
                                 Console.WriteLine(orderitem.ToString());
                             }
                             catch
@@ -263,7 +264,7 @@ class DalTest
                             
                             break;
                         case 3:
-                            dalOrderItem.GetAll();
+                            dal.OrderItem.GetAll();
                      foreach(OrderItem item in items)
                             {
                                 Console.WriteLine(item.ToString());
@@ -276,7 +277,7 @@ class DalTest
                             num2 = Convert.ToInt32(Console.ReadLine());
                             try
                             {
-                                orderitem = dalOrderItem.GetOrderItem(num2, num);
+                                orderitem = dal.OrderItem.GetOrderItem(num2, num);
                                 Console.WriteLine(orderitem.ToString());
                             }
                             catch
@@ -292,7 +293,7 @@ class DalTest
                             num = System.Console.Read();
                             try//if the ID choosen already doesn't exist
                             {
-                                dalOrderItem.Delete(num);
+                                dal.OrderItem.Delete(num);
                             }
                             catch
                             {
@@ -320,7 +321,7 @@ class DalTest
                             orderitem.Price = num;
                             try
                             {
-                                dalOrderItem.Update(orderitem);
+                                dal.OrderItem.Update(orderitem);
                             }
                             catch
                             {
