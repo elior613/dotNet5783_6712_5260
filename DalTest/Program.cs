@@ -52,7 +52,16 @@ class DalTest
                     {
 
                         case 1://adding a new product
-                            dal.Product.Add(product);
+                            try
+                            {
+                                dal.Product.Add(product);
+                                product.ID++;
+                                
+                            }
+                            catch
+                            {
+                                Console.WriteLine("erreur");
+                            }
                             break;
 
                         case 2://looking for the details of an existing product
