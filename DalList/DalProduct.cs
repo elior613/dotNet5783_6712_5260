@@ -18,7 +18,7 @@ internal class DalProduct:IProduct
             if (dataSource.producrArr[i].ID == prod.ID)
                         throw new ExistException();//if the new product was in fact an existing product
         }
-        dataSource.producrArr[DataSource.Config.productNum] = prod;
+        dataSource.producrArr.Add(prod);
         Console.WriteLine("The product has been successfully added");//confirmation of the creation of the new product
         return prod.ID; 
     }

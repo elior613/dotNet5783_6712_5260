@@ -2,17 +2,27 @@
 
 using DalApi;
 using DO;
+using System.Diagnostics;
 
 namespace Dal;
 
 internal class DalOrderItem:IOrderItem
 {
     DataSource dataSource = DataSource.Instance;
-    public  int Add(OrderItem oi)
+    static readonly Random rand = new Random();
+
+    public int Add(OrderItem oi)
     {
-        oi.id = DataSource.Config.orderItemId;
-        oi.OrderID = DataSource.Config.orderId;
-        dataSource.orderItemArr[DataSource.Config.orderItemNum] = oi;
+        for (int i = 0; i < dataSource.orderItemArr.Count(); i++) {
+            if (dataSource.orderItemArr[i].id == oi.id)
+                throw new ExistException();
+                }
+        oi.id = DataSource.Config.OrderItemId;
+        oi.OrderID = rand.Next(1,dataSource.orderArr.Count());
+        oi.ProductID = rand.Next(100000,100000+dataSource.producrArr.Count());
+        oi.Amount = rand.Next(0, 100);
+        oi.Price = rand.Next(30, 300);
+        dataSource.orderItemArr.Add(oi);
         DataSource.Config.orderItemNum++;
         Console.WriteLine("The order item has been successfully added");
         return oi.id;
@@ -53,7 +63,7 @@ internal class DalOrderItem:IOrderItem
     }
     public  void Delete(int num)
     {
-        for(int i = 0; i < DataSource.Config.orderItemNum; i++)
+        for(int i = 0; i < dataSource.orderItemArr.Count(); i++)
         {
             if (dataSource.orderItemArr[i].id == num)
             {

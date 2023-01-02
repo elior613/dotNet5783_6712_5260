@@ -8,11 +8,34 @@ namespace Dal;
 internal class DalOrder:IOrder
 {
     DataSource dataSource = DataSource.Instance;
+    static readonly Random rand = new Random();
     public  int Add(DO.Order ord)
     {
-   
-        ord.ID = DataSource.Config.orderId;//adding a new ID for the new Order
-        dataSource.orderArr[DataSource.Config.productNum] = ord;//addingg the new order in the array with all the orders 
+        for(int i = 0; i <dataSource.orderArr.Count; i++)
+        {
+            if (dataSource.orderArr[i].ID == ord.ID)
+                throw new ExistException();
+        }
+
+        List<string> namesOfCustomers = new List<string> { "Avraam", "Itzchak", "Iakov", "Moshe", "Aharon", "Yosef", "David", "Shlomo",
+                        "Yisroel", "Reuven", "Shimon", "Levi", "Yehuda", "Yissachar", "Zevulun", "Dan", "Naftali", "Gad", "Asher","Menashe", "Efraim", "Beniamin"};//to initialize the first customers names
+        List<string> emailsOfCustomers = new List<string> { "Avraam@gmail.com", "Itzchak@gmail.com", "Iakov@gmail.com", "Moshe@gmail.com", "Aharon@gmail.com", "Yosef@gmail.com", "David@gmail.com", "Shlomo@gmail.com",
+                        "Yisroel@gmail.com", "Reuven@gmail.com", "Shimon@gmail.com", "Levi@gmail.com", "Yehuda@gmail.com", "Yissachar@gmail.com", "Zevulun@gmail.com", "Dan@gmail.com", "Naftali@gmail.com", "Gad@gmail.com", "Asher@gmail.com","Menashe@gmail.com", "Efraim@gmail.com", "Beniamin@gmail.com"};//to initialize the customers emails
+        List<string> addressOfCustumer = new List<string> { "Ben Yehuda, Jerusalem", "Jaffa, Jerusalem", "King Gorge, Jerusalem", "Dizingof, Tel Aviv", "Bialik, Tel Aviv", "Rabbi Akiva, Bnei Brak", "Hazon Ish, Bnei Brak", "Bnei Brit, Ashdod", "Yerushalaim, Zefat" };//to initialize the customers addresses
+        
+        DateTime date1 = DateTime.Now;
+        TimeSpan t = new TimeSpan(1, 5, 9, 6, 3);
+        DateTime date2 = date1 - t;
+        DateTime date3 = date2 - t;
+
+        ord.ID = DataSource.Config.OrderId;//adding a new ID for the new Order
+        ord.CostumerName = namesOfCustomers[rand.Next(0, 21)];
+        ord.CostumerEmail = emailsOfCustomers[rand.Next(0, 21)];
+        ord.CostumerAddress = addressOfCustumer[rand.Next(0, 8)];
+        ord.OrderDate = date3;
+        ord.ShipDate = date2;
+        ord.DeliveryDate = date1;
+        dataSource.orderArr.Add(ord);//addingg the new order in the array with all the orders 
         DataSource.Config.productNum++;
         Console.WriteLine("The order has been successfully added");
         return ord.ID;
@@ -62,9 +85,9 @@ internal class DalOrder:IOrder
     {
         for(int i=0; i< dataSource.orderArr.Count; i++)
         {
-            if (dataSource.producrArr[i].ID == num)
+            if (dataSource.orderArr[i].ID == num)
             {
-                dataSource.producrArr.Remove(dataSource.producrArr[i]);
+                dataSource.orderArr.Remove(dataSource.orderArr[i]);
                 Console.WriteLine("The order has been successfully deleted");
                 return;
             }
