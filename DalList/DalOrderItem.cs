@@ -14,10 +14,10 @@ internal class DalOrderItem:IOrderItem
     public int Add(OrderItem oi)
     {
         for (int i = 0; i < dataSource.orderItemArr.Count(); i++) {
-            if (dataSource.orderItemArr[i].id == oi.id)
+            if (dataSource.orderItemArr[i].ID == oi.ID)
                 throw new ExistException();
                 }
-        oi.id = DataSource.Config.OrderItemId;
+        oi.ID = DataSource.Config.OrderItemId;
         oi.OrderID = rand.Next(1,dataSource.orderArr.Count());
         oi.ProductID = rand.Next(100000,100000+dataSource.producrArr.Count());
         oi.Amount = rand.Next(0, 100);
@@ -25,19 +25,19 @@ internal class DalOrderItem:IOrderItem
         dataSource.orderItemArr.Add(oi);
         DataSource.Config.orderItemNum++;
         Console.WriteLine("The order item has been successfully added");
-        return oi.id;
+        return oi.ID;
     }
     public  DO.OrderItem Get(int num)
     {
         DO.OrderItem oi=new DO.OrderItem();
         for(int i = 0; i < dataSource.orderItemArr.Count; i++)
         {
-            if (dataSource.orderItemArr[i].id==num)
+            if (dataSource.orderItemArr[i].ID==num)
                 oi= dataSource.orderItemArr[i];
 
             
         }
-        if (oi.id != num)
+        if (oi.ID != num)
             throw new DoesntExistException();
             return oi;
     }
@@ -65,7 +65,7 @@ internal class DalOrderItem:IOrderItem
     {
         for(int i = 0; i < dataSource.orderItemArr.Count(); i++)
         {
-            if (dataSource.orderItemArr[i].id == num)
+            if (dataSource.orderItemArr[i].ID == num)
             {
                 dataSource.orderItemArr.Remove(dataSource.orderItemArr[i]);
                 Console.WriteLine("The order item has been successfully deleted");
@@ -79,7 +79,7 @@ internal class DalOrderItem:IOrderItem
     {
         for (int i = 0; i < dataSource.orderItemArr.Count; i++)
         {
-            if (dataSource.orderItemArr[i].id == oi.id)
+            if (dataSource.orderItemArr[i].ID == oi.ID)
             {
                 dataSource.orderItemArr[i] = oi;
                 Console.WriteLine("The order item has been updated successfully");

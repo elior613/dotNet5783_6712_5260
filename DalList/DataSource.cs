@@ -80,7 +80,7 @@ internal sealed class DataSource
     {
         OrderItem orderItem = new OrderItem()
         {
-            id = Config.OrderItemId,
+            ID = Config.OrderItemId,
             OrderID = rand.Next(1, 100),
             ProductID = rand.Next(100000, 100200),
             Amount = rand.Next(0, 100),

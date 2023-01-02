@@ -59,7 +59,6 @@ class DalTest
                     choice = Convert.ToInt32(Console.ReadLine());//receive the choice of the user
                     int num, num2, category;//those variable will receive the ID off the product we want to see or the ID of the product we want to update
                     //DO.Product prod = new DO.Product();
-                    Furniture furniture = new Furniture();//initialising of all the differents product our shop will sell
                     string  name, email, address;
                     DateTime date;
                     switch (choice)
@@ -304,7 +303,7 @@ class DalTest
                             {
                                 items = dal.OrderItem.GetAll();//adding a new ID for the new Order
                                 orderitem = items.ToList()[items.Count() - 1];
-                                orderitem.id++;
+                                orderitem.ID++;
                                 dal.OrderItem.Add(orderitem);//adding a new order
                             }
                             break;
@@ -366,7 +365,7 @@ class DalTest
                         case 6://updatin an order item
                             Console.WriteLine("enter Id of the order item you want to update");
                             num = Convert.ToInt32(Console.ReadLine());
-                            orderitem.id = num;//choosing the ID of the order Item we want to update
+                            orderitem.ID = num;//choosing the ID of the order Item we want to update
                             Console.WriteLine("enter Id of the order");
                             num = Convert.ToInt32(Console.ReadLine());
                             orderitem.OrderID = num;//updating ID of the order
