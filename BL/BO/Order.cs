@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    public class Order
+    public class BÒOrder
     {
         public int ID { get; set; }//the ID with which we will selet the desired object
 

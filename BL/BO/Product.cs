@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    public class Product
+    public class BOProduct
     {
         public int ID { get; set; }
         public int InStock { get; set; }
