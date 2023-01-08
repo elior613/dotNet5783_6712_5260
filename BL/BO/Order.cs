@@ -1,29 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace BO
 {
-    public class BÒOrder
+    public class Order
     {
         public int ID { get; set; }//the ID with which we will selet the desired object
+        public string CostumerName { get; set; }//the name of the costumer
+        public string CostumerEmail { get; set; }//email of costumer
+        public string CostumerAddress { get; set; }//address of costumer
+        public DateTime OrderDate { get; set; }// the date of the order
+        public DateTime ShipDate { get; set; }//the date of the ship
+        public DateTime DeliveryDate { get; set; }//the date of the delivery
+        public double TotalPrice { get; set; }//a total price of order
+        public IEnumerable<OrderItem> items { get; set; }//a list of the items
+        public OrderStatus Status { get; set; }//the status of the orders
 
-        public string CostumerName { get; set; }
-        public string CostumerEmail { get; set; }
-
-        public string CostumerAddress { get; set; }
-
-        public DateTime OrderDate { get; set; }
-        public DateTime ShipDate { get; set; }
-        public DateTime DeliveryDate { get; set; }
 
 
         //to show the details when asked
         public override string ToString() => $@"
-        Order ID: {ID}, Costumer details: {CostumerName},{CostumerEmail}, {CostumerAddress}, 
-        Order date:{OrderDate}, Ship date: {ShipDate}, Delivery date: {DeliveryDate}
+Order ID: {ID}, Costumer details: {CostumerName},{CostumerEmail}, {CostumerAddress}, 
+Order date:{OrderDate}, Ship date: {ShipDate}, Delivery date: {DeliveryDate},
+Total price: {TotalPrice}, Items: {items}, Status: {Status}
     ";
     }
 }
