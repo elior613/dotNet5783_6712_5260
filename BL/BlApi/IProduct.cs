@@ -9,7 +9,56 @@ namespace BlApi
 {
     public interface IProduct
     {
-        int Add(IProduct product);
-        void Update(IProduct product);
+        /// <summary>
+        /// Return the list of the product
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        IEnumerable<ProductForList?>? GetProductForLists(Func<DO.Product?,bool>?filter);
+
+        /// <summary>
+        /// return the list of catalog of the products
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        IEnumerable<ProductItem?>? GetProductCatalog();
+
+        /// <summary>
+        /// Return a specific product depending of the ID only for the admins
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// 
+        Product? Get(int ID);
+
+        /// <summary>
+        /// Customers screen 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cart"></param>
+        /// <returns></returns>
+        /// 
+        ProductItem? Get(int id,Cart cart);
+
+        /// <summary>
+        /// Only admin screen :adding product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// 
+        public void Add(IProduct product);
+
+        /// <summary>
+        /// Only for admin : Deleting a product
+        /// </summary>
+        /// <param name="product"></param>
+        ///
+        public void Delete(int id);
+
+        /// <summary>
+        /// Only for admin: Updating product
+        /// </summary>
+        /// <param name="product"></param>
+         public void Update(IProduct product);
     }
 }

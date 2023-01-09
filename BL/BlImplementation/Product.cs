@@ -4,7 +4,7 @@ using DalApi;
 
 namespace BlImplementation
 {
-    internal class Product:IProduct
+    internal class Product:BlApi.IProduct
     {
         IDal Dal = new DalList();
     }
