@@ -12,7 +12,7 @@ namespace BO
         public DateTime ShipDate { get; set; }//the date of the ship
         public DateTime DeliveryDate { get; set; }//the date of the delivery
         public double TotalPrice { get; set; }//a total price of order
-        public IEnumerable<OrderItem> items { get; set; }//a list of the items
+        public IEnumerable<OrderItem> Items { get; set; }//a list of the items
         public OrderStatus Status { get; set; }//the status of the orders
 
 

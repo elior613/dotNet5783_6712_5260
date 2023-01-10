@@ -6,6 +6,6 @@ namespace BlImplementation
 {
     internal class Cart:ICart
     {
-        IDal Dal = new DalList();
+        private IDal Dal = new DalList();
     }
 }

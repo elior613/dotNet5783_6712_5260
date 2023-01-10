@@ -46,12 +46,12 @@ namespace BlApi
         /// <param name="id"></param>
         /// <returns></returns>
         /// 
-        public void Add(IProduct product);
+        public void Add(Product product);
 
         /// <summary>
         /// Only for admin : Deleting a product
         /// </summary>
-        /// <param name="product"></param>
+        /// <param name="id"></param>
         ///
         public void Delete(int id);
 
