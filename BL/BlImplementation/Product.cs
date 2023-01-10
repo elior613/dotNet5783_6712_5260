@@ -2,6 +2,7 @@
 using BO;
 using Dal;
 using DalApi;
+using System.Collections.Generic;
 
 namespace BlImplementation
 {
@@ -33,6 +34,7 @@ namespace BlImplementation
             prod.ID = prodDO.ID;
             prod.InStock= prodDO.InStock;
             prod.Price= prodDO.Price;
+            prod.Furniture = (BO.Furniture)prodDO.Furniture;
             return prod;
         }
 
@@ -43,17 +45,34 @@ namespace BlImplementation
 
         IEnumerable<ProductItem?>? BlApi.IProduct.GetProductCatalog()
         {
-            throw new NotImplementedException();
+            List<ProductItem?> list = new List<ProductItem?>();
+
         }
 
         IEnumerable<ProductForList?>? BlApi.IProduct.GetProductForLists(Func<DO.Product?, bool>? filter)
         {
-            
+            List<ProductForList> productForLists=new List<ProductForList>();
+            foreach (DO.Product item in Dal.Product.GetAll())//converting from product to product for list
+            {
+                if (filter(item))
+                {
+                    BO.ProductForList productForList = new BO.ProductForList();
+                    productForList.ID = item.ID;
+                    productForList.Name = item.Name;
+                    productForList.Price = item.Price;
+                    productForList.Furniture = (BO.Furniture)item.Furniture;
+                    productForLists.Add(productForList); 
+                }
+               
+            }
+
+
+            return productForLists;
         }
 
         void BlApi.IProduct.Update(BlApi.IProduct product)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
