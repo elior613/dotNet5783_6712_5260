@@ -21,7 +21,7 @@ namespace BlApi
         /// </summary>
         /// <returns></returns>
         /// 
-        IEnumerable<ProductItem?>? GetProductCatalog();
+        IEnumerable<ProductItem?>? GetProductCatalog(BO.Cart cart);
 
         /// <summary>
         /// Return a specific product depending of the ID only for the admins
@@ -59,6 +59,6 @@ namespace BlApi
         /// Only for admin: Updating product
         /// </summary>
         /// <param name="product"></param>
-         public void Update(IProduct product);
+         public void Update(BO.Product product);
     }
 }

@@ -20,8 +20,14 @@ internal class DalOrderItem:IOrderItem
         oi.ID = DataSource.Config.OrderItemId;
         oi.OrderID = rand.Next(1,dataSource.orderArr.Count());
         oi.ProductID = rand.Next(100000,100000+dataSource.producrArr.Count());
-        oi.Amount = rand.Next(0, 100);
-        oi.Price = rand.Next(30, 300);
+        foreach(Product product in dataSource.producrArr)
+        {
+            if (product.ID == oi.ProductID)
+            {
+                oi.Price=product.Price;
+                oi.Amount = product.InStock;
+            }
+        }
         dataSource.orderItemArr.Add(oi);
         DataSource.Config.orderItemNum++;
         Console.WriteLine("The order item has been successfully added");

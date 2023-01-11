@@ -16,7 +16,7 @@ public struct Order//structur Order
 
     //to show the details when asked
     public override string ToString() => $@"
-        Order ID: {ID}, Costumer details: {CostumerName},{CostumerEmail}, {CostumerAddress}, 
-        Order date:{OrderDate}, Ship date: {ShipDate}, Delivery date: {DeliveryDate}
+Order ID: {ID}, Costumer details: {CostumerName},{CostumerEmail}, {CostumerAddress}, 
+Order date:{OrderDate}, Ship date: {ShipDate}, Delivery date: {DeliveryDate}
     ";
 }

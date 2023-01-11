@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 class DalTest
 {
     static IDal dal = new DalList();
-    
+
     static void Main(string[] args)
     {//initialising of all the class that we will need in our program
 
@@ -20,15 +20,12 @@ class DalTest
         IEnumerable<Order>orders;
         IEnumerable<OrderItem>items;
         IEnumerable<string> details=new List<string>();
-        List<string> namesOfProducts = new List<string> { "Sofa", "Table", "Chair", "Wardrobe", "Dresser", "Bed", "Shelf", "Armchair" };
         Product product = new Product()
         {
             ID = 100051,
-            Name = namesOfProducts[rand.Next(0, 7)],
-            Furniture = (DO.Furniture)rand.Next(0, 4),
-            InStock = rand.Next(0, 100),
-            Price = rand.Next(30, 300)
+            Furniture = (DO.Furniture)rand.Next(0, 4)
         };
+
         Order order = new Order();
   
         OrderItem orderitem = new OrderItem();
@@ -74,10 +71,7 @@ class DalTest
                             {
 
                                     product.ID++;
-                                    product.Name = namesOfProducts[rand.Next(0, 7)];
                                     product.Furniture = (DO.Furniture)rand.Next(0, 4);
-                                    product.InStock = rand.Next(0, 100);
-                                    product.Price = rand.Next(30, 300);
                                 dal.Product.Add(product);
                             }
                             break;
@@ -295,7 +289,7 @@ class DalTest
                     //DO.OrderItem oi = new OrderItem();
                     switch (choice)
                     {
-                        case 1://adding a new order ited
+                        case 1://adding a new order item
                             try {
                                 dal.OrderItem.Add(orderitem);
                             }

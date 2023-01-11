@@ -2,6 +2,8 @@
 
 using DO;
 using System;
+using System.Xml.Linq;
+
 namespace Dal;
 
 
@@ -22,6 +24,144 @@ internal sealed class DataSource
     internal List<Order> orderArr = new List<Order>();
     internal List<OrderItem> orderItemArr = new List<OrderItem>();
 
+    //initializing the product name
+    public string initializingName(Product product)
+    {
+        List<string> namesOfProducts = new List<string> { "Sofa", "Armchair", "Table", "Chair", "Closet", "Shelf", "Bed" };//to initialize the names of the products
+        if (product.Furniture == DO.Furniture.livingRoomFurniture)
+            product.Name = namesOfProducts[rand.Next(0, 5)];
+        else if (product.Furniture == DO.Furniture.bedroomFurniture)
+            product.Name = namesOfProducts[rand.Next(2, 6)];
+        else if (product.Furniture == DO.Furniture.kitchenFurniture)
+            product.Name = namesOfProducts[rand.Next(2, 5)];
+        else if (product.Furniture == DO.Furniture.toilets)
+            product.Name = namesOfProducts[rand.Next(4, 5)];
+        else if (product.Furniture == DO.Furniture.officeFurniture)
+            product.Name = namesOfProducts[rand.Next(2, 5)];
+        return product.Name;
+    }
+
+    //counters of evere furniture, to count how many are in stock
+    public  int livingRoomSofaCount = rand.Next(0, 300);
+    public  int livingRoomTableCount = rand.Next(0, 300);
+    public  int livingRoomChairCount = rand.Next(0, 300);
+    public  int livingRoomClosetCount = rand.Next(0, 300);
+    public  int livingRoomShelfCount = rand.Next(0, 300);
+    public  int livingRoomArmchairCount = 0;
+    public  int bedroomTableCount = rand.Next(0, 300);
+    public  int bedroomChairCount = rand.Next(0, 300);
+    public  int bedroomClosetCount = rand.Next(0, 300);
+    public  int bedroomShelfCount = rand.Next(0, 300);
+    public  int bedroomBedCount = rand.Next(0, 300);
+    public  int kitchenTableCount = rand.Next(0, 300);
+    public  int kitchenChairCount = rand.Next(0, 300);
+    public  int kitchenClosetCount = rand.Next(0, 300);
+    public  int kitchenShelfCount = 0;
+    public  int toiletsClosetCount = rand.Next(0, 300);
+    public  int toiletsShelfCount = rand.Next(0, 300);
+    public  int officeTableCount = rand.Next(0, 300);
+    public  int officeChairCount = rand.Next(0, 300);
+    public  int officeClosetCount = rand.Next(0, 300);
+    public  int officeShelfCount = 0;
+
+    //initializing the number of the product in stock
+    public int initializingInStock(Product product)
+    {
+        if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Sofa")
+            product.InStock = livingRoomSofaCount;
+        else if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Armchair")
+            product.InStock = livingRoomArmchairCount;
+        else if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Table")
+            product.InStock = livingRoomTableCount;
+        else if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Chair")
+            product.InStock = livingRoomChairCount;
+        else if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Closet")
+            product.InStock = livingRoomClosetCount;
+        else if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Shelf")
+            product.InStock = livingRoomShelfCount;
+        else if (product.Furniture == DO.Furniture.bedroomFurniture && product.Name == "Table")
+            product.InStock = bedroomTableCount;
+        else if (product.Furniture == DO.Furniture.bedroomFurniture && product.Name == "Chair")
+            product.InStock = bedroomChairCount;
+        else if (product.Furniture == DO.Furniture.bedroomFurniture && product.Name == "Closet")
+            product.InStock = bedroomClosetCount;
+        else if (product.Furniture == DO.Furniture.bedroomFurniture && product.Name == "Shelf")
+            product.InStock = bedroomShelfCount;
+        else if (product.Furniture == DO.Furniture.bedroomFurniture && product.Name == "Bed")
+            product.InStock = bedroomBedCount;
+        else if (product.Furniture == DO.Furniture.kitchenFurniture && product.Name == "Table")
+            product.InStock = kitchenTableCount;
+        else if (product.Furniture == DO.Furniture.kitchenFurniture && product.Name == "Chair")
+            product.InStock = kitchenChairCount;
+        else if (product.Furniture == DO.Furniture.kitchenFurniture && product.Name == "Closet")
+            product.InStock = kitchenClosetCount;
+        else if (product.Furniture == DO.Furniture.kitchenFurniture && product.Name == "Shelf")
+            product.InStock = kitchenShelfCount;
+        else if (product.Furniture == DO.Furniture.toilets && product.Name == "Closet")
+            product.InStock = toiletsClosetCount;
+        else if (product.Furniture == DO.Furniture.toilets && product.Name == "Shelf")
+            product.InStock = toiletsShelfCount;
+        else if (product.Furniture == DO.Furniture.officeFurniture && product.Name == "Table")
+            product.InStock = officeTableCount;
+        else if (product.Furniture == DO.Furniture.officeFurniture && product.Name == "Chair")
+            product.InStock = officeChairCount;
+        else if (product.Furniture == DO.Furniture.officeFurniture && product.Name == "Closet")
+            product.InStock = officeClosetCount;
+        else if (product.Furniture == DO.Furniture.officeFurniture && product.Name == "Shelf")
+            product.InStock = officeShelfCount;
+
+        return product.InStock;
+    }
+
+
+    //initializing the price of every product
+    public double initializingPrice(Product product)
+    {
+        if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Sofa")
+            product.Price = 1100;
+        else if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Armchair")
+            product.Price = 900;
+        else if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Table")
+            product.Price = 2000;
+        else if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Chair")
+            product.Price = 600;
+        else if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Closet")
+            product.Price = 4000;
+        else if (product.Furniture == DO.Furniture.livingRoomFurniture && product.Name == "Shelf")
+            product.Price = 200;
+        else if (product.Furniture == DO.Furniture.bedroomFurniture && product.Name == "Table")
+            product.Price = 500;
+        else if (product.Furniture == DO.Furniture.bedroomFurniture && product.Name == "Chair")
+            product.Price = 300;
+        else if (product.Furniture == DO.Furniture.bedroomFurniture && product.Name == "Closet")
+            product.Price = 3000;
+        else if (product.Furniture == DO.Furniture.bedroomFurniture && product.Name == "Shelf")
+            product.Price = 200;
+        else if (product.Furniture == DO.Furniture.bedroomFurniture && product.Name == "Bed")
+            product.Price = 1800;
+        else if (product.Furniture == DO.Furniture.kitchenFurniture && product.Name == "Table")
+            product.Price = 1750;
+        else if (product.Furniture == DO.Furniture.kitchenFurniture && product.Name == "Chair")
+            product.Price = 500;
+        else if (product.Furniture == DO.Furniture.kitchenFurniture && product.Name == "Closet")
+            product.Price = 2000;
+        else if (product.Furniture == DO.Furniture.kitchenFurniture && product.Name == "Shelf")
+            product.Price = 200;
+        else if (product.Furniture == DO.Furniture.toilets && product.Name == "Closet")
+            product.Price = 1500;
+        else if (product.Furniture == DO.Furniture.toilets && product.Name == "Shelf")
+            product.Price = 200;
+        else if (product.Furniture == DO.Furniture.officeFurniture && product.Name == "Table")
+            product.Price = 1650;
+        else if (product.Furniture == DO.Furniture.officeFurniture && product.Name == "Chair")
+            product.Price = 1000;
+        else if (product.Furniture == DO.Furniture.officeFurniture && product.Name == "Closet")
+            product.Price = 1050;
+        else if (product.Furniture == DO.Furniture.officeFurniture && product.Name == "Shelf")
+            product.Price = 200;
+
+        return product.Price;
+    }
 
     static DataSource()
     {
@@ -34,15 +174,14 @@ internal sealed class DataSource
 
     private void AddProduct(int countProduct)//adding products and fullfiling it's details
     {
-        List<string> namesOfProducts = new List<string> { "Sofa", "Table", "Chair", "Wardrobe", "Dresser", "Bed", "Shelf", "Armchair" };//to initialize the names of the products
         Product product = new Product()
         {
             ID = countProduct++,
-            Name = namesOfProducts[rand.Next(0, 7)],
-            Furniture = (DO.Furniture)rand.Next(0, 4),
-            InStock = rand.Next(0, 100),
-            Price = rand.Next(30, 300)
+            Furniture = (DO.Furniture)rand.Next(0, 4)
         };
+        product.Name = initializingName(product);
+        product.InStock = initializingInStock(product);
+        product.Price = initializingPrice(product);     
         producrArr.Add(product);//returning the new created product
     }
 
@@ -82,10 +221,16 @@ internal sealed class DataSource
         {
             ID = Config.OrderItemId,
             OrderID = rand.Next(1, 100),
-            ProductID = rand.Next(100000, 100200),
-            Amount = rand.Next(0, 100),
-            Price = rand.Next(30, 300)
+            ProductID = rand.Next(100000, 100000 + producrArr.Count())
         };
+        foreach(Product product in producrArr)
+        {
+            if (product.ID == orderItem.ProductID)
+            {
+                orderItem.Price=product.Price;
+                orderItem.Amount = product.InStock;
+            }
+        }
         orderItemArr.Add(orderItem);
     }
 
