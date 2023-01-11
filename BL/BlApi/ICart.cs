@@ -21,7 +21,7 @@ namespace BlApi
         /// Updating the quantity of a product in the cart
         /// </summary>
         /// <param name="cart"></param>
-        public void Update(ICart cart);
+        public void Update(BO.Cart cart);
 
         ///<summary>
         ///Confirmation of placing order in the cart
