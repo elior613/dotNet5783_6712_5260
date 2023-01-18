@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using Dal;
 using DalApi;
+using System.Xml.Linq;
 
 namespace BlImplementation
 {
@@ -37,7 +38,7 @@ namespace BlImplementation
                     List<BO.OrderItem> myOrderItems = cart.Items?.ToList() ?? new List<BO.OrderItem>();
                     myOrderItems.Add(orderItem);
                     cart.Items = myOrderItems;
-                    Update(cart);
+                    UpdatingSum(cart);
 
                 }
             }
@@ -59,20 +60,80 @@ namespace BlImplementation
 
                 orderItem.Amount++;
                 orderItem.TotalPrice+=product.Price;
-                Update(cart);
+                UpdatingSum(cart);
 
             }
             return cart;
         }
 
-        public void Confirmation(BO.Cart cart)
+        public void Confirmation(BO.Cart cart,string name, string email, string adress)
         {
+            DO.Product doProduct;
+            BO.Product product;
+            foreach (var item in cart.Items??throw new BO.Exceptions.DoesnotExistException("cannot confirm the order") )
+            {
+                product = new BO.Product();
+                doProduct = Dal.Product.Get(item.ID);
+                product.Furniture = (BO.Furniture)doProduct.Furniture;
+                product.Name = doProduct.Name;
+                product.Price=doProduct.Price;
+                product.ID = doProduct.ID;
+                product.InStock=doProduct.InStock;
+
+                if (product.InStock < item.Amount)
+                    throw new BO.Exceptions.NotEnoughInStock();
+                if (name == "") 
+                    throw new BO.Exceptions.DoesnotExistException("Don't know the name of the customer ");
+                if (adress == "") 
+                    throw new BO.Exceptions.DoesnotExistException("Adress don't known");
+                System.Net.Mail.MailAddress
+                if (!IsValidEmail(email)) // verify the email 
+                    throw new BO.EmailNotValid("the email isn't valid check this out");
+
+
+            }
             throw new NotImplementedException();
         }
 
-        public void Update(BO.Cart cart)
+        public bool MailCheck(string email)
         {
-            throw new NotImplementedException();
+            var mail = new System.Net.Mail.MailAddress(email);
+
+            return mail.Address==email;
+        }
+
+        public void Update(BO.Cart cart, int productId, int newQuantity=1)
+        {
+            BO.OrderItem? orderItem = cart.Items?.FirstOrDefault(item => item.ProductID == productId);
+
+            if (orderItem?.Amount < newQuantity && newQuantity > 0) 
+                for (int i = newQuantity-orderItem.Amount; i > 0; i--)
+                    cart = Add(cart, productId) ?? throw new BO.Exceptions.DoesnotExistException();
+
+            else if (orderItem?.Amount > newQuantity && newQuantity > 0)
+            {
+
+                List<BO.OrderItem> newOI = cart.Items?.ToList() ?? new List<BO.OrderItem>();
+                BO.OrderItem? UpdatingOrder = newOI.Find(item => item.ProductID == productId) ?? throw new BO.Exceptions.DoesnotExistException("This OrderItem doesn't exist in the cart");
+                UpdatingOrder.TotalPrice = (double)UpdatingOrder.Price * newQuantity;
+                UpdatingOrder.Amount = newQuantity;
+                cart.Items = newOI;//switching the old non-update list whith the new Update List
+                UpdatingSum(cart); 
+
+            }
+            else if (orderItem?.Amount == 0)
+            {
+                List<BO.OrderItem> newOI = cart.Items?.ToList() ?? new List<BO.OrderItem>();
+                newOI.Remove(orderItem);
+                cart.Items = newOI;
+                UpdatingSum(cart);
+            }
+            
+        }
+        public void UpdatingSum(BO.Cart cart)
+        {
+            cart.TotalPrice = cart.Items?.Sum(amount => amount.Price * amount.Amount) ?? 0;
+
         }
     }
 }
