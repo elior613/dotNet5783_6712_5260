@@ -8,13 +8,12 @@ namespace BO
         public OrderStatus Status { get; set; }//the status of the order
         public int AmountOfItems { get; set; }//amount of items
         public double TotalPrice { get; set; }//the total price
-        public IEnumerable<Tuple<DateTime,OrderStatus>> OrderStatus { get; set; }
+      
 
         //printing the details when needed
         public override string ToString() => $@"
 ID: {ID}, Costumer Name:{CostumerName}, Status: {Status}
 Amount of items:{AmountOfItems}, Total price: {TotalPrice}
-Order Status: {OrderStatus}
     ";
     }
 }
