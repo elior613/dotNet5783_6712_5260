@@ -6,6 +6,15 @@ using System.Runtime.Serialization;
 namespace BO;
 public class Exceptions : Exception
 {
+    public class NotEnoughInStock : Exception
+    {
+        public NotEnoughInStock() : base() { }
+        public NotEnoughInStock(string message) : base(message) { }
+
+        override public string ToString() =>
+        "No more of this product in stock";
+
+    }
     public class DoesnotExistException : Exception
     {
         public DoesnotExistException() : base() { }
