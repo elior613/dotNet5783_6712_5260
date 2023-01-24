@@ -14,7 +14,7 @@ namespace BlImplementation
 
         void BlApi.IProduct.Add(BO.Product product)
         {
-            if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock > 0)
+            if (product.ID > 0)
             {
                 DO.Product prodDO = new DO.Product();
                 prodDO.Name = product.Name;
@@ -71,7 +71,7 @@ namespace BlImplementation
                     pi.InStock = true;
                 else
                     pi.InStock = false;
-                foreach (BO.OrderItem item in cart.items)
+                foreach (BO.OrderItem item in cart.Items)
                 {
                     if (item.Name == prodDO.Name)
                         count++;
@@ -99,7 +99,7 @@ namespace BlImplementation
                     pi.InStock = true;
                 else
                     pi.InStock = false;
-                foreach(BO.OrderItem item in cart.items)
+                foreach(BO.OrderItem item in cart.Items)
                 {
                     if (item.Name == product.Name)
                         count++;

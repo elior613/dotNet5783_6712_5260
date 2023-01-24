@@ -6,12 +6,6 @@ using System.Xml.Linq;
 
 namespace Dal;
 
-
-
-   
-
-
-
 internal sealed class DataSource
 {
     private static DataSource _instance = null;
