@@ -20,7 +20,7 @@ namespace BlApi
         IEnumerable<OrderForList?>? GetOrders();
 
         /// <summary>
-        /// for Admin Only:return order depending of it's ID
+        /// return order depending of it's ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

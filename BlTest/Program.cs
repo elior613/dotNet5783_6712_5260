@@ -14,7 +14,7 @@ namespace BlTest
 
         static IBL bl = new BL();
         static IDal dal = new DalList();
-        static BL bl2 = new BL();
+
 
         static Random rand = new Random();
         static BO.Cart cart = new BO.Cart() {
@@ -25,6 +25,8 @@ namespace BlTest
         };
         static BO.Product product = new BO.Product();
         static BO.ProductItem productItem=new BO.ProductItem();
+        static BO.Order order = new BO.Order();
+        static BO.OrderTracking orderTracking = new BO.OrderTracking();
        
 
         static void Main(string[] args)
@@ -178,6 +180,85 @@ namespace BlTest
                                     bl.Product.Update(product);
                                 }
                                 catch (ErrorDetailsException ex)//...say it to the user...
+                                {
+                                    Console.WriteLine(ex);
+                                }
+                                break;
+                            default:
+                                break;
+                        };
+                        break;
+                    case 2:
+                        //Order Submenu
+                        Console.WriteLine("Hello, welcome to the shop!! What to you want to do?");
+                        Console.WriteLine("-Choose 1 to get a list of the orders.");
+                        Console.WriteLine("-Choose 2 to get an order by id");
+                        Console.WriteLine("-Choose 3 to update order shipping");
+                        Console.WriteLine("-Choose 4 to to update order delivering");
+                        Console.WriteLine("-Choose 5 to track the order");
+                        Console.WriteLine("-Choose another number to return to the menu");
+                        choice = Convert.ToInt32(Console.ReadLine());//receive the choice of the user
+
+
+                        switch (choice)
+                        {
+
+                            case 1://get a list of the orders
+                                foreach ( OrderForList ofl in bl.Order.GetOrders())
+                                {
+                                    Console.WriteLine(ofl);
+                                }
+                                break;
+
+                            case 2://get an order by ID
+
+                                Console.WriteLine("enter the id of the product you want");
+                                num = Convert.ToInt32(Console.ReadLine());
+                                try//if the id not correct ...
+                                {
+                                    order = bl.Order.Get(num);
+                                    Console.WriteLine(order);
+                                }
+                                catch (ErrorDetailsException ex)//...say it to the user...
+                                {
+                                    Console.WriteLine(ex);
+                                }
+                                break;
+                            case 3://update order shipping
+                                Console.WriteLine("enter the id of the product you want");
+                                num = Convert.ToInt32(Console.ReadLine());
+                                try//if the id not correct ...
+                                {
+                                    order = bl.Order.Update(num);
+                                    Console.WriteLine(order);
+                                }
+                                catch (ErrorDetailsException ex)//...say it to the user...
+                                {
+                                    Console.WriteLine(ex);
+                                }
+                                break;
+                            case 4://update order delivering
+                                Console.WriteLine("enter the id of the product you want");
+                                num = Convert.ToInt32(Console.ReadLine());
+                                try//if the id not correct ...
+                                {
+                                    order = bl.Order.updateDelivery(num);
+                                    Console.WriteLine(order);
+                                }
+                                catch (ErrorDetailsException ex)//...say it to the user...
+                                {
+                                    Console.WriteLine(ex);
+                                }
+                                break;
+                            case 5:// to track the order
+                                Console.WriteLine("enter the id of the product you want");
+                                num = Convert.ToInt32(Console.ReadLine());
+                                try//if the id not correct ...
+                                {
+                                    orderTracking = bl.Order.Tracking(num);
+                                    Console.WriteLine(orderTracking);
+                                }
+                                catch (DoesnotExistException ex)//...say it to the user...
                                 {
                                     Console.WriteLine(ex);
                                 }
