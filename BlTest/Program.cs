@@ -6,6 +6,7 @@ using DO;
 using BO;
 using Dal;
 using static BO.Exceptions;
+using System.Security.Principal;
 
 namespace BlTest
 {
@@ -17,12 +18,12 @@ namespace BlTest
 
 
         static Random rand = new Random();
-        static BO.Cart cart = new BO.Cart() {
+        static BO.Cart cart = new BO.Cart(); /*{
             CostumerName = "Moshe",
             CostumerEmail = "Moshe@gmail.com",
             CostumerAddress = "Ben Yehuda 5, Jerusalem",
             Items = null
-        };
+        };*/
         static BO.Product product = new BO.Product();
         static BO.ProductItem productItem=new BO.ProductItem();
         static BO.Order order = new BO.Order();
@@ -266,6 +267,59 @@ namespace BlTest
                             default:
                                 break;
                         };
+                        break;
+
+                    case 3:
+
+                        //Cart Submenu
+                        Console.WriteLine("Choose 1 to Add Product To Cart");
+                        Console.WriteLine("Choose 2 to Update Amount Product");
+                        Console.WriteLine("Choose 3 to Confirm Order");
+                        Console.WriteLine("Choose another number to return to the menu");
+                        BO.Cart tempCart;
+                        int id, amount;
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine(@"Enter the product ID number that you want to add");
+                                while (!int.TryParse(Console.ReadLine(), out id)) ;
+                                tempCart = bl.Cart.Add(cart, id);
+                                
+                                foreach (BO.OrderItem oItem in cart.Items)
+                                {
+                                    Console.WriteLine(oItem);
+                                }
+                                break;
+
+
+                            case 2:
+                                Console.WriteLine("enter the id of the product you want to update");
+                                while (!int.TryParse(Console.ReadLine(), out id)) ;
+                                Console.WriteLine("how many product do you want to update");
+                                while (!int.TryParse(Console.ReadLine(), out amount)) ;
+                                bl.Cart.Update(cart, id, amount);
+                                foreach (BO.OrderItem oItem in cart.Items)
+                                    Console.WriteLine(oItem);
+                                break;
+
+                            case 3:
+                                string? name1, mail1, address1;
+                                Console.WriteLine("Name: ");
+                                name1 = Console.ReadLine();
+                                Console.WriteLine("eMail: ");
+                                mail1 = Console.ReadLine();
+                                Console.WriteLine("Adress: ");
+                                address1 = Console.ReadLine();
+                                bl.Cart.Confirmation(cart,name1,mail1,address1);
+                                break;
+
+                            default:
+                                break;
+                        }
+
+
+
+
                         break;
 
                 };
