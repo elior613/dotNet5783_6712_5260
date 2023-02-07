@@ -46,5 +46,15 @@ public class Exceptions : Exception
         "Add Failed Excaption: adding the product failed due to duplicate product ID/abnormal catch/incorrect data";
 
     }
+
+    public class AvailableException : Exception
+    {
+        public AvailableException() : base() { }
+        public AvailableException(string message) : base(message) { }
+        public AvailableException(string message, Exception innerException) : base(message, innerException) { }
+        protected AvailableException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        override public string ToString() =>
+        "The product is available on order";
+    }
 }
 

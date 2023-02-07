@@ -30,7 +30,7 @@ namespace BlApi
         ///</summary>
         ///<param name="Cart"></param>
         ///
-        public void Confirmation(Cart cart, string name, string email, string adress);
+       // public void Confirmation(Cart cart, string name, string email, string adress);
 
 
     }

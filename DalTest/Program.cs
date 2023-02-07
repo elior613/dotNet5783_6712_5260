@@ -22,7 +22,7 @@ class DalTest
         IEnumerable<string> details=new List<string>();
         Product product = new Product()
         {
-            ID = 100051,
+            ID = 100050,
             Furniture = (DO.Furniture)rand.Next(0, 4)
         };
 
@@ -172,7 +172,22 @@ class DalTest
                         case 1:
                             try
                             {
-                                dal.Order.Add(order);//adding a new order
+                                int id = dal.Order.Add(order);//adding a new order
+                                //to update a new order in the order item table
+                                OrderItem ordItem = new OrderItem();
+                                ordItem.OrderID = id;
+                                try
+                                {
+                                    dal.OrderItem.Add(ordItem);
+                                }
+                                      
+                            catch
+                            {
+                                items = dal.OrderItem.GetAll();//adding a new ID for the new Order
+                                orderitem = items.ToList()[items.Count() - 1];
+                                ordItem.ID++;
+                                dal.OrderItem.Add(ordItem);//adding a new order
+                            }
                             }
                             catch
                             {

@@ -29,13 +29,20 @@ namespace BlImplementation
 
         void BlApi.IProduct.Delete(int id)
         {
-            IEnumerable<DO.Order> orders = Dal.Order.GetAll();
-            foreach (DO.Order order in orders)
+            try
             {
-                if (order.ID == id)
-                    throw new Exception("The product is available on order");
+                IEnumerable<DO.OrderItem> orders = Dal.OrderItem.GetAll();
+                foreach (DO.OrderItem order in orders)
+                {
+                    if (order.ProductID == id)
+                        throw new AvailableException();
+                }
+                Dal.Product.Delete(id);
             }
-            Dal.Product.Delete(id);
+            catch (DoesntExistException ex)//...say it to the user...
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         BO.Product? BlApi.IProduct.Get(int ID)
@@ -64,6 +71,7 @@ namespace BlImplementation
             if (id > 0)
             {
                 prodDO = Dal.Product.Get(id);
+                pi.ID=prodDO.ID;
                 pi.Name = prodDO.Name;
                 pi.Furniture = (BO.Furniture)prodDO.Furniture;
                 pi.Price = prodDO.Price;
@@ -85,12 +93,16 @@ namespace BlImplementation
 
         IEnumerable<ProductItem?>? BlApi.IProduct.GetProductCatalog(BO.Cart cart)
         {
-            int count = 0;
             List<ProductItem?> list = new List<ProductItem?>();
-            ProductItem pi = new ProductItem();
-            IEnumerable<DO.Product> products = Dal.Product.GetAll();
+            List<DO.Product> products = new List<DO.Product>(); 
+            foreach(DO.Product product in Dal.Product.GetAll())
+            {
+                products.Add(product);
+            }
             foreach (DO.Product product in products)
             {
+                ProductItem pi = new ProductItem();
+                int count = 0;
                 pi.Name = product.Name;
                 pi.ID = product.ID;
                 pi.Price = product.Price;
@@ -99,54 +111,62 @@ namespace BlImplementation
                     pi.InStock = true;
                 else
                     pi.InStock = false;
-                foreach(BO.OrderItem item in cart.Items)
+                foreach (BO.OrderItem item in cart.Items)
                 {
-                    if (item.Name == product.Name)
+                    if (item.Name == product.Name&&item.Price==product.Price)
                         count++;
                 }
-                pi.Amount=count;
-                list.Add(pi);
+                pi.Amount = count;
+
+                 list.Add(pi);
             }
+            
                 return list;
         }
 
-        IEnumerable<ProductForList?>? BlApi.IProduct.GetProductForLists(Func<DO.Product?, bool>? filter)
+        IEnumerable<ProductForList?>? BlApi.IProduct.GetProductForLists()
         {
             List<ProductForList> productForLists=new List<ProductForList>();
             foreach (DO.Product item in Dal.Product.GetAll())//converting from product to product for list
             {
-                if (filter(item))
-                {
                     BO.ProductForList productForList = new BO.ProductForList();
                     productForList.ID = item.ID;
                     productForList.Name = item.Name;
                     productForList.Price = item.Price;
                     productForList.Furniture = (BO.Furniture)item.Furniture;
-                    productForLists.Add(productForList); 
+                    productForLists.Add(productForList);
+
+
                 }
-               
-            }
-
-
             return productForLists;
         }
 
         void BlApi.IProduct.Update(BO.Product product)
         {
-            if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock > 0)
-            {
-                DO.Product _product = new DO.Product()
+          
+                if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock > 0)
                 {
-                    ID = product.ID,
-                    Name = product.Name,
-                    Price = product.Price,
-                    InStock = product.InStock,
-                    Furniture = (DO.Furniture)product.Furniture
-                };
-                Dal.Product.Update(_product);
+                try
+                {
+                    DO.Product _product = new DO.Product()
+                    {
+                        ID = product.ID,
+                        Name = product.Name,
+                        Price = product.Price,
+                        InStock = product.InStock,
+                        Furniture = (DO.Furniture)product.Furniture
+                    };
+                    Dal.Product.Update(_product);
+                }
+                catch (DoesntExistException ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
+           
             else
                 throw new ErrorDetailsException();
         }
     }
 }
+

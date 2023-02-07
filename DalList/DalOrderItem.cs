@@ -18,7 +18,8 @@ internal class DalOrderItem:IOrderItem
                 throw new ExistException();
                 }
         oi.ID = DataSource.Config.OrderItemId;
-        oi.OrderID = rand.Next(1,dataSource.orderArr.Count());
+        if(oi.OrderID<1||oi.OrderID>dataSource.orderArr.Count())
+            oi.OrderID = rand.Next(1, dataSource.orderArr.Count());
         oi.ProductID = rand.Next(100000,100000+dataSource.producrArr.Count());
         foreach(Product product in dataSource.producrArr)
         {

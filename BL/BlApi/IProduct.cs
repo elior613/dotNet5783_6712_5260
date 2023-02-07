@@ -14,7 +14,7 @@ namespace BlApi
         /// </summary>
         /// <returns></returns>
         /// 
-        IEnumerable<ProductForList?>? GetProductForLists(Func<DO.Product?,bool>?filter);
+        IEnumerable<ProductForList?>? GetProductForLists();
 
         /// <summary>
         /// return the list of catalog of the products

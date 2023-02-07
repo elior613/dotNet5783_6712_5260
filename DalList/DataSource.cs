@@ -209,14 +209,17 @@ internal sealed class DataSource
         orderArr.Add(order);
     }
 
+    int countOrder = 0;
     private  void AddOrderItem()
     {
         OrderItem orderItem = new OrderItem()
         {
             ID = Config.OrderItemId,
-            OrderID = rand.Next(1, 100),
+            OrderID = ++countOrder,
             ProductID = rand.Next(100000, 100000 + producrArr.Count())
         };
+        if (countOrder > 100)
+            orderItem.OrderID = rand.Next(1, 100);
         foreach(Product product in producrArr)
         {
             if (product.ID == orderItem.ProductID)

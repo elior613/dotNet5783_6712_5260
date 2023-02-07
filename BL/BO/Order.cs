@@ -21,7 +21,9 @@ namespace BO
         public override string ToString() => $@"
 Order ID: {ID}, Costumer details: {CostumerName},{CostumerEmail}, {CostumerAddress}, 
 Order date:{OrderDate}, Ship date: {ShipDate}, Delivery date: {DeliveryDate},
-Total price: {TotalPrice}, Item: {Item}, Status: {Status}
+Total price: {TotalPrice}, 
+Item: {Item}
+Status: {Status}
     ";
     }
 }

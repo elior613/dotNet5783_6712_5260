@@ -7,6 +7,7 @@ using BO;
 using Dal;
 using static BO.Exceptions;
 using System.Security.Principal;
+using System.Collections.Generic;
 
 namespace BlTest
 {
@@ -28,6 +29,10 @@ namespace BlTest
         static BO.ProductItem productItem=new BO.ProductItem();
         static BO.Order order = new BO.Order();
         static BO.OrderTracking orderTracking = new BO.OrderTracking();
+        static List<DO.Product> list=new List<DO.Product>();
+        static List<BO.OrderItem> orderItems = new List<BO.OrderItem>();
+        
+      
        
 
         static void Main(string[] args)
@@ -65,14 +70,16 @@ namespace BlTest
                         {
 
                             case 1://get a list of the product
-                                foreach (ProductForList pfl in bl.Product.GetProductForLists(null))
+                                foreach (ProductForList pfl in bl.Product.GetProductForLists())
                                 {
                                     Console.WriteLine(pfl);
                                 }
                                 break;
 
                             case 2://get a list of catalog of the products
-
+                                order = bl.Order.Get(1);
+                                orderItems.Add(order.Item);
+                                cart.Items = orderItems;
                                 foreach (ProductItem pi in bl.Product.GetProductCatalog(cart))
                                 {
                                     Console.WriteLine(pi);
@@ -91,6 +98,10 @@ namespace BlTest
                                 {
                                     Console.WriteLine(ex);
                                 }
+                                catch (DoesntExistException ex)//...say it to the user...
+                                {
+                                    Console.WriteLine(ex);
+                                }
                                 break;
                             case 4://get a specific product depending of the ID (for customers)
                             
@@ -98,15 +109,9 @@ namespace BlTest
                                 {
                                     Console.WriteLine("enter the id of the product you want");
                                     num = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine("enter your name");
-                                    name = System.Console.ReadLine();
-                                    cart.CostumerName = name;
-                                    Console.WriteLine("enter your email");
-                                    email = System.Console.ReadLine();
-                                    cart.CostumerEmail = email;
-                                    Console.WriteLine("enter your adderss");
-                                    address = System.Console.ReadLine();
-                                    cart.CostumerAddress = address;
+                                    order = bl.Order.Get(1);
+                                    orderItems.Add(order.Item);
+                                    cart.Items = orderItems;
                                     productItem = bl.Product.Get(num, cart);
                                     Console.WriteLine(productItem);
                                 }
@@ -118,7 +123,9 @@ namespace BlTest
                             case 5:// to add any product
                                 try
                                 {
-
+                                    IEnumerable< ProductForList> list=bl.Product.GetProductForLists();
+                                    list.ToList();
+                                    product.ID = 100000 + list.Count();
                                     bl.Product.Add(product);
                                 }
                                 catch
@@ -137,7 +144,7 @@ namespace BlTest
                                 {
                                     bl.Product.Delete(num);
                                 }
-                                catch (Exception ex)//...say it to the user...
+                                catch (AvailableException ex)//...say it to the user...
                                 {
                                     Console.WriteLine(ex);
                                 }
@@ -184,6 +191,7 @@ namespace BlTest
                                 {
                                     Console.WriteLine(ex);
                                 }
+                                
                                 break;
                             default:
                                 break;
@@ -213,7 +221,7 @@ namespace BlTest
 
                             case 2://get an order by ID
 
-                                Console.WriteLine("enter the id of the product you want");
+                                Console.WriteLine("enter the id of the order you want");
                                 num = Convert.ToInt32(Console.ReadLine());
                                 try//if the id not correct ...
                                 {
@@ -226,7 +234,7 @@ namespace BlTest
                                 }
                                 break;
                             case 3://update order shipping
-                                Console.WriteLine("enter the id of the product you want");
+                                Console.WriteLine("enter the id of the order you want");
                                 num = Convert.ToInt32(Console.ReadLine());
                                 try//if the id not correct ...
                                 {
@@ -239,7 +247,7 @@ namespace BlTest
                                 }
                                 break;
                             case 4://update order delivering
-                                Console.WriteLine("enter the id of the product you want");
+                                Console.WriteLine("enter the id of the order you want");
                                 num = Convert.ToInt32(Console.ReadLine());
                                 try//if the id not correct ...
                                 {
@@ -252,7 +260,7 @@ namespace BlTest
                                 }
                                 break;
                             case 5:// to track the order
-                                Console.WriteLine("enter the id of the product you want");
+                                Console.WriteLine("enter the id of the order you want");
                                 num = Convert.ToInt32(Console.ReadLine());
                                 try//if the id not correct ...
                                 {
@@ -310,7 +318,7 @@ namespace BlTest
                                 mail1 = Console.ReadLine();
                                 Console.WriteLine("Adress: ");
                                 address1 = Console.ReadLine();
-                                bl.Cart.Confirmation(cart,name1,mail1,address1);
+                              //  bl.Cart.Confirmation(cart,name1,mail1,address1);
                                 break;
 
                             default:

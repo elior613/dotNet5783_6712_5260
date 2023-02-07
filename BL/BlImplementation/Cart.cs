@@ -66,7 +66,7 @@ namespace BlImplementation
             return cart;
         }
 
-        public void Confirmation(BO.Cart cart,string name, string email, string adress)
+       /* public void Confirmation(BO.Cart cart,string name, string email, string adress)
         {
             DO.Product doProduct;
             BO.Product product;
@@ -94,6 +94,7 @@ namespace BlImplementation
             }
             throw new NotImplementedException();
         }
+       */
 
         public bool MailCheck(string email)
         {

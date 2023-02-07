@@ -2,7 +2,9 @@
 using BO;
 using Dal;
 using DalApi;
+using DO;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Reflection.Metadata.Ecma335;
 using static BO.Exceptions;
 
@@ -17,10 +19,10 @@ namespace BlImplementation
             int count = 0;
             double total = 0;
             List<OrderForList> orderForLists=new List<OrderForList?>();
-            BO.OrderForList order = new BO.OrderForList();
             IEnumerable <DO.Order> orders= Dal.Order.GetAll();
             foreach(DO.Order ord in orders)
             {
+                BO.OrderForList order = new BO.OrderForList();
                 order.ID= ord.ID;
                 order.CostumerName= ord.CostumerName;
                 if (ord.DeliveryDate != DateTime.MinValue)
@@ -63,17 +65,17 @@ namespace BlImplementation
                 ord.DeliveryDate=order.DeliveryDate;
                 ord.ShipDate=order.ShipDate;
                 ord.OrderDate=order.OrderDate;
-                foreach(DO.OrderItem oi in Dal.OrderItem.GetAll())
+                foreach(DO.OrderItem OI in Dal.OrderItem.GetAll())
                 {
-                    if(oi.OrderID==ord.ID)
-                        prodID = oi.ProductID;
+                    if(OI.OrderID==ord.ID)
+                        prodID = OI.ProductID;
                 }
-                foreach(BO.OrderItem oi in GetOrderItems())
+                foreach (BO.OrderItem oi in GetOrderItems())
                 {
                     if (oi.ProductID == prodID)
                         ord.Item = oi;
                 }
-                ord.TotalPrice=ord.Item.TotalPrice;
+                 ord.TotalPrice=ord.Item.TotalPrice;
                 if (ord.DeliveryDate != DateTime.MinValue)
                     ord.Status = BO.OrderStatus.delivered;
                 else if (ord.ShipDate != DateTime.MinValue)
@@ -114,7 +116,7 @@ namespace BlImplementation
         {
             BO.Order thisOrder = new BO.Order();
             DO.Order ord = Dal.Order.Get(id);
-            if (ord.DeliveryDate == DateTime.MinValue)
+            if (ord.ShipDate!=DateTime.MinValue&&ord.DeliveryDate == DateTime.MinValue)
             {
                 ord.DeliveryDate = DateTime.Now;
                 Dal.Order.Update(ord);
@@ -139,33 +141,35 @@ namespace BlImplementation
             DO.Order ord = Dal.Order.Get(id);
             if (ord.ID == id)
             {
-                Tuple<DateTime, BO.OrderStatus>[] DStatus = new Tuple<DateTime, BO.OrderStatus>[3];
-                DStatus[0]= new Tuple<DateTime, BO.OrderStatus>(ord.OrderDate,BO.OrderStatus.confirmed);
-                DStatus[0] = new Tuple<DateTime, BO.OrderStatus>(ord.ShipDate, BO.OrderStatus.shipped);
-                DStatus[0] = new Tuple<DateTime, BO.OrderStatus>(ord.DeliveryDate, BO.OrderStatus.delivered);
-
-                BO.OrderTracking tracking=new BO.OrderTracking();
-                tracking.ID= id;
+       
+                IEnumerable<Tuple<DateTime?, string?>> list;
+                BO.OrderTracking tracking = new BO.OrderTracking();
+                tracking.ID = id;
                 if (ord.DeliveryDate != DateTime.MinValue)
                     tracking.Status = BO.OrderStatus.delivered;
                 else if (ord.ShipDate != DateTime.MinValue)
                     tracking.Status = BO.OrderStatus.shipped;
                 else
                     tracking.Status = BO.OrderStatus.confirmed;
-                tracking.OrderStatus = DStatus;
+                list = new List<Tuple<DateTime?, string>>
+            {
+                new Tuple<DateTime?, string>(ord.OrderDate, $"The Order {ord.ID} was ordered"),
+                new Tuple<DateTime?, string>(ord.ShipDate, $"The Order {ord.ID} was shipped"),
+                new Tuple<DateTime?, string>(ord.DeliveryDate, $"The Order {ord.ID} was delivered")
+            };
+                tracking.OrderStatus = list;
                 return tracking;
             }
             else
                 throw new DoesnotExistException();
         }
 
-          IEnumerable<BO.OrderItem> GetOrderItems() //a help method for the method Get
+        List<BO.OrderItem> GetOrderItems() //a help method for the method Get
         {
-            IEnumerable<DO.OrderItem> orderItems = Dal.OrderItem.GetAll();
             List<BO.OrderItem> list = new List<BO.OrderItem>();
-            BO.OrderItem oi=new BO.OrderItem();
-            foreach(DO.OrderItem item in orderItems)
+            foreach(DO.OrderItem item in Dal.OrderItem.GetAll())
             {
+                BO.OrderItem oi = new BO.OrderItem();
                 oi.ID=item.ID;
                 oi.ProductID=item.ProductID;
                 oi.Amount=item.Amount;
@@ -184,11 +188,10 @@ namespace BlImplementation
 
         IEnumerable<BO.Order> GetAllOrders()//a help method for the method update
         {
-            IEnumerable<DO.Order> orders = Dal.Order.GetAll();
             List<BO.Order> list = new List<BO.Order>();
-            BO.Order order = new BO.Order();
-            foreach (DO.Order ord in orders)
+            foreach (DO.Order ord in Dal.Order.GetAll())
             {
+                BO.Order order = new BO.Order();
                 order.ID = ord.ID;
                 order.CostumerName = ord.CostumerName;
                 order.CostumerEmail = ord.CostumerEmail;
