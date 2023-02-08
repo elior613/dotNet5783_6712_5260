@@ -13,6 +13,7 @@ public struct Order//structur Order
     public DateTime ShipDate { get; set; }
     public DateTime DeliveryDate { get; set; }
 
+    public int totalAmount;
 
     //to show the details when asked
     public override string ToString() => $@"

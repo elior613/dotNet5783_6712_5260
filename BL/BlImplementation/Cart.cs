@@ -66,7 +66,7 @@ namespace BlImplementation
             return cart;
         }
 
-       /* public void Confirmation(BO.Cart cart,string name, string email, string adress)
+        public void Confirmation(BO.Cart cart,string name, string email, string adress)
         {
             DO.Product doProduct;
             BO.Product product;
@@ -83,18 +83,30 @@ namespace BlImplementation
                 if (product.InStock < item.Amount)
                     throw new BO.Exceptions.NotEnoughInStock();
                 if (name == "") 
-                    throw new BO.Exceptions.DoesnotExistException("Don't know the name of the customer ");
+                    throw new BO.Exceptions.DoesnotExistException("Missing Name ");
                 if (adress == "") 
-                    throw new BO.Exceptions.DoesnotExistException("Adress don't known");
-                System.Net.Mail.MailAddress
-                if (!IsValidEmail(email)) // verify the email 
-                    throw new BO.EmailNotValid("the email isn't valid check this out");
-
-
+                    throw new BO.Exceptions.DoesnotExistException("Missing Adress");
+                if (!MailCheck(email)) // verify the email 
+                    throw new BO.Exceptions.DoesnotExistException("the email isn't valid check this out");
             }
-            throw new NotImplementedException();
+            
+            int totalQuantity = (from item in cart.Items
+                                     select item.Amount).Sum();
+
+            if (totalQuantity==0)
+                throw new BO.Exceptions.DoesnotExistException("The cart is Empty.");
+
+            DO.Order newOrder = new DO.Order()
+            {
+                totalAmount = totalQuantity,
+                CostumerAddress = adress,
+                CostumerEmail = email,
+                CostumerName = name,
+                OrderDate = DateTime.Now,
+                ID = 0,
+            };
         }
-       */
+       
 
         public bool MailCheck(string email)
         {
