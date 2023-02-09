@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using Dal;
 using DalApi;
+using DO;
 using System.Xml.Linq;
 
 namespace BlImplementation
@@ -86,8 +87,8 @@ namespace BlImplementation
                     throw new BO.Exceptions.DoesnotExistException("Missing Name ");
                 if (adress == "") 
                     throw new BO.Exceptions.DoesnotExistException("Missing Adress");
-                if (!MailCheck(email)) // verify the email 
-                    throw new BO.Exceptions.DoesnotExistException("the email isn't valid check this out");
+                if (MailCheck(email)
+                    throw new BO.Exceptions.DoesnotExistException("Email isn't correct");
             }
             
             int totalQuantity = (from item in cart.Items
@@ -105,7 +106,38 @@ namespace BlImplementation
                 OrderDate = DateTime.Now,
                 ID = 0,
             };
-        }
+            int orderId = Dal!.Order.Add(newOrder); 
+            DO.OrderItem DOoi = new DO.OrderItem();
+            foreach (var item in cart.Items) // add to the list of orderItem (data) 
+            {
+                DOoi.Amount = item.Amount;
+                DOoi.ProductID = item.ProductID;
+                DOoi.Price=item.Price;
+                DOoi.OrderID = 0;
+                DOoi.OrderID = orderId;
+                item.ID = Dal.OrderItem.Add(DOoi);
+            }
+            cart.CostumerName = name;
+            cart.CostumerAddress = adress;
+            cart.CostumerEmail = email;
+
+
+            
+                foreach (var item in cart.Items)
+                {
+                try
+                {
+                    DO.Product DoProduct = Dal.Product.Get(item.ProductID);
+                    DoProduct.InStock -= item.Amount;
+                    Dal.Product.Update(DoProduct);
+                }
+                catch (Exception)
+                {
+                    throw new DoesntExistException("This Product doesn't exist");
+                }
+                }
+            }
+        
        
 
         public bool MailCheck(string email)
