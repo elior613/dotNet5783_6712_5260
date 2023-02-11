@@ -144,7 +144,7 @@ namespace BlImplementation
         void BlApi.IProduct.Update(BO.Product product)
         {
           
-                if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock > 0)
+                if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock >= 0)
                 {
                 try
                 {

@@ -284,30 +284,55 @@ namespace BlTest
                         Console.WriteLine("Choose 2 to Update Amount Product");
                         Console.WriteLine("Choose 3 to Confirm Order");
                         Console.WriteLine("Choose another number to return to the menu");
+                        choice = Convert.ToInt32(Console.ReadLine());//receive the choice of the user
                         BO.Cart tempCart;
                         int id, amount;
                         switch (choice)
                         {
                             case 1:
-                                Console.WriteLine(@"Enter the product ID number that you want to add");
-                                while (!int.TryParse(Console.ReadLine(), out id)) ;
-                                tempCart = bl.Cart.Add(cart, id);
-                                
-                                foreach (BO.OrderItem oItem in cart.Items)
+                                try//if the id correct and there is in stock
                                 {
-                                    Console.WriteLine(oItem);
+                                    Console.WriteLine(@"Enter the product ID number that you want to add");
+                                    while (!int.TryParse(Console.ReadLine(), out id)) ;
+                                    tempCart = bl.Cart.Add(cart, id);
+
+                                    foreach (BO.OrderItem oItem in cart.Items)
+                                    {
+                                        Console.WriteLine(oItem);
+                                    }
+                                
+                                }
+                                catch(DoesnotExistException ex)
+                                {
+                                    Console.WriteLine(ex);
+                                }
+                                catch (NotEnoughInStock ex)
+                                {
+                                    Console.WriteLine(ex);
                                 }
                                 break;
 
 
                             case 2:
-                                Console.WriteLine("enter the id of the product you want to update");
-                                while (!int.TryParse(Console.ReadLine(), out id)) ;
-                                Console.WriteLine("how many product do you want to update");
-                                while (!int.TryParse(Console.ReadLine(), out amount)) ;
-                                bl.Cart.Update(cart, id, amount);
-                                foreach (BO.OrderItem oItem in cart.Items)
-                                    Console.WriteLine(oItem);
+                                try
+                                {
+                                    Console.WriteLine("enter the id of the product you want to update");
+                                    while (!int.TryParse(Console.ReadLine(), out id)) ;
+                                    Console.WriteLine("how many product do you want to update");
+                                    while (!int.TryParse(Console.ReadLine(), out amount)) ;
+                                    bl.Cart.Update(cart, id, amount);
+                                    if (cart.Items != null)
+                                    {
+                                        foreach (BO.OrderItem oItem in cart.Items)
+                                            Console.WriteLine(oItem);
+                                    }
+                                    else
+                                        Console.WriteLine("the product doesn't exist in cart");
+                                }
+                                catch (DoesnotExistException ex)
+                                {
+                                    Console.WriteLine(ex);
+                                } 
                                 break;
 
                             case 3:
@@ -318,7 +343,18 @@ namespace BlTest
                                 mail1 = Console.ReadLine();
                                 Console.WriteLine("Adress: ");
                                 address1 = Console.ReadLine();
-                              //  bl.Cart.Confirmation(cart,name1,mail1,address1);
+                                try
+                                {
+                                    bl.Cart.Confirmation(cart, name1, mail1, address1);
+                                }
+                                catch(DoesnotExistException ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+                                catch (NotEnoughInStock ex)
+                                {
+                                    Console.WriteLine(ex);
+                                }
                                 break;
 
                             default:

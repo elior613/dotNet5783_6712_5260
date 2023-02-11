@@ -21,7 +21,7 @@ namespace BlApi
         /// Updating the quantity of a product in the cart
         /// </summary>
         /// <param name="cart"></param>
-        public void Update(BO.Cart cart, int productI,int newQuantity=1);
+        public Cart? Update(BO.Cart cart, int productI,int newQuantity=1);
         public void UpdatingSum(BO.Cart cart);
         public bool MailCheck(string email);
 
@@ -30,7 +30,7 @@ namespace BlApi
         ///</summary>
         ///<param name="Cart"></param>
         ///
-       // public void Confirmation(Cart cart, string name, string email, string adress);
+        public void Confirmation(Cart cart, string name, string email, string adress);
 
 
     }

@@ -2,6 +2,7 @@
 using Dal;
 using DalApi;
 using DO;
+using System.ComponentModel;
 using System.Xml.Linq;
 
 namespace BlImplementation
@@ -9,38 +10,57 @@ namespace BlImplementation
     internal class Cart:ICart
     {
         private IDal Dal = new DalList();
-
+        Random rand = new Random();
         public BO.Cart? Add(BO.Cart cart, int productId)
         {
             BO.Product? product;
             BO.OrderItem? orderItem;
             orderItem= cart.Items?.FirstOrDefault(item => item.ProductID == productId);
 
-            if (orderItem == null) 
+            if (orderItem == null)
             {
                 //product = Dal.Product.GetOne(item => item?.ID == productID)?.ConvertProduct_DO_to_BO() ?? throw new BO.NotValidAddToCartException($"Impossible to add this product because the product with id {productID} doesn't exist ");
-                DO.Product? doProd = Dal.Product.Get(productId);
-                if (doProd == null)
-                    throw new BO.Exceptions.DoesnotExistException($"Impossible to add this product because the product with id {productId} doesn't exist ");
-                else
+                try
                 {
-                    product=new BO.Product();
-                    product.ID=doProd.Value.ID;
-                    product.Name=doProd.Value.Name;
-                    product.Price=doProd.Value.Price;
-                    product.Furniture = (BO.Furniture)doProd.Value.Furniture;
-                    if (product.InStock<=0)
-                    {
-                        throw new BO.Exceptions.NotEnoughInStock($"Cannot add this {product.Name} in the cart: out of stock");
-                    }
-                    
-                    
+                    DO.Product? doProd = Dal.Product.Get(productId);
 
-                    List<BO.OrderItem> myOrderItems = cart.Items?.ToList() ?? new List<BO.OrderItem>();
+
+                    if (doProd == null)
+                        throw new BO.Exceptions.DoesnotExistException($"Impossible to add this product because the product with id {productId} doesn't exist ");
+                    else
+                    {
+                        product = new BO.Product();
+                        product.ID = doProd.Value.ID;
+                        product.Name = doProd.Value.Name;
+                        product.Price = doProd.Value.Price;
+                        product.Furniture = (BO.Furniture)doProd.Value.Furniture;
+                        product.InStock = doProd.Value.InStock;
+                        if (product.InStock <= 0)
+                        {
+                            throw new BO.Exceptions.NotEnoughInStock($"Cannot add this {product.Name} in the cart: out of stock");
+                        }
+
+
+                        orderItem = new BO.OrderItem()
+                        {
+                            ID = rand.Next(),
+                            ProductID = product.ID,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Amount = 1,
+                            TotalPrice = product.Price
+                        };
+                        List<BO.OrderItem> myOrderItems = cart.Items?.ToList() ?? new List<BO.OrderItem>();
                     myOrderItems.Add(orderItem);
                     cart.Items = myOrderItems;
                     UpdatingSum(cart);
 
+                }
+            }
+
+                catch (DO.DoesntExistException ex)
+                {
+                    throw new BO.Exceptions.DoesnotExistException();
                 }
             }
             else
@@ -54,6 +74,11 @@ namespace BlImplementation
                 product.Name = doProd.Value.Name;
                 product.Price = doProd.Value.Price;
                 product.Furniture = (BO.Furniture)doProd.Value.Furniture;
+                foreach(DO.Product prod in Dal.Product.GetAll())
+                {
+                    if (prod.ID == product.ID)
+                        product.InStock = prod.InStock;
+                }
                 if (product.InStock <= 0)
                 {
                     throw new BO.Exceptions.NotEnoughInStock($"Cannot add this {product.Name} in the cart: out of stock");
@@ -74,7 +99,7 @@ namespace BlImplementation
             foreach (var item in cart.Items??throw new BO.Exceptions.DoesnotExistException("cannot confirm the order") )
             {
                 product = new BO.Product();
-                doProduct = Dal.Product.Get(item.ID);
+                doProduct = Dal.Product.Get(item.ProductID);
                 product.Furniture = (BO.Furniture)doProduct.Furniture;
                 product.Name = doProduct.Name;
                 product.Price=doProduct.Price;
@@ -87,7 +112,7 @@ namespace BlImplementation
                     throw new BO.Exceptions.DoesnotExistException("Missing Name ");
                 if (adress == "") 
                     throw new BO.Exceptions.DoesnotExistException("Missing Adress");
-                if (MailCheck(email)
+                if (MailCheck(email)==false)
                     throw new BO.Exceptions.DoesnotExistException("Email isn't correct");
             }
             
@@ -142,38 +167,53 @@ namespace BlImplementation
 
         public bool MailCheck(string email)
         {
-            var mail = new System.Net.Mail.MailAddress(email);
+            try
+            {
+                var mail = new System.Net.Mail.MailAddress(email);
 
-            return mail.Address==email;
+                return mail.Address == email;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
 
-        public void Update(BO.Cart cart, int productId, int newQuantity=1)
+        public BO.Cart? Update(BO.Cart cart, int productId, int newQuantity=1)
         {
-            BO.OrderItem? orderItem = cart.Items?.FirstOrDefault(item => item.ProductID == productId);
-
-            if (orderItem?.Amount < newQuantity && newQuantity > 0) 
-                for (int i = newQuantity-orderItem.Amount; i > 0; i--)
-                    cart = Add(cart, productId) ?? throw new BO.Exceptions.DoesnotExistException();
-
-            else if (orderItem?.Amount > newQuantity && newQuantity > 0)
+            try
             {
+                DO.Product? doProd = Dal.Product.Get(productId);
+                BO.OrderItem? orderItem = cart.Items?.FirstOrDefault(item => item.ProductID == productId);
 
-                List<BO.OrderItem> newOI = cart.Items?.ToList() ?? new List<BO.OrderItem>();
-                BO.OrderItem? UpdatingOrder = newOI.Find(item => item.ProductID == productId) ?? throw new BO.Exceptions.DoesnotExistException("This OrderItem doesn't exist in the cart");
-                UpdatingOrder.TotalPrice = (double)UpdatingOrder.Price * newQuantity;
-                UpdatingOrder.Amount = newQuantity;
-                cart.Items = newOI;//switching the old non-update list whith the new Update List
-                UpdatingSum(cart); 
+                if (orderItem?.Amount < newQuantity && newQuantity > 0)
+                    for (int i = newQuantity - orderItem.Amount; i > 0; i--)
+                        cart = Add(cart, productId) ?? throw new BO.Exceptions.DoesnotExistException();
 
+                else if (orderItem?.Amount > newQuantity && newQuantity > 0)
+                {
+
+                    List<BO.OrderItem> newOI = cart.Items?.ToList() ?? new List<BO.OrderItem>();
+                    BO.OrderItem? UpdatingOrder = newOI.Find(item => item.ProductID == productId) ?? throw new BO.Exceptions.DoesnotExistException("This OrderItem doesn't exist in the cart");
+                    UpdatingOrder.TotalPrice = (double)UpdatingOrder.Price * newQuantity;
+                    UpdatingOrder.Amount = newQuantity;
+                    cart.Items = newOI;//switching the old non-update list whith the new Update List
+                    UpdatingSum(cart);
+
+                }
+                else if (orderItem?.Amount == 0)
+                {
+                    List<BO.OrderItem> newOI = cart.Items?.ToList() ?? new List<BO.OrderItem>();
+                    newOI.Remove(orderItem);
+                    cart.Items = newOI;
+                    UpdatingSum(cart);
+                }
+                return cart;
             }
-            else if (orderItem?.Amount == 0)
+            catch (DO.DoesntExistException ex)
             {
-                List<BO.OrderItem> newOI = cart.Items?.ToList() ?? new List<BO.OrderItem>();
-                newOI.Remove(orderItem);
-                cart.Items = newOI;
-                UpdatingSum(cart);
+                throw new BO.Exceptions.DoesnotExistException();
             }
-            
         }
         public void UpdatingSum(BO.Cart cart)
         {

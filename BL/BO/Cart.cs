@@ -11,9 +11,15 @@ namespace BO
         internal double TotalPrice { get; set; }//the total price
 
         //to show the details when asked
-        public override string ToString() => $@"
-Costumer details: {CostumerName},{CostumerEmail}, {CostumerAddress}, 
-Total price: {TotalPrice}, Items: {Items}
-    ";
+        public override string ToString()
+        {
+            string str = "Name:" + CostumerName + '\n' +
+                         "Email:" + CostumerEmail + '\n' +
+                         "Address:" + CostumerAddress+ '\n'+
+                         "Total Price:" + TotalPrice + '\n';
+
+            return str;
+            //  return this.ToStringProperty();
+        }
     }
 }
