@@ -3,6 +3,8 @@
 using DO;
 using System.Net;
 using DalApi;
+using System.Linq;
+
 namespace Dal;
 
 internal class DalOrder:IOrder
@@ -13,7 +15,7 @@ internal class DalOrder:IOrder
     {
         for(int i = 0; i <dataSource.orderArr.Count; i++)
         {
-            if (dataSource.orderArr[i].ID == ord.ID)
+            if (dataSource.orderArr[i]?.ID == ord.ID)
                 throw new ExistException();
         }
 
@@ -46,34 +48,47 @@ internal class DalOrder:IOrder
         DO.Order ord = new DO.Order();
         for (int i = 0; i < dataSource.orderArr.Count; i++)//get thanks to a loop in an array an order
         {
-            if (dataSource.orderArr[i].ID == num)
+            if (dataSource.orderArr[i]?.ID == num)
             {
-                ord = dataSource.orderArr[i];
+                ord = (DO.Order)dataSource.orderArr?[i];
                 return ord;
             }
         }
         throw new DoesntExistException();//if the order doesn't exist
     }
 
-    public  IEnumerable<Order> GetAll()
+    
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null) =>
+        (filter == null ? dataSource.orderArr.Select(item => item) : dataSource.orderArr.Where(filter))
+        ?? throw new DoesntExistException("Missing Order");
+    public Order? Get(Func<Order?, bool>? function) // stage 3
     {
-        IEnumerable<Order> ord = dataSource.orderArr;//putting all the orders in an array and return the pointer to the array
-        return ord;
+        foreach (var item in dataSource.orderArr)
+            if (function(item))
+                return item.Value;
+        throw new DoesntExistException("Order doesn't exist");
+        /*
+        var v = from item in DataSource.orders // stage 5 
+                where function(item)
+                select item;
+        return v.FirstOrDefault(); // return the order or null
+        */
     }
 
-    public IEnumerable<string> GetDetails(int IDnum)//showing all the details about an order depending of it's ID
+
+    public IEnumerable<string?> GetDetails(int IDnum)//showing all the details about an order depending of it's ID
     {
         List<string> list = new List<string>();
         for(int i=0; i< dataSource.orderArr.Count; i++)
         {
-            if (dataSource.orderArr[i].ID == IDnum)
+            if (dataSource.orderArr[i]?.ID == IDnum)
             {
-                list.Add(dataSource.orderArr[i].CostumerName);
-                list.Add(dataSource.orderArr[i].CostumerEmail);
-                list.Add(dataSource.orderArr[i].CostumerAddress);
-                list.Add(dataSource.orderArr[i].OrderDate.ToString());
-                list.Add(dataSource.orderArr[i].ShipDate.ToString());
-                list.Add(dataSource.orderArr[i].DeliveryDate.ToString());
+                list.Add(dataSource.orderArr[i]?.CostumerName);
+                list.Add(dataSource.orderArr[i]?.CostumerEmail);
+                list.Add(dataSource.orderArr[i]?.CostumerAddress);
+                list.Add(dataSource.orderArr[i]?.OrderDate.ToString());
+                list.Add(dataSource.orderArr[i]?.ShipDate.ToString());
+                list.Add(dataSource.orderArr[i]?.DeliveryDate.ToString());
             }
         }
         if (list.Count > 0)
@@ -85,7 +100,7 @@ internal class DalOrder:IOrder
     {
         for(int i=0; i< dataSource.orderArr.Count; i++)
         {
-            if (dataSource.orderArr[i].ID == num)
+            if (dataSource.orderArr[i]?.ID == num)
             {
                 dataSource.orderArr.Remove(dataSource.orderArr[i]);
                 Console.WriteLine("The order has been successfully deleted");
@@ -95,11 +110,11 @@ internal class DalOrder:IOrder
         throw new DoesntExistException();//if the order didn't exist
     }
 
-    public  void Update(DO.Order ord)//updating all the details about the order 
+    public  void Update(DO.Order? ord)//updating all the details about the order 
     {
         for (int i = 0; i < dataSource.orderArr.Count; i++)
         {
-            if (dataSource.orderArr[i].ID == ord.ID)
+            if (dataSource.orderArr[i]?.ID == ord?.ID)
             {
                 dataSource.orderArr[i]=ord;
                 Console.WriteLine("The order has been updated successfully");

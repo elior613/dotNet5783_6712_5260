@@ -4,7 +4,7 @@ namespace BO
     public class OrderForList
     {
         public int ID { get; set; }//the ID with which we will selet the desired object
-        public string CostumerName { get; set; }//the name of the costumer
+        public string? CostumerName { get; set; }//the name of the costumer
         public OrderStatus Status { get; set; }//the status of the order
         public int AmountOfItems { get; set; }//amount of items
         public double TotalPrice { get; set; }//the total price

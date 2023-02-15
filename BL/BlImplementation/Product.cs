@@ -31,7 +31,7 @@ namespace BlImplementation
         {
             try
             {
-                IEnumerable<DO.OrderItem> orders = Dal.OrderItem.GetAll();
+                IEnumerable<DO.OrderItem?> orders = Dal.OrderItem.GetAll(null);
                 foreach (DO.OrderItem order in orders)
                 {
                     if (order.ProductID == id)
@@ -49,21 +49,21 @@ namespace BlImplementation
         {
             if (ID > 0)
             {
-                DO.Product prodDO = new DO.Product();
+                DO.Product? prodDO = new DO.Product();
                 prodDO = Dal.Product.Get(ID);
                 BO.Product prod = new BO.Product();
-                prod.Name = prodDO.Name;
-                prod.ID = prodDO.ID;
-                prod.InStock = prodDO.InStock;
-                prod.Price = prodDO.Price;
-                prod.Furniture = (BO.Furniture)prodDO.Furniture;
+                prod.Name = prodDO?.Name;
+                prod.ID = (int)prodDO?.ID;
+                prod.InStock = (int)prodDO?.InStock;
+                prod.Price = (double)prodDO?.Price;
+                prod.Furniture = (BO.Furniture)prodDO?.Furniture;
                 return prod;
             }
             else
                 throw new ErrorDetailsException();
         }
 
-        ProductItem? BlApi.IProduct.Get(int id, BO.Cart cart)
+        ProductItem BlApi.IProduct.Get(int id, BO.Cart cart)
         {
             ProductItem pi = new ProductItem();
             DO.Product prodDO = new DO.Product();
@@ -91,11 +91,11 @@ namespace BlImplementation
                 throw new ErrorDetailsException();
         }
 
-        IEnumerable<ProductItem?>? BlApi.IProduct.GetProductCatalog(BO.Cart cart)
+        IEnumerable<ProductItem?> BlApi.IProduct.GetProductCatalog(BO.Cart cart)
         {
             List<ProductItem?> list = new List<ProductItem?>();
             List<DO.Product> products = new List<DO.Product>(); 
-            foreach(DO.Product product in Dal.Product.GetAll())
+            foreach(DO.Product product in Dal.Product.GetAll(null))
             {
                 products.Add(product);
             }
@@ -124,7 +124,7 @@ namespace BlImplementation
                 return list;
         }
 
-        IEnumerable<ProductForList?>? BlApi.IProduct.GetProductForLists()
+        IEnumerable<ProductForList?> BlApi.IProduct.GetProductForLists()
         {
             List<ProductForList> productForLists=new List<ProductForList>();
             foreach (DO.Product item in Dal.Product.GetAll())//converting from product to product for list

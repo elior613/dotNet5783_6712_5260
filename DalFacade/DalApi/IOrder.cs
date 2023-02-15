@@ -5,6 +5,6 @@ namespace DalApi
 {
     public interface IOrder:ICrud<Order>
     {
-        public IEnumerable<string> GetDetails(int IDnum);
+        public IEnumerable<string?> GetDetails(int IDnum);
     }
 }

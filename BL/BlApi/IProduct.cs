@@ -29,7 +29,7 @@ namespace BlApi
         /// <param name="id"></param>
         /// <returns></returns>
         /// 
-        Product? Get(int ID);
+        Product Get(int ID);
 
         /// <summary>
         /// Customers screen 
@@ -38,7 +38,7 @@ namespace BlApi
         /// <param name="cart"></param>
         /// <returns></returns>
         /// 
-        ProductItem? Get(int id,Cart cart);
+        ProductItem Get(int id,Cart cart);
 
         /// <summary>
         /// Only admin screen :adding product

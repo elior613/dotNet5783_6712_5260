@@ -7,7 +7,7 @@ namespace BO
     {
         public int ID { get; set; }//the name of the product
         public int InStock { get; set; }//how many there is in the stock
-        public string Name { get; set; }//the name of the product
+        public string? Name { get; set; }//the name of the product
         public double Price { get; set; }//the price of the product
         public Furniture Furniture { get; set; }//the category of the product
 

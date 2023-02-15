@@ -14,7 +14,7 @@ internal class DalOrderItem:IOrderItem
     public int Add(OrderItem oi)
     {
         for (int i = 0; i < dataSource.orderItemArr.Count(); i++) {
-            if (dataSource.orderItemArr[i].ID == oi.ID)
+            if (dataSource.orderItemArr[i]?.ID == oi.ID)
                 throw new ExistException();
                 }
         oi.ID = DataSource.Config.OrderItemId;
@@ -39,8 +39,8 @@ internal class DalOrderItem:IOrderItem
         DO.OrderItem oi=new DO.OrderItem();
         for(int i = 0; i < dataSource.orderItemArr.Count; i++)
         {
-            if (dataSource.orderItemArr[i].ID==num)
-                oi= dataSource.orderItemArr[i];
+            if (dataSource.orderItemArr[i]?.ID==num)
+                oi= (DO.OrderItem)dataSource.orderItemArr?[i];
 
             
         }
@@ -48,31 +48,45 @@ internal class DalOrderItem:IOrderItem
             throw new DoesntExistException();
             return oi;
     }
-
-    public  IEnumerable<OrderItem> GetAll()
+    public OrderItem? Get(Func<OrderItem?, bool>? function)
     {
-        IEnumerable<OrderItem> oi =dataSource.orderItemArr;
-        return oi;
+        foreach (var item in dataSource.orderItemArr)
+            if (function(item))
+                return item;
+        throw new DoesntExistException("OrderItem doesn't exist");
+/*
+        var v = from item in dataSource.orderItemArr 
+                where function(item)
+                select item;
+        return v.FirstOrDefault(); // return the product or null
+*/
     }
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? function = null) =>
 
-    public  DO.OrderItem GetOrderItem(int prodId,int ordId)
-    {
-        DO.OrderItem oi = new DO.OrderItem();
-        for(int i=0; i < dataSource.orderItemArr.Count; i++)
-        {
-            if (dataSource.orderItemArr[i].ProductID == prodId && dataSource.orderItemArr[i].OrderID==ordId)
-                oi= dataSource.orderItemArr[i];
-        }
-        if(oi.OrderID==ordId&&oi.ProductID==prodId)
-        return oi;
-        else
-            throw new DoesntExistException();
-    }
+       (function == null ?
+                     dataSource.orderItemArr.Select(item => item) :
+                     dataSource.orderItemArr.Where(function))
+   ?? throw new DoesntExistException("Missing Order Item");
+
+    /* public  DO.OrderItem? GetOrderItem(int prodId,int ordId)
+     {
+         DO.OrderItem? oi = new DO.OrderItem();
+         for(int i=0; i < dataSource.orderItemArr.Count; i++)
+         {
+             if (dataSource.orderItemArr[i]?.ProductID == prodId && dataSource.orderItemArr[i]?.OrderID==ordId)
+                 oi= dataSource.orderItemArr?[i];
+         }
+         if(oi?.OrderID==ordId&&oi?.ProductID==prodId)
+         return oi;
+         else
+             throw new DoesntExistException();
+     }
+    */
     public  void Delete(int num)
     {
         for(int i = 0; i < dataSource.orderItemArr.Count(); i++)
         {
-            if (dataSource.orderItemArr[i].ID == num)
+            if (dataSource.orderItemArr[i]?.ID == num)
             {
                 dataSource.orderItemArr.Remove(dataSource.orderItemArr[i]);
                 Console.WriteLine("The order item has been successfully deleted");
@@ -82,11 +96,11 @@ internal class DalOrderItem:IOrderItem
         throw new DoesntExistException();
     }
 
-    public  void Update(DO.OrderItem oi)
+    public  void Update(DO.OrderItem? oi)
     {
         for (int i = 0; i < dataSource.orderItemArr.Count; i++)
         {
-            if (dataSource.orderItemArr[i].ID == oi.ID)
+            if (dataSource.orderItemArr[i]?.ID == oi?.ID)
             {
                 dataSource.orderItemArr[i] = oi;
                 Console.WriteLine("The order item has been updated successfully");

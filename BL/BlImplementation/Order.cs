@@ -19,7 +19,7 @@ namespace BlImplementation
             int count = 0;
             double total = 0;
             List<OrderForList> orderForLists=new List<OrderForList?>();
-            IEnumerable <DO.Order> orders= Dal.Order.GetAll();
+            IEnumerable <DO.Order?> orders= Dal.Order.GetAll();
             foreach(DO.Order ord in orders)
             {
                 BO.OrderForList order = new BO.OrderForList();
@@ -36,7 +36,7 @@ namespace BlImplementation
                     if (or.CostumerName == ord.CostumerName)
                     {
                         count++;
-                        foreach(DO.OrderItem oi in Dal.OrderItem.GetAll())
+                        foreach(DO.OrderItem oi in Dal.OrderItem.GetAll(null))
                         {
                             if (oi.ID == ord.ID)
                                 total += oi.Price;
@@ -51,21 +51,21 @@ namespace BlImplementation
             return orderForLists;
         }
 
-        BO.Order? BlApi.IOrder.Get(int id)
+        BO.Order BlApi.IOrder.Get(int id)
         {
             if (id > 0)
             {
                 int prodID=0; 
-                BO.Order ord=new BO.Order(); 
-                DO.Order order= Dal.Order.Get(id);
-                ord.ID=order.ID;
-                ord.CostumerName=order.CostumerName;
-                ord.CostumerAddress=order.CostumerAddress;
-                ord.CostumerEmail=order.CostumerEmail;
-                ord.DeliveryDate=order.DeliveryDate;
-                ord.ShipDate=order.ShipDate;
-                ord.OrderDate=order.OrderDate;
-                foreach(DO.OrderItem OI in Dal.OrderItem.GetAll())
+                BO.Order? ord=new BO.Order(); 
+                DO.Order? order= Dal.Order.Get(id);
+                ord.ID=(int)order?.ID;
+                ord.CostumerName=order?.CostumerName;
+                ord.CostumerAddress=order?.CostumerAddress;
+                ord.CostumerEmail=order?.CostumerEmail;
+                ord.DeliveryDate=order?.DeliveryDate;
+                ord.ShipDate=order?.ShipDate;
+                ord.OrderDate=order?.OrderDate;
+                foreach(DO.OrderItem OI in Dal.OrderItem.GetAll(null))
                 {
                     if(OI.OrderID==ord.ID)
                         prodID = OI.ProductID;
@@ -89,12 +89,13 @@ namespace BlImplementation
                 throw new ErrorDetailsException();
         }
 
-        BO.Order? BlApi.IOrder.Update(int id)
+        BO.Order BlApi.IOrder.Update(int id)
         {
             BO.Order thisOrder=new BO.Order();
             DO.Order ord = Dal.Order.Get(id);
             if (ord.ShipDate==DateTime.MinValue)
             {
+          
                 ord.ShipDate = DateTime.Now;
                 Dal.Order.Update(ord);
                 foreach(BO.Order order in GetAllOrders())
@@ -136,7 +137,7 @@ namespace BlImplementation
                 throw new ErrorDetailsException();
         }
 
-        BO.OrderTracking? BlApi.IOrder.Tracking(int id)
+        BO.OrderTracking BlApi.IOrder.Tracking(int id)
         {
             DO.Order ord = Dal.Order.Get(id);
             if (ord.ID == id)
@@ -200,7 +201,7 @@ namespace BlImplementation
                 order.ShipDate = ord.ShipDate;
                 order.DeliveryDate = ord.DeliveryDate;
                 DO.OrderItem oitem = new DO.OrderItem();
-                foreach (DO.OrderItem oi in Dal.OrderItem.GetAll())
+                foreach (DO.OrderItem oi in Dal.OrderItem.GetAll(null))
                 {
                     if (oi.OrderID == ord.ID)
                         oitem = oi;

@@ -14,9 +14,9 @@ internal sealed class DataSource
     //creating all the array we need for the each class
     static readonly Random rand = new Random();
 
-    internal List<Product> producrArr = new List<Product>();
-    internal List<Order> orderArr = new List<Order>();
-    internal List<OrderItem> orderItemArr = new List<OrderItem>();
+    internal List<Product?> producrArr = new List<Product?>();
+    internal List<Order?> orderArr = new List<Order?>();
+    internal List<OrderItem?> orderItemArr = new List<OrderItem?>();
 
     //initializing the product name
     public string initializingName(Product product)

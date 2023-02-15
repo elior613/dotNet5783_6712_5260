@@ -16,9 +16,9 @@ class DalTest
     {//initialising of all the class that we will need in our program
 
         Random rand = new Random();
-        IEnumerable<Product>products;
-        IEnumerable<Order>orders;
-        IEnumerable<OrderItem>items;
+        IEnumerable<Product?>products;
+        IEnumerable<Order?>orders;
+        IEnumerable<OrderItem?>items;
         IEnumerable<string> details=new List<string>();
         Product product = new Product()
         {
@@ -52,6 +52,7 @@ class DalTest
                     Console.WriteLine("-Choose 3 to show all products.");
                     Console.WriteLine("-Choose 4 to delete any product");
                     Console.WriteLine("-Choose 5 to update any product");
+                    Console.WriteLine("-Choose 6 to get any product");
                     Console.WriteLine("-Choose another number to return to the menu");
                     choice = Convert.ToInt32(Console.ReadLine());//receive the choice of the user
                     int num, num2, category;//those variable will receive the ID off the product we want to see or the ID of the product we want to update
@@ -90,11 +91,19 @@ class DalTest
                             }
                             break;
                         case 3://show all the details of all the existing products
-                            products = dal.Product.GetAll();
-                            foreach (Product p in products)
+                            try//if the product doesn't exist ...
                             {
-                                Console.WriteLine(p);
+                                products = dal.Product.GetAll(null);
+                                foreach (Product p in products)
+                                {
+                                    Console.WriteLine(p);
+                                }
                             }
+                            catch (DoesntExistException ex)//...say it to the user...
+                            {
+                                Console.WriteLine(ex);
+                            }
+                            
                             break;
                         case 4://for deleting a Product
                             Console.WriteLine("enter the ID of the product you want do delete ");
@@ -150,6 +159,21 @@ class DalTest
                             {
                                 Console.WriteLine(ex);
                             }
+                            break;
+
+                        case 6:
+                            Console.WriteLine("enter the ID of the product you want to see");
+                            num = Convert.ToInt32(Console.ReadLine());
+                            try//if the product doesn't exist ...
+                            {
+                                Product? productN=new Product?();
+                                productN = dal.Product.Get(item => item?.ID == num);
+                                Console.WriteLine(productN);
+                            }
+                            catch (DoesntExistException ex)//...say it to the user...
+                            {
+                                Console.WriteLine(ex);
+                            }
 
                             break;
                         default:
@@ -164,6 +188,7 @@ class DalTest
                     Console.WriteLine("-Choose 4 to show details of any Order.");
                     Console.WriteLine("-Choose 5 to delete ant Order.");
                     Console.WriteLine("-Choose 6 to update ant Order.");
+                    Console.WriteLine("-Choose 7 to get any order");
                     Console.WriteLine("-Choose another number to return to the menu");
                     choice = Convert.ToInt32(Console.ReadLine());
                     //DO.Order ord = new Order();
@@ -184,7 +209,7 @@ class DalTest
                             catch
                             {
                                 items = dal.OrderItem.GetAll();//adding a new ID for the new Order
-                                orderitem = items.ToList()[items.Count() - 1];
+                                orderitem = (DO.OrderItem)items.ToList()[items.Count() - 1];
                                 ordItem.ID++;
                                 dal.OrderItem.Add(ordItem);//adding a new order
                             }
@@ -193,7 +218,7 @@ class DalTest
                             {
 
                                 orders=dal.Order.GetAll();//adding a new ID for the new Order
-                                order = orders.ToList()[orders.Count()-1];
+                                order = (DO.Order)orders.ToList()[orders.Count()-1];
                                 order.ID++;
                                 dal.Order.Add(order);//adding a new order
                             }
@@ -212,11 +237,20 @@ class DalTest
                             }
                             break;
                         case 3:
-                             orders= dal.Order.GetAll();
-                            foreach (Order or in orders)
+                            try//if the product doesn't exist ...
                             {
-                                Console.WriteLine(or);
+                                orders = dal.Order.GetAll(null);
+                                foreach (Order p in orders)
+                                {
+                                    Console.WriteLine(p);
+                                }
                             }
+                            catch (DoesntExistException ex)//...say it to the user...
+                            {
+                                Console.WriteLine(ex);
+                            }
+
+           
                             break;
 
 
@@ -284,6 +318,20 @@ class DalTest
                             {
                                 Console.WriteLine(ex);
                             }
+                            break;
+                        case 7:
+                            Console.WriteLine("enter the ID of the order you want to see");
+                            num = Convert.ToInt32(Console.ReadLine());
+                            try//if the order doesn't exist ...
+                            {
+                                Order? OrderN = new Order?();
+                                OrderN = dal.Order.Get(item => item?.ID == num);
+                                Console.WriteLine(OrderN);
+                            }
+                            catch (DoesntExistException ex)//...say it to the user...
+                            {
+                                Console.WriteLine(ex);
+                            }
 
                             break;
                         default:
@@ -296,9 +344,10 @@ class DalTest
                     Console.WriteLine("-Choose 1 to Add a new OrderItem to an existing set.");
                     Console.WriteLine("-Choose 2 to show any OrderItem.");
                     Console.WriteLine("-Choose 3 to show all the OrderItems.");
-                    Console.WriteLine("-Choose 4 to show details of any OrderItem by Product ID and Order ID.");
+                   // Console.WriteLine("-Choose 4 to show details of any OrderItem by Product ID and Order ID.");
                     Console.WriteLine("-Choose 5 to delete ant OrderItem.");
                     Console.WriteLine("-Choose 6 to update ant OrderItem.");
+                    Console.WriteLine("-Choose 7 to get any order item");
                     Console.WriteLine("-Choose another number to return to the menu");
                     choice = Convert.ToInt32(Console.ReadLine());
                     //DO.OrderItem oi = new OrderItem();
@@ -311,7 +360,7 @@ class DalTest
                             catch
                             {
                                 items = dal.OrderItem.GetAll();//adding a new ID for the new Order
-                                orderitem = items.ToList()[items.Count() - 1];
+                                orderitem = (DO.OrderItem)items.ToList()[items.Count() - 1];
                                 orderitem.ID++;
                                 dal.OrderItem.Add(orderitem);//adding a new order
                             }
@@ -332,20 +381,28 @@ class DalTest
 
                             break;
                         case 3:
-                           items =  dal.OrderItem.GetAll();
-                     foreach(OrderItem item in items)
+                            try//if the product doesn't exist ...
                             {
-                                Console.WriteLine(item);
+                                items = dal.OrderItem.GetAll(null);
+                                foreach (OrderItem p in items)
+                                {
+                                    Console.WriteLine(p);
+                                }
                             }
+                            catch (DoesntExistException ex)//...say it to the user...
+                            {
+                                Console.WriteLine(ex);
+                            }
+                    
                             break;
-                        case 4:
+                       /* case 4:
                             Console.WriteLine("enter the ID of the order");
                             num = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("enter the ID of the product");
                             num2 = Convert.ToInt32(Console.ReadLine());
                             try
                             {
-                                orderitem = dal.OrderItem.GetOrderItem(num2, num);
+                                orderitem = (DO.OrderItem)dal.OrderItem.GetOrderItem(num2, num);
                                 Console.WriteLine(orderitem);
                             }
                             catch (DoesntExistException ex)//...say it to the user...
@@ -354,7 +411,7 @@ class DalTest
                             }
 
                             break;
-
+                       */
 
                         case 5://delete an order item depending of it's ID
                             Console.WriteLine("enter the ID of the order item you want do delete ");
@@ -395,7 +452,20 @@ class DalTest
                             {
                                 Console.WriteLine(ex);
                             }
-
+                            break;
+                        case 7:
+                            Console.WriteLine("enter the ID of the order item you want to see");
+                            num = Convert.ToInt32(Console.ReadLine());
+                            try//if the order item  doesn't exist ...
+                            {
+                                OrderItem? OrderItemN = new OrderItem?();
+                                OrderItemN = dal.OrderItem.Get(item => item?.ID == num);
+                                Console.WriteLine(OrderItemN);
+                            }
+                            catch (DoesntExistException ex)//...say it to the user...
+                            {
+                                Console.WriteLine(ex);
+                            }
                             break;
                         default:
                             break;

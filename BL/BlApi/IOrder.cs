@@ -34,7 +34,7 @@ namespace BlApi
         /// <param name="id"></param>
         /// <returns></returns>
         /// 
-        Order? Update(int id);
+        Order Update(int id);
 
         /// <summary>
         /// 

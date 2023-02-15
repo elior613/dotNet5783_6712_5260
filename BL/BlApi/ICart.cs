@@ -15,13 +15,13 @@ namespace BlApi
     /// <returns></returns>
     public interface ICart
     {
-        public Cart? Add(Cart cart, int ProductId);
+        public Cart Add(Cart cart, int ProductId);
 
         /// <summary>
         /// Updating the quantity of a product in the cart
         /// </summary>
         /// <param name="cart"></param>
-        public Cart? Update(BO.Cart cart, int productI,int newQuantity=1);
+        public Cart Update(BO.Cart cart, int productI,int newQuantity=1);
         public void UpdatingSum(BO.Cart cart);
         public bool MailCheck(string email);
 

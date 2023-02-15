@@ -11,11 +11,11 @@ namespace BlImplementation
     {
         private IDal Dal = new DalList();
         Random rand = new Random();
-        public BO.Cart? Add(BO.Cart cart, int productId)
+        public BO.Cart Add(BO.Cart cart, int productId)
         {
-            BO.Product? product;
-            BO.OrderItem? orderItem;
-            orderItem= cart.Items?.FirstOrDefault(item => item.ProductID == productId);
+            BO.Product product;
+            BO.OrderItem orderItem;
+            orderItem= cart.Items.FirstOrDefault(item => item.ProductID == productId);
 
             if (orderItem == null)
             {
