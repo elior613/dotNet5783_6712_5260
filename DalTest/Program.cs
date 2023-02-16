@@ -10,7 +10,7 @@ using System.Security.Cryptography;
 
 class DalTest
 {
-    static IDal dal = new DalList();
+    static DalApi.IDal? dal = DalApi.Factory.Get();
 
     static void Main(string[] args)
     {//initialising of all the class that we will need in our program

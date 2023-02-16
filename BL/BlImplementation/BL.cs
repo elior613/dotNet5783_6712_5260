@@ -7,7 +7,7 @@ using BlApi;
 
 namespace BlImplementation
 {
-    sealed public class BL:IBL
+    sealed internal class BL:IBL
     {
         public IProduct Product { get; }= new BlImplementation.Product();
         public IOrder Order { get; } = new BlImplementation.Order();

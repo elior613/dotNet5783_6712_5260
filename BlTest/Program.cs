@@ -14,8 +14,8 @@ namespace BlTest
     internal class Program
     {
 
-        static IBL bl = new BL();
-        static IDal dal = new DalList();
+        static IBL bl = BlApi.Factory.Get();
+        static DalApi.IDal? dal = DalApi.Factory.Get();
 
 
         static Random rand = new Random();

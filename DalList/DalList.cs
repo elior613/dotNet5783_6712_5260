@@ -9,8 +9,10 @@ using DO;
 
 namespace Dal
 {
-    sealed public class DalList : IDal
+    sealed internal class DalList : IDal
     {
+        public static IDal Instance { get; } = new DalList();
+        private DalList() { } // constructor stage 4
         public IProduct Product { get; } = new DalProduct();
         public IOrder Order { get; } = new DalOrder();
         public IOrderItem OrderItem { get; } = new DalOrderItem();

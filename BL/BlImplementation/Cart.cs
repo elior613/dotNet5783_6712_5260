@@ -1,5 +1,5 @@
 ﻿using BlApi;
-using Dal;
+
 using DalApi;
 using DO;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ namespace BlImplementation
 {
     internal class Cart:ICart
     {
-        private IDal Dal = new DalList();
+        DalApi.IDal? dal = DalApi.Factory.Get();
         Random rand = new Random();
         public BO.Cart Add(BO.Cart cart, int productId)
         {
@@ -22,7 +22,7 @@ namespace BlImplementation
                 //product = Dal.Product.GetOne(item => item?.ID == productID)?.ConvertProduct_DO_to_BO() ?? throw new BO.NotValidAddToCartException($"Impossible to add this product because the product with id {productID} doesn't exist ");
                 try
                 {
-                    DO.Product? doProd = Dal.Product.Get(productId);
+                    DO.Product? doProd = dal.Product.Get(productId);
 
 
                     if (doProd == null)
@@ -65,7 +65,7 @@ namespace BlImplementation
             }
             else
             {
-                DO.Product? doProd = Dal.Product.Get(productId);
+                DO.Product? doProd = dal.Product.Get(productId);
                 
                 if (doProd == null)
                     throw new BO.Exceptions.DoesnotExistException($"Impossible to add this product because the product with id {productId} doesn't exist ");
@@ -74,7 +74,7 @@ namespace BlImplementation
                 product.Name = doProd.Value.Name;
                 product.Price = doProd.Value.Price;
                 product.Furniture = (BO.Furniture)doProd.Value.Furniture;
-                foreach(DO.Product prod in Dal.Product.GetAll())
+                foreach(DO.Product prod in dal.Product.GetAll())
                 {
                     if (prod.ID == product.ID)
                         product.InStock = prod.InStock;
@@ -99,7 +99,7 @@ namespace BlImplementation
             foreach (var item in cart.Items??throw new BO.Exceptions.DoesnotExistException("cannot confirm the order") )
             {
                 product = new BO.Product();
-                doProduct = Dal.Product.Get(item.ProductID);
+                doProduct = dal.Product.Get(item.ProductID);
                 product.Furniture = (BO.Furniture)doProduct.Furniture;
                 product.Name = doProduct.Name;
                 product.Price=doProduct.Price;
@@ -131,7 +131,7 @@ namespace BlImplementation
                 OrderDate = DateTime.Now,
                 ID = 0,
             };
-            int orderId = Dal!.Order.Add(newOrder); 
+            int orderId = dal!.Order.Add(newOrder); 
             DO.OrderItem DOoi = new DO.OrderItem();
             foreach (var item in cart.Items) // add to the list of orderItem (data) 
             {
@@ -140,7 +140,7 @@ namespace BlImplementation
                 DOoi.Price=item.Price;
                 DOoi.OrderID = 0;
                 DOoi.OrderID = orderId;
-                item.ID = Dal.OrderItem.Add(DOoi);
+                item.ID = dal.OrderItem.Add(DOoi);
             }
             cart.CostumerName = name;
             cart.CostumerAddress = adress;
@@ -152,9 +152,9 @@ namespace BlImplementation
                 {
                 try
                 {
-                    DO.Product DoProduct = Dal.Product.Get(item.ProductID);
+                    DO.Product DoProduct = dal.Product.Get(item.ProductID);
                     DoProduct.InStock -= item.Amount;
-                    Dal.Product.Update(DoProduct);
+                    dal.Product.Update(DoProduct);
                 }
                 catch (Exception)
                 {
@@ -183,7 +183,7 @@ namespace BlImplementation
         {
             try
             {
-                DO.Product? doProd = Dal.Product.Get(productId);
+                DO.Product? doProd = dal.Product.Get(productId);
                 BO.OrderItem? orderItem = cart.Items?.FirstOrDefault(item => item.ProductID == productId);
 
                 if (orderItem?.Amount < newQuantity && newQuantity > 0)

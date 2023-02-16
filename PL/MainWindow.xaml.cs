@@ -25,7 +25,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        static private IBL bl = new BL();
+        static BlApi.IBL? bl = BlApi.Factory.Get();
 
         ObservableCollection<BO.ProductForList?> list = new ObservableCollection<BO.ProductForList?>(bl.Product.GetProductForLists());
         public MainWindow()

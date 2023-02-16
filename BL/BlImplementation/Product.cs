@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using BO;
-using Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
@@ -10,8 +9,7 @@ namespace BlImplementation
 {
     internal class Product : BlApi.IProduct
     {
-        private IDal Dal = new DalList();
-
+        DalApi.IDal? dal = DalApi.Factory.Get();
         void BlApi.IProduct.Add(BO.Product product)
         {
             if (product.ID > 0)
@@ -21,7 +19,7 @@ namespace BlImplementation
                 prodDO.ID = product.ID;
                 prodDO.InStock = product.InStock;
                 prodDO.Price = product.Price;
-                Dal.Product.Add(prodDO);
+                dal.Product.Add(prodDO);
             }
             else
                 throw new ErrorDetailsException();
@@ -31,13 +29,13 @@ namespace BlImplementation
         {
             try
             {
-                IEnumerable<DO.OrderItem?> orders = Dal.OrderItem.GetAll(null);
+                IEnumerable<DO.OrderItem?> orders = dal.OrderItem.GetAll(null);
                 foreach (DO.OrderItem order in orders)
                 {
                     if (order.ProductID == id)
                         throw new AvailableException();
                 }
-                Dal.Product.Delete(id);
+                dal.Product.Delete(id);
             }
             catch (DoesntExistException ex)//...say it to the user...
             {
@@ -50,7 +48,7 @@ namespace BlImplementation
             if (ID > 0)
             {
                 DO.Product? prodDO = new DO.Product();
-                prodDO = Dal.Product.Get(ID);
+                prodDO = dal.Product.Get(ID);
                 BO.Product prod = new BO.Product();
                 prod.Name = prodDO?.Name;
                 prod.ID = (int)prodDO?.ID;
@@ -70,7 +68,7 @@ namespace BlImplementation
             int count = 0;
             if (id > 0)
             {
-                prodDO = Dal.Product.Get(id);
+                prodDO = dal.Product.Get(id);
                 pi.ID=prodDO.ID;
                 pi.Name = prodDO.Name;
                 pi.Furniture = (BO.Furniture)prodDO.Furniture;
@@ -95,7 +93,7 @@ namespace BlImplementation
         {
             List<ProductItem?> list = new List<ProductItem?>();
             List<DO.Product> products = new List<DO.Product>(); 
-            foreach(DO.Product product in Dal.Product.GetAll(null))
+            foreach(DO.Product product in dal.Product.GetAll(null))
             {
                 products.Add(product);
             }
@@ -127,7 +125,7 @@ namespace BlImplementation
         IEnumerable<ProductForList?> BlApi.IProduct.GetProductForLists()
         {
             List<ProductForList> productForLists=new List<ProductForList>();
-            foreach (DO.Product item in Dal.Product.GetAll())//converting from product to product for list
+            foreach (DO.Product item in dal.Product.GetAll())//converting from product to product for list
             {
                     BO.ProductForList productForList = new BO.ProductForList();
                     productForList.ID = item.ID;
@@ -156,7 +154,7 @@ namespace BlImplementation
                         InStock = product.InStock,
                         Furniture = (DO.Furniture)product.Furniture
                     };
-                    Dal.Product.Update(_product);
+                    dal.Product.Update(_product);
                 }
                 catch (DoesntExistException ex)
                 {
@@ -169,7 +167,7 @@ namespace BlImplementation
         }
         public IEnumerable<BO.ProductForList?> GetSomeProduct(BO.Furniture? category) // function useful for stage 3 in ComboBox
         {
-            return from product in Dal.Product.GetAll() // stage 5 
+            return from product in dal.Product.GetAll() // stage 5 
                    where product?.Furniture== (DO.Furniture?)category
                    select new BO.ProductForList
                    {

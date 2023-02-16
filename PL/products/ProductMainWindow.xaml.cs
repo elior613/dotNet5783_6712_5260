@@ -27,7 +27,7 @@ namespace PL.products
 
     public partial class ProductMainWindow : Window
     {
-        private IBL bl = new BL();
+        BlApi.IBL? bl = BlApi.Factory.Get();
         int index;
         ObservableCollection<BO.ProductForList> list;
         bool _isValidInt = true;
