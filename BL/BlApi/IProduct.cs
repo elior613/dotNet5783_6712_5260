@@ -60,5 +60,11 @@ namespace BlApi
         /// </summary>
         /// <param name="product"></param>
          public void Update(BO.Product product);
+
+        /// <summary>
+        /// function useful for stage 3 in ComboBox
+        /// </summary>
+        /// <param name="product"></param>
+        public IEnumerable<BO.ProductForList?> GetSomeProduct(BO.Furniture? category); 
     }
 }

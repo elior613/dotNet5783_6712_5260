@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BlApi;
 using BlImplementation;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
@@ -24,16 +25,18 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static private IBL bl = new BL();
+
+        ObservableCollection<BO.ProductForList?> list = new ObservableCollection<BO.ProductForList?>(bl.Product.GetProductForLists());
         public MainWindow()
         {
             InitializeComponent();
         }
-        private IBL bl = new BL();
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new products.ProductForList().Show();
+            new products.ProductForList(bl,list).Show();
         }
 
     }

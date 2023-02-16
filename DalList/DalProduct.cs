@@ -17,13 +17,14 @@ internal class DalProduct:IProduct
         {
             if (dataSource.producrArr[i]?.ID == prod.ID)
                         throw new ExistException();//if the new product was in fact an existing product
-        }
+        }/*
         //initializing the correct name of the product
         prod.Name = dataSource.initializingName(prod);
         //initializing the correct num of price
         prod.Price=dataSource.initializingPrice(prod);
         //initializing the correct num of the count in the stock
         prod.InStock=dataSource.initializingInStock(prod);
+        */
 
         dataSource.producrArr.Add(prod);
         Console.WriteLine("The product has been successfully added");//confirmation of the creation of the new product

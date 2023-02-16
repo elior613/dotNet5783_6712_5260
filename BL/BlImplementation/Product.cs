@@ -167,6 +167,18 @@ namespace BlImplementation
             else
                 throw new ErrorDetailsException();
         }
+        public IEnumerable<BO.ProductForList?> GetSomeProduct(BO.Furniture? category) // function useful for stage 3 in ComboBox
+        {
+            return from product in Dal.Product.GetAll() // stage 5 
+                   where product?.Furniture== (DO.Furniture?)category
+                   select new BO.ProductForList
+                   {
+                       ID = product?.ID ?? throw new NullReferenceException("Missing ID"),
+                       Name = product?.Name + ' ' ?? throw new NullReferenceException("Missing Name"),
+                       Furniture = (BO.Furniture?)product?.Furniture ?? throw new NullReferenceException("Missing product category"),
+                       Price = product?.Price ?? 0d
+                   };
+        }
     }
 }
 

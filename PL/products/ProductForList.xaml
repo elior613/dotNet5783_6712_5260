@@ -8,28 +8,46 @@
         Title="ProductForList" Height="640" Width="800">
 
     <Grid Name="MainGrid">
- 
-            <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="349*"/>
+            <ColumnDefinition Width="451*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2" Margin="0,56,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="39*"/>
+                <ColumnDefinition Width="161*"/>
+                <ColumnDefinition Width="200*"/>
             </Grid.ColumnDefinitions >
+            <Label Content="Category"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="183" FontSize="18" FontFamily="Century" Height="34" Foreground="Black" Margin="17,-54,0,0" Grid.ColumnSpan="2" />
+            <Label Grid.ColumnSpan="3" Margin="0,39,10,0" RenderTransformOrigin="0.506,0.462"/>
+            <ComboBox Name="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" Margin="2,-39,187,521" RenderTransformOrigin="0.989,0.36" Grid.ColumnSpan="2">
+                <ComboBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="-1" ScaleX="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-180.123"/>
+                        <TranslateTransform Y="11.782"/>
+                    </TransformGroup>
+                </ComboBox.RenderTransform>
+            </ComboBox>
         </Grid>
-        <ComboBox Name="CategorySelector" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="1"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="173,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
-        <ListView Name="productListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5} " SelectionChanged="ListView_SelectionChanged">
+
+
+        <ListView Name="productListView" MouseDoubleClick="Product_MouseDoubleClick" d:ItemsSource="{d:SampleData ItemCount=5} " Grid.RowSpan="3" Margin="0,56,0,0" Grid.ColumnSpan="2" RenderTransformOrigin="0.956,0.518" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Content="Add a new product" Grid.Row="2" HorizontalAlignment="Left" Margin="296,5,0,5" Padding="5" Click="AddProductButton_Click" Grid.Column="1"/>
+
 
     </Grid>
 </Window>

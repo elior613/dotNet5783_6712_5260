@@ -171,7 +171,7 @@ internal sealed class DataSource
         Product product = new Product()
         {
             ID = countProduct++,
-            Furniture = (DO.Furniture)rand.Next(0, 4)
+            Furniture = (DO.Furniture)rand.Next(0, 5)
         };
         product.Name = initializingName(product);
         product.InStock = initializingInStock(product);
