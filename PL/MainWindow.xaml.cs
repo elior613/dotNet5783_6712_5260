@@ -39,5 +39,17 @@ namespace PL
             new products.ProductForList(bl,list).Show();
         }
 
+        private void AdminButton_Clik(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void CostumerButton_Clik(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void OrderTracking_Clik(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
