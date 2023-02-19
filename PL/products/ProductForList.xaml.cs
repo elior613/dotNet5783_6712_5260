@@ -67,6 +67,10 @@ namespace PL.products
                 MessageBox.Show(ex.Message);
             }
         }
+        private void orderList_Click(object sender, RoutedEventArgs e)
+        {
+            new orders.OrderList(bl).Show();
+        }
         private void Product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
            BO.Product _product = bl.Product.Get(((BO.ProductForList)productListView.SelectedItem).ID);

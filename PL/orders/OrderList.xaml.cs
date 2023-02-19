@@ -48,6 +48,9 @@ namespace PL.orders
 
         private void Order_MouseDoubleClick(object sender, MouseButtonEventArgs e) => new orders.Order(bl, ((BO.OrderForList)OrderListView.SelectedItem).ID, orderForList, this.OrderListView.SelectedIndex).Show();
 
+        private void OrderListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
+        }
     }
 }
