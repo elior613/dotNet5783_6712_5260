@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using BlApi;
 using BlImplementation;
 using System.Collections.ObjectModel;
+using PL.Customer;
 
 namespace PL
 {
@@ -41,11 +42,11 @@ namespace PL
 
         private void AdminButton_Clik(object sender, RoutedEventArgs e)
         {
-
+            new products.ProductForList(bl, list).Show();
         }
         private void CostumerButton_Clik(object sender, RoutedEventArgs e)
         {
-
+            new ProductListCatalogWindow(bl).Show();
         }
         private void OrderTracking_Clik(object sender, RoutedEventArgs e)
         {

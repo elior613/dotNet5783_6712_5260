@@ -7,11 +7,11 @@ using System.Xml.Linq;
 
 namespace BlImplementation
 {
-    internal class Cart:ICart
+    internal class Cart: ICart
     {
         DalApi.IDal? dal = DalApi.Factory.Get();
         Random rand = new Random();
-        public BO.Cart Add(BO.Cart cart, int productId)
+        public BO.Cart? Add(BO.Cart? cart, int productId)
         {
             BO.Product product;
             BO.OrderItem orderItem;
@@ -220,5 +220,20 @@ namespace BlImplementation
             cart.TotalPrice = cart.Items?.Sum(amount => amount.Price * amount.Amount) ?? 0;
 
         }
+        public IEnumerable<BO.OrderItem?> getAllOrderItemInCart(BO.Cart cart)
+        {
+            List<BO.OrderItem> items = new List<BO.OrderItem>();
+            if (cart.Items != null)
+            {
+                foreach (BO.OrderItem item in cart.Items)
+                {
+                    items.Add(item);
+                }
+                return items;
+            }
+            else
+                throw new Exception("the cart is empty");
+        }
     }
+  
 }

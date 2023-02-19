@@ -32,11 +32,6 @@ namespace PL.products
         ObservableCollection<BO.ProductForList> list;
         bool _isValidInt = true;
         bool _isValidDouble = true;
-        private int id { get; set; }
-        private string name { get; set; }
-        private double price { get; set; }
-        private int instock { get; set; }
-        private DO.Furniture category { get; set; }
 
 
 

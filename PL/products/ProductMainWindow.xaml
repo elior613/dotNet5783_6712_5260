@@ -8,13 +8,13 @@
         Title="ProductMainWindow" Height="450" Width="800">
     <Window.Resources>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="buttonColor">
-            <GradientStop Color="Black"/>
+            <GradientStop Color="blue"/>
             <GradientStop Color="BurlyWood" Offset="1"/>
         </LinearGradientBrush>
     </Window.Resources>
     <Grid>
         <Grid MaxHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" >
-            <StackPanel Background="WhiteSmoke">
+            <StackPanel Background="LightYellow">
                 <Grid x:Name="ProductDetailsGrid" HorizontalAlignment="Left" Margin="109,38,0,0" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>

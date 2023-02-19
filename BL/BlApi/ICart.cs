@@ -15,7 +15,7 @@ namespace BlApi
     /// <returns></returns>
     public interface ICart
     {
-        public Cart Add(Cart cart, int ProductId);
+        public Cart? Add(Cart? cart, int ProductId);
 
         /// <summary>
         /// Updating the quantity of a product in the cart
@@ -31,7 +31,11 @@ namespace BlApi
         ///<param name="Cart"></param>
         ///
         public void Confirmation(Cart cart, string name, string email, string adress);
-
+        ///<summary>
+        ///help method that gives all items in the cart
+        ///</summary>
+        ///<param name="Cart"></param>
+        public IEnumerable<BO.OrderItem?> getAllOrderItemInCart(BO.Cart cart);
 
     }
 }

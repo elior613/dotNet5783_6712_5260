@@ -14,12 +14,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="IGIDA3_c.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="customers\" />
     <Folder Include="orders\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="IGIDA3_c.jpg" />
   </ItemGroup>
 
 </Project>

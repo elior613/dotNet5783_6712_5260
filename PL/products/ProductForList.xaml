@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ProductForList" Height="640" Width="800">
 
-    <Grid Name="MainGrid">
+    <Grid Name="MainGrid" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="349*"/>
             <ColumnDefinition Width="451*"/>
@@ -39,7 +39,7 @@
         </Grid>
 
 
-        <ListView Name="productListView" MouseDoubleClick="Product_MouseDoubleClick" d:ItemsSource="{d:SampleData ItemCount=5} " Grid.RowSpan="3" Margin="0,56,0,0" Grid.ColumnSpan="2" RenderTransformOrigin="0.956,0.518" >
+        <ListView Name="productListView" MouseDoubleClick="Product_MouseDoubleClick" d:ItemsSource="{d:SampleData ItemCount=5} " Grid.RowSpan="3" Background="LightYellow" Margin="0,56,0,0" Grid.ColumnSpan="2" RenderTransformOrigin="0.956,0.518" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

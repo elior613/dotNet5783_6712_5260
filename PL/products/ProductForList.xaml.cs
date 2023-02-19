@@ -49,7 +49,7 @@ namespace PL.products
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            if ((BO.Furniture)CategorySelector.SelectedItem == Furniture.all)
+             if ((BO.Furniture)CategorySelector.SelectedItem == Furniture.all)
                 productListView.ItemsSource = productListView.ItemsSource = bl.Product?.GetProductForLists();
             else productListView.ItemsSource = bl.Product.GetSomeProduct((BO.Furniture)CategorySelector.SelectedItem);
           
