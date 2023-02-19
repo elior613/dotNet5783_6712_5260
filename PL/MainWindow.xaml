@@ -18,5 +18,19 @@
         <Button x:Name="OrderTracking_" Content="Order Tracking" HorizontalAlignment="Left" Margin="526,268,0,0" VerticalAlignment="Top" FontSize="23" Click="OrderTracking_Clik" Height="55" Width="160"/>
         <Label Content="Welcome to our furniture store" HorizontalAlignment="Center" Margin="0,77,0,0" VerticalAlignment="Top" Width="571" Height="66" FontSize="40" Background="LightYellow"/>
 
+
+        <TextBox x:Name="orderID" Width="100" Height="25" 
+        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="325,217,0,0" BorderBrush="White">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=orderID,Path=Text}">
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
     </Grid>
 </Window>

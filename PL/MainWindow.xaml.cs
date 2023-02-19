@@ -50,7 +50,21 @@ namespace PL
         }
         private void OrderTracking_Clik(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                BO.OrderTracking track = bl.Order.Tracking(int.Parse(orderID.Text));
+                MessageBox.Show(track.ToString());
+                orderID.Text = "";
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                orderID.Text = "";
+            }
         }
     }
 }
+
+//Visibility="{Binding ElementName=BackButton,Path= IsCancel ,Converter={StaticResource notBooleanToVisibilityConverter}}"
+// <Setter Property="Background" Value="{StaticResource EnterOrderID}"/>

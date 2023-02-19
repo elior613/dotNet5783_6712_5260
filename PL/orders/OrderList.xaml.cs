@@ -46,7 +46,7 @@ namespace PL.orders
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private void Order_MouseDoubleClick(object sender, MouseButtonEventArgs e) => new OrderWindows.OrderWindow(bl, ((BO.OrderForList)OrderListView.SelectedItem).ID, orderForList, this.OrderListView.SelectedIndex).Show();
+        private void Order_MouseDoubleClick(object sender, MouseButtonEventArgs e) => new orders.Order(bl, ((BO.OrderForList)OrderListView.SelectedItem).ID, orderForList, this.OrderListView.SelectedIndex).Show();
 
 
     }

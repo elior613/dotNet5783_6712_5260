@@ -156,7 +156,7 @@ namespace BlImplementation
                 new Tuple<DateTime?, string>(ord.ShipDate, $"The Order {ord.ID} was shipped"),
                 new Tuple<DateTime?, string>(ord.DeliveryDate, $"The Order {ord.ID} was delivered")
             };
-                tracking.OrderStatus = list;
+                tracking.Tracking = list;
                 return tracking;
             }
             else
