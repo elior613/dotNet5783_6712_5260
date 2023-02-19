@@ -75,6 +75,7 @@ namespace PL.Customer
             { MessageBox.Show(ex.Message); }
 
         }
+
         private void Click_delete_from_Cart(object sender, RoutedEventArgs e)
         {
             BO.OrderItem item = (sender as Button)?.DataContext as BO.OrderItem;
