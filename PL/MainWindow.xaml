@@ -20,7 +20,7 @@
 
 
         <TextBox x:Name="orderID" Width="100" Height="25" 
-        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="325,217,0,0" BorderBrush="White">
+        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="586,192,0,0" BorderBrush="White">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}">
                     <Setter Property="Background" Value="Transparent"/>

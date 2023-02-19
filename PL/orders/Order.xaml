@@ -1,4 +1,5 @@
 ﻿<Window x:Class="PL.orders.Order"
+        
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,6 +10,7 @@
       Title="cart">
 
     <Grid MaxHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Background="#FFFFFF">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
@@ -31,7 +33,6 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-
                 <Label FontFamily="Times New Roman" Content="Order ID :" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
                 <TextBox  Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0"  Text="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="170"/>
 
@@ -65,11 +66,12 @@
             </Grid>
 
             <StackPanel x:Name="ButtonsStackPanel" Orientation="Horizontal" Margin="100,20" Width="225" >
-                <Button x:Name="Ship_Button"   Content="Update Ship Date" Click="UpdateShipDate_Button_Click" Height="20" IsEnabled="{Binding ShipDate, Converter={StaticResource buttonEnabledConverter}}"  FontFamily="Britannic Bold" Foreground="#000000" Background="{x:Null}" BorderBrush="#FF1C1717"/>
-                <Button x:Name="Delivery_Button"  Content="Update Delivery Date" Click="UpdateDeliveryDate_Button_Click" Height="20" Margin="5" IsEnabled="{Binding DeliveryDate, Converter={StaticResource buttonEnabledConverter}}" FontFamily="Britannic Bold" Foreground="#000000" Background="{x:Null}" BorderBrush="#FF221717"/>
+                <Button x:Name="Ship_Button"   Content="Update Ship Date" Click="UpdateShipDate_Button_Click" Height="20"   FontFamily="Britannic Bold" Foreground="#000000" Background="{x:Null}" BorderBrush="#FF1C1717"/>
+                <Button x:Name="Delivery_Button"  Content="Update Delivery Date" Click="UpdateDeliveryDate_Button_Click" Height="20" Margin="5"  FontFamily="Britannic Bold" Foreground="#000000" Background="{x:Null}" BorderBrush="#FF221717"/>
+           
             </StackPanel>
         </StackPanel>
-        <ListView x:Name="viewListOrderItem"  Grid.Column="1" Margin="10,42,0,41" HorizontalAlignment="Left" Width="344" Background="#FFFFFF" Foreground="Black" >
+        <ListView x:Name="viewListOrderItem"  Grid.Column="1" Margin="10,42,0,41" HorizontalAlignment="Left" Width="344" Background="#FFFFFF" Foreground="Black" SelectionChanged="viewListOrderItem_SelectionChanged" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ID}"  Width="Auto" Header="ID">

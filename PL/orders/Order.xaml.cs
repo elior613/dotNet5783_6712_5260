@@ -34,7 +34,7 @@ namespace PL.orders
             this.id = id;
             BO.Order order = bl.Order.Get(id);
             InitializeComponent();
-            viewListOrderItem.ItemsSource = (System.Collections.IEnumerable)order.Item;
+            viewListOrderItem.ItemsSource = bl.Order.GetOrders();
             if (order.ShipDate == null) // I tried to use DataBinding with ButtonEnabledConverter but it doesn't work so sorry
                 Delivery_Button.IsEnabled = false;
             else if (order.ShipDate != null && order.DeliveryDate == null)
@@ -97,6 +97,11 @@ namespace PL.orders
             }
 
             this.Close();
+        }
+
+        private void viewListOrderItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using PL.products;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,7 +25,7 @@ namespace PL.orders
     public partial class OrderList : Window, INotifyPropertyChanged
     {
         IBL bl;
-
+  
         public OrderList(IBL bl)
         {
             this.bl = bl;
@@ -52,5 +53,11 @@ namespace PL.orders
         {
 
         }
+        /*
+        private void Order_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            new Order(bl, ((BO.Order)OrderListView.SelectedItem).ID, List!, this.OrderListView.SelectedIndex).Show();
+        }
+        */
     }
 }
