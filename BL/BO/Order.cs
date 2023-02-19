@@ -1,5 +1,7 @@
 ﻿
 
+using BlApi;
+
 namespace BO
 {
     public class Order
@@ -14,6 +16,7 @@ namespace BO
         public double TotalPrice { get; set; }//a total price of order
         public OrderItem? Item { get; set; }//a list of the items
         public OrderStatus Status { get; set; }//the status of the orders
+        public int AmountOfItem { get; set; }
 
 
 
