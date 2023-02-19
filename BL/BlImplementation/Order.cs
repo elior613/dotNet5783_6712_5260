@@ -23,6 +23,7 @@ namespace BlImplementation
                 BO.OrderForList order = new BO.OrderForList();
                 order.ID= ord.ID;
                 order.CostumerName= ord.CostumerName;
+                order.OrderDate= ord.OrderDate;///
                 if (ord.DeliveryDate != DateTime.MinValue)
                     order.Status = BO.OrderStatus.delivered;
                 else if (ord.ShipDate != DateTime.MinValue)
